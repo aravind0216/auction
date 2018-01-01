@@ -44,6 +44,7 @@ class servicesController extends Controller
     public function saveSlider(Request $request){
         $request->validate([
             'title'=>'required|unique:sliders',
+            'image' => 'mimes:jpeg,jpg,png|max:1000' // max 1000kb
         ]);
         //image upload
         $fileName = null;
@@ -161,6 +162,7 @@ class servicesController extends Controller
     public function saveBlog(Request $request){
         $request->validate([
             'title'=>'required|unique:blogs',
+            'image' => 'mimes:jpeg,jpg,png|max:1000' // max 1000kb
         ]);
         //image upload
         $fileName = null;
@@ -182,6 +184,7 @@ class servicesController extends Controller
     public function updateBlog(Request $request){
         $request->validate([
             'title'=> 'required|unique:blogs,title,'.$request->id,
+            'image' => 'mimes:jpeg,jpg,png|max:1000' // max 1000kb
         ]);
         if($request->image!=""){
             $old_image = "upload_image/".$request->image1;

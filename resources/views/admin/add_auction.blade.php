@@ -242,7 +242,7 @@ $.ajax({
   type: "GET",
   dataType: "JSON",
   success: function( data ) {
-    // alert(data.brand);
+    //alert(data.status);
     $("#lot"+count).val(lot_number);
     $("#brand"+count).val(data.brand);
     $("#vehicle_id"+count).val(data.vehicle_id);
@@ -250,6 +250,13 @@ $.ajax({
     $("#vehicle_type"+count).val(data.vehicle_type);
     $("#price"+count).val(data.price);
     $("#year"+count).val(data.year);
+    if(data.status == 1){
+      $("#row"+count).remove();
+      alert('Lot Number is Wrong!');
+    }
+  },error: function (data) {
+    $("#row"+count).remove();
+    alert('Lot Number is Wrong!');
   }
 });
 

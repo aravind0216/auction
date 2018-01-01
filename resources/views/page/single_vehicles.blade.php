@@ -74,18 +74,20 @@ $.ajaxSetup({
 function btnPlus(){
   var min_bid = parseInt($('#min_bid_value').val());
   var bid_amount = parseInt($('#bid_amount').val());
-  var totalValue = parseInt(min_bid + circleBid);
+  var vehicle_price = parseInt($('#vehicle_price').val());
+  var totalValue = parseInt(min_bid + vehicle_price);
   bid_amount = parseInt(bid_amount + min_bid);
   $('#bid_amount').val(bid_amount);
 }
 function btnMinus(){
-   var min_bid = parseInt($('#min_bid_value').val());
+  var min_bid = parseInt($('#min_bid_value').val());
   var bid_amount = parseInt($('#bid_amount').val());
-  var totalValue = parseInt(min_bid + circleBid);
-if(totalValue < bid_amount){
-  bid_amount = parseInt(bid_amount - min_bid);
-  $('#bid_amount').val(bid_amount);
-}
+  var vehicle_price = parseInt($('#vehicle_price').val());
+  var totalValue = parseInt(min_bid + vehicle_price);
+    if(totalValue < bid_amount){
+    bid_amount = parseInt(bid_amount - min_bid);
+    $('#bid_amount').val(bid_amount);
+    }
 }
 
  

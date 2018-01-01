@@ -79,6 +79,28 @@ class LiveauctionController extends Controller
 
         return response()->json($message); 
     }
+    public function startBid(Request $request){
+          $message =  array(
+           'user'=>'admin',
+           'bid_type'=> 'start',
+           'channel_name'=> $request->channel_name,
+           'bid_amount'=> $request->vehicle_price,
+       );
+           event(new LiveAuction($message));
+
+        return response()->json($message); 
+    }
+    public function nextBid(Request $request){
+          $message =  array(
+           'user'=>'admin',
+           'bid_type'=> 'next',
+           'auction_id'=> $request->auction_id,
+           'channel_name'=> $request->channel_name,
+       );
+           event(new LiveAuction($message));
+
+        return response()->json($message); 
+    }
 
     public function updateMonitoringVehicleStatus(Request $request){
 
@@ -254,7 +276,8 @@ class LiveauctionController extends Controller
        <input type="hidden" name="starting_time" id="starting_time" value="'.$auction->starting_time.'" >
        <input type="hidden" name="starting_date" id="starting_date" value="'.$auction->starting_date.'" >
        
-                                <div id="check_timer">
+       
+                            <div id="check_timer">
                         <div style="margin-left: 79px;
     letter-spacing: 1px;
     padding-top: 10px;
@@ -270,7 +293,13 @@ class LiveauctionController extends Controller
                     $output.='</div>';
                     if(\Auth::check()){
 
-        $bid_amount = $vehicle->minimum_bid_value + $vehicle->price;
+        $pre_bid_value = pre_bid_value::where('vehicle_id',$id)->orderBy('bid_amount', 'desc')->first();
+        if(!empty($pre_bid_value)){
+            $bid_amount = $vehicle->minimum_bid_value + $pre_bid_value->bid_amount;
+        }
+        else{
+            $bid_amount = $vehicle->minimum_bid_value + $vehicle->price;
+        }
         $bid25 = $bid_amount * ($auction->minimum_percentage/100);
         if(Auth::user()->wallet > $bid25){
                         $output.='<div class="row">
@@ -441,7 +470,15 @@ class LiveauctionController extends Controller
     }
     $output.='<script type="text/javascript" src="/dist/js/custom.js"></script>
         ';
-         $vehicle_price = $vehicle->price;
+        
+        $pre_bid_value = pre_bid_value::where('vehicle_id',$id)->orderBy('bid_amount', 'desc')->first();
+        if(!empty($pre_bid_value)){
+            $vehicle_price = $pre_bid_value->bid_amount;
+        }
+        else{
+            $vehicle_price = $vehicle->price;
+        }
+         
          date_default_timezone_set("Asia/Dubai");
          date_default_timezone_get();
          $time = date("h:i A"); 

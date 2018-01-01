@@ -280,6 +280,9 @@
                                         <li><a href="/about-us">About Us</a></li>
                                         <!-- <li><a href="/member-registration">Member Registration</a></li> -->
                                         <li><a href="/contact">Contact Us</a></li>
+                                        @if(\Auth::check())
+                                        <li><a href="/member/dashboard">My Account</a></li>
+                                        @endif
                                     </ul>
                                 </nav>
                             </div>

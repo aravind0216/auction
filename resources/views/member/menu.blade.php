@@ -2,7 +2,7 @@
 <div class="header-navbar navbar-expand-sm navbar navbar-horizontal navbar-fixed navbar-light navbar-without-dd-arrow" role="navigation" data-menu="menu-wrapper">
     <div class="navbar-header d-xl-none d-block">
         <ul class="nav navbar-nav flex-row">
-            <li class="nav-item mr-auto"><a class="navbar-brand" href="index.html">
+            <li class="nav-item mr-auto"><a class="navbar-brand" href="/">
                     <div class="brand-logo"><img class="logo" src="/images/logo/logo.png"></div>
                     <h2 class="brand-text mb-0">New York Car Auction</h2>
                 </a></li>

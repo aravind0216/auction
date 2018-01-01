@@ -191,6 +191,7 @@ var x = setInterval(function() {
 </div>
 @endsection
 @section('extra-js')
+ <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
   <script type="text/javascript" src="/dist/js/jquery.js"></script>
     <script type="text/javascript" src="/dist/js/popper.js"></script>
     <script type="text/javascript" src="/dist/js/bootstrap.min.js"></script>
@@ -199,7 +200,7 @@ var x = setInterval(function() {
     <script type="text/javascript" src="/dist/js/plugin/slick/slick.min.js"></script>
     <script type="text/javascript" src="/dist/js/custom.js"></script>
  
- <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+
   <script>
 
     var public_ipv = '"{{$_SERVER['REMOTE_ADDR']}}"';
@@ -232,20 +233,35 @@ var x = setInterval(function() {
         after_bid=0;
       }
       if(data.message.user =='admin'){
+        console.log('bidding_type'+data.message.bid_type)
           if(data.message.bid_type =='bonus'){
+            console.log('bonus value'+data.message.bid_amount);
             bidding_type='bonus';
-               clearInterval(timerInterval);
-               bidding_timer(10);
-            //TIME_LIMIT = 10;
-            console.log(data.message.bid_amount)
-            $('#base-timer-label').html('Bonus Time'+'<br>'+data.message.bid_amount);
-          }else if(data.message.bid_type =='no-bid'){
             clearInterval(timerInterval);
-            viewAuction(auction_id);
+            bidding_timer(10,'bonus');
+            $('#base-timer-label').html('Bonus Time'+'<br>'+data.message.bid_amount);
+            //TIME_LIMIT = 10;
+            // console.log(data.message.bid_amount)
+          }else if(data.message.bid_type =='no-bid'){
+            //clearInterval(timerInterval);
+            viewAuction(auction_id,true);
+            //$('#base-timer-label').html(circleBid + '<br> Bid!'); 
           }
+          else if(data.message.bid_type =='start'){
+            clearInterval(timerInterval);
+            bidding_timer(10,'start');
+            $('#base-timer-label').html(circleBid + '<br> Bid!'); 
+          }
+          // else if(data.message.bid_type =='next'){
+          //   if(auction_id ==null){
+          //     viewAuction(data.message.auction_id);
+          //   }else{
+          //     viewAuction(auction_id);
+          //   }
+          // }
       }else{
            clearInterval(timerInterval);
-               bidding_timer(10);
+               bidding_timer(10,'bid');
         // console.log(data.message.bid_amount)
         //  alert(JSON.stringify(data));
         // clearInterval(timerInterval);
@@ -259,13 +275,13 @@ var x = setInterval(function() {
          min_bid = parseInt($('#min_bid_value').val());
     
          total_bid = parseInt(bid_amount) + parseInt(min_bid);
-        clearTimeout(timerOut);
-        if(public_ipv == public_ip){
-          timerOut = setTimeout(() => {
+        // clearTimeout(timerOut);
+    //     if(public_ipv == public_ip){
+    //       timerOut = setTimeout(() => {
          
-       updateVehicleStatus(bid_id,vehicle_id);
-    }, 10000);
-        }
+    //    updateVehicleStatus(bid_id,vehicle_id);
+    // }, 10000);
+    //     }
     
         $('#bid_amount').val(total_bid);
          $('#base-timer-label').html(bid_amount+ '<br> Bid!');
@@ -319,7 +335,7 @@ function viewDetails(id)
   });
 }
 
-function bidding_timer(TIME_LIMITS) {
+function bidding_timer(TIME_LIMITS,types) {
   var TIME_LIMIT = TIME_LIMITS;
   let timeLeft = TIME_LIMIT;
 
@@ -395,7 +411,8 @@ function startTimer() {
     setRemainingPathColor(timeLeft);
     
     if (timeLeft <= 0) {
-      
+     // console.log('timeLeft'+timeLeft);
+      console.log(types+' -- '+timeLeft);
       // clearInterval(timerInterval);
       onTimesUp();
     }
@@ -455,8 +472,8 @@ function setCircleDasharray() {
 
 var auction_id = '<?php echo $id; ?>';
 
-viewAuction(auction_id);
-function viewAuction(auction_id)
+viewAuction(auction_id,false);
+function viewAuction(auction_id,pushing)
 {
     //alert(auction_id);
     $.ajax({
@@ -464,18 +481,26 @@ function viewAuction(auction_id)
     type: "GET",
     success: function(data)
     {
-      if(data.time_status ==1){
-         body_data=data.html;
-        after_bid=1;
-      }else{
-        $('#view-auction').html(data.html);
-        call_time(); 
-      }
-        console.log("time_status"+data.time_status);
-        //bidding_timer();
-        
+       
         circleBid = parseInt(data.vehicle_price);
-        $('#base-timer-label').html(circleBid + '<br> Bid!');   
+        if(pushing ==true){
+          $('#view-auction').html(data.html);
+         
+        clearInterval(timerInterval);
+        bidding_timer(10,'next');
+         $('#base-timer-label').html(circleBid + '<br> Bid!');  
+      }else{
+        if(data.time_status ==1){
+           body_data=data.html;
+          after_bid=1;
+        }else{
+          $('#view-auction').html(data.html);
+          call_time(); 
+        }
+
+      }
+      
+        
     }
   });
 }
@@ -613,8 +638,9 @@ var dist = countDownStartDate - now;
     $('#register-expire').removeClass('displayhide');
     $('#check_timer').removeClass('timeFalse');
    
-    bidding_timer(10);
-    $('#base-timer-label').html(circleBid + '<br> Bid!'); 
+    //bidding_timer(10);
+     $('#base-timer-label').html('Get Ready'); 
+    //$('#base-timer-label').html(circleBid + '<br> Bid!'); 
     //document.getElementById("time_runner").innerHTML = "EXPIRED";
   }else{
      document.getElementById("base-timer-label").innerHTML = "Bidding <br>"+"Starts in"+"<br>"+hours + " h "
@@ -639,7 +665,7 @@ var dist = countDownStartDate - now;
   // if()
 }, 1000);
 //}
-bidding_timer(0);
+bidding_timer(0,'counter');
 }
 
  

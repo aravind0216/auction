@@ -62,7 +62,7 @@
         <div class="navbar-header d-xl-block d-none">
             <ul class="nav navbar-nav flex-row">
                 <li class="nav-item">
-                    <a class="navbar-brand" href="/member/dashboard">
+                    <a class="navbar-brand" href="/">
                         <div class="brand-logo"><img class="logo" src="/dist/images/logo.png"></div>
                         {{-- <h2 class="brand-text mb-0">New York Car Auction</h2> --}}
                     </a>

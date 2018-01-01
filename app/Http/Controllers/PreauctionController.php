@@ -97,9 +97,20 @@ class PreauctionController extends Controller
                         </div>
                         <br>
                         <h3>'.$vehicle->sales_type.'</h3>
-                        <br>
+                        <br>';
 
-                        <div id="app"></div>
+                        $pre_bid_value = pre_bid_value::where('vehicle_id',$id)->orderBy('bid_amount', 'desc')->first();
+                        if(!empty($pre_bid_value)){
+                            $output.='<input type="hidden" name="vehicle_price" id="vehicle_price" value="'.$pre_bid_value->bid_amount.'">';
+                            $bid_amount = $vehicle->minimum_bid_value + $pre_bid_value->bid_amount;
+                            $output.='<h5 style="padding-bottom: 10px;">Latest Bid Value : '.$pre_bid_value->bid_amount.' AED</h5><br>';
+                        }
+                        else{
+                            $output.='<input type="hidden" name="vehicle_price" id="vehicle_price" value="'.$vehicle->price.'">';
+                            $bid_amount = $vehicle->minimum_bid_value + $vehicle->price;
+                        }
+
+                        $output.='<div id="app"></div>
                      
                     <div style="margin-left: 79px;
     letter-spacing: 1px;
@@ -123,7 +134,7 @@ class PreauctionController extends Controller
           <input type="hidden" name="wallet" id="wallet" value="'.Auth::user()->wallet.'">
        <input type="hidden" name="vehicle_id" id="vehicle_id" value="'.$vehicle->id.'" >';
 
-       $bid_amount = $vehicle->minimum_bid_value + $vehicle->price;
+       
       $output.='<input style="width:300x !important;" name="bid_amount" id="bid_amount" type="text" value="'.$bid_amount.'" class="form-control" readonly aria-describedby="basic-addon2">
       <div class="input-group-append">
         <button class="btn btn-outline-secondary" type="button" onclick=btnMinus()><i class="fa fa-minus" aria-hidden="true"></i></button>

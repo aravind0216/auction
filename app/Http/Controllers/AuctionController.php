@@ -140,7 +140,7 @@ class AuctionController extends Controller
     }
 
     public function getAuctionVehicle($id){
-        $vehicle = vehicle::where('id',$id)->where('status',0)->get();
+        $vehicle = vehicle::where('id',$id)->where('status',0)->first();
 
         $brand = brand::find($vehicle->brand_id);
         $model = car::find($vehicle->car_id);
@@ -153,6 +153,7 @@ class AuctionController extends Controller
             'brand' => '',
             'model' => '',
             'vehicle_type' => '',
+            'status' => 0,
         );
 
         if(!empty($brand)){
@@ -165,6 +166,10 @@ class AuctionController extends Controller
 
         if(!empty($vehicle_type)){
             $data['vehicle_type'] = $vehicle_type->name;
+        }
+
+        if(empty($vehicle)){
+            $data['status'] = 1;
         }
 
         return response()->json($data); 

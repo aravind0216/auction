@@ -202,6 +202,7 @@ Route::group(['prefix' => 'admin'],function(){
 	//auction
 	Route::POST('/save-auction', 'AuctionController@saveAuction');
 	
+	
 	Route::POST('/update-auction', 'AuctionController@updateAuction');
 	Route::get('/edit-auction/{id}', 'AuctionController@editAuction');
 	Route::get('/view-auction', 'AuctionController@viewAuction');
@@ -216,7 +217,8 @@ Route::group(['prefix' => 'admin'],function(){
 	Route::get('/get-live-monitoring/{id}', 'AuctionController@getLiveMonitoring');
 
 	Route::POST('/update-vehicle-status', 'LiveauctionController@updateMonitoringVehicleStatus');
-
+	Route::POST('/start-bid', 'LiveauctionController@startBid');
+	Route::POST('/next-bid', 'LiveauctionController@nextBid');
 
 	//damage
 	Route::POST('/save-damage', 'DamageController@saveDamage');

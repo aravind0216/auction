@@ -68,13 +68,12 @@ $('.auction').addClass('active');
     channel.bind('my-event', function(data) {
       
       
-  
     });
 
 var auction_id = '<?php echo $id; ?>';
 var vehicle_price;
-viewAuction(auction_id);
-function viewAuction(auction_id)
+viewAuction(auction_id,false);
+function viewAuction(auction_id,pushing)
 {
     //alert(auction_id);
     $.ajax({
@@ -83,9 +82,15 @@ function viewAuction(auction_id)
     success: function(data)
     {
       // console.log(data)
+      if(pushing == true){
+        $('#view-auction').html(data.html);
+        vehicle_price = data.vehicle_price;
+      }else{
         $('#view-auction').html(data.html);
         vehicle_price = data.vehicle_price;
         call_time(); 
+
+      }
     }
   });
 }
@@ -97,11 +102,6 @@ function call_time(){
   var start_time = $('#current_time').val();
   var end_date = $('#starting_date').val();
   var end_time = $('#starting_time').val();
-
-  console.log(start_date);
-  console.log(start_time);
-  console.log(end_date);
-  console.log(end_time);
 
 // Set the date we're counting down to
 var countDownDate = new Date(end_date+' '+end_time).getTime();
@@ -138,7 +138,7 @@ var dist = countDownStartDate - now;
     // $('#registerForm').addClass('displayhide');
     // $('#register-expire').removeClass('displayhide');
     document.getElementById("time_runner").innerHTML = "Running";
-    pusher_calling('bonus');
+    startBid();
   }else{
      document.getElementById("time_runner").innerHTML = "Starts in "+hours + " h "
   + minutes + "m " + seconds + "s ";
@@ -164,26 +164,48 @@ var dist = countDownStartDate - now;
 //}
 
 }
+
+function startBid(){
+     $.ajaxSetup({
+      headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+    });
+var channel_name = $('#channel_name').val();
+    var token = $("#token").val();
+    var formData = { _token: token, channel_name: channel_name, vehicle_price: vehicle_price};
+    $.ajax({
+        url : '/admin/start-bid',
+        type: "POST",
+        data: formData,
+        //contentType: false,
+        //processData: false,
+        dataType: "JSON",
+        success: function(data)
+        {             
+           pusher_calling('bonus');
+        },error: function (data) {
+            var errorData = data.responseJSON.errors;
+            $.each(errorData, function(i, obj) {
+            toastr.error(obj[0]);
+            });
+        }
+    });
+}
 var TIME_LIMIT =10;
+
 function pusher_calling(bids_type){
-   let timeLeft = TIME_LIMIT;
-   let timePassed = 0;
-   window.timerInterval = null;
-  timerInterval = setInterval(() => {
-    timePassed = timePassed += 1;
-    timeLeft = TIME_LIMIT - timePassed;
-    if (timeLeft <= 0) {
-      
-       clearInterval(timerInterval);
+    // window.timerOut = null;
+  var timerOut = setTimeout(() => {
        if(bids_type =='bonus'){
          bonusTime();
        }else if(bids_type == 'no-bid'){
         noBid();
-       }else if(bids_type == 'bid'){
-
        }
-    }
-  }, 1000);
+      //  else if(bids_type == 'next'){
+      //     nextBid();
+      //  }
+  }, 10000);
 }
 
 function noBid(){
@@ -207,8 +229,40 @@ function noBid(){
         success: function(data)
         {                
             //toastr.success('Sold');
-            viewAuction(auction_id);
-            pusher_calling('bid');
+            viewAuction(auction_id,true);
+            //clearTimeout(timerOut);
+            pusher_calling('bonus');
+            //nextBid();
+           // pusher_calling('bid');
+        },error: function (data) {
+            var errorData = data.responseJSON.errors;
+            $.each(errorData, function(i, obj) {
+            toastr.error(obj[0]);
+            });
+        }
+    });
+}
+
+function nextBid(){
+ $.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+   var auction_id = $("#auction_id").val();
+  var channel_name = $('#channel_name').val();
+    $.ajax({
+        url : '/admin/next-bid',
+        type: "POST",
+        data: {channel_name:channel_name,auction_id:auction_id},
+        // contentType: false,
+        // processData: false,
+        dataType: "JSON",
+        success: function(data)
+        { 
+          //clearTimeout(timerOut);
+          pusher_calling('bonus');
+            // toastr.success('United Arab Emirates',data);
         },error: function (data) {
             var errorData = data.responseJSON.errors;
             $.each(errorData, function(i, obj) {
@@ -228,7 +282,6 @@ function bonusTime(){
    var bidding_type ="bonus";
   var channel_name = $('#channel_name').val();
   var price = vehicle_price;
-  console.log('channel_name'+channel_name)
     $.ajax({
         url : '/bonus-time',
         type: "POST",
@@ -237,7 +290,9 @@ function bonusTime(){
         // processData: false,
         dataType: "JSON",
         success: function(data)
-        {       pusher_calling('no-bid')
+        {   
+          //clearTimeout(timerOut);
+              pusher_calling('no-bid')
                 console.log(data)
             // toastr.success('United Arab Emirates',data);
         },error: function (data) {

@@ -2,7 +2,7 @@
     <div class="main-menu menu-fixed menu-dark menu-accordion menu-shadow" data-scroll-to-active="true">
         <div class="navbar-header">
             <ul class="nav navbar-nav flex-row">
-                <li class="nav-item mr-auto"><a class="navbar-brand" href="/admin/dashboard">
+                <li class="nav-item mr-auto"><a class="navbar-brand" href="/">
                         <!-- <div class="brand-logo"><img class="logo" src="/images/logo/logo.png" /></div> -->
                         <img style="width: 151px;
     margin-top: -25px;
