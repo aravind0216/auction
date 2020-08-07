@@ -12,7 +12,13 @@
     <!--Srart Style -->
     
     @yield('extra-css')
-    
+    <style>
+        .login-text{
+    font-weight: 700;
+    margin-right: 10px;
+    margin-top: 2px;
+        }
+    </style>
     
     <!-- Favicon Link -->
     <link rel="shortcut icon" type="image/png" href="/dist/images/favicon.png">
@@ -35,27 +41,27 @@
     <!------ Header Start ------>
     <div class="impl_header_wrapper">
         <div class="impl_logo">
-            <a href="/"><img style="width: 230px;height: 100px;" src="dist/images/logo.png" alt="Logo" class="img-fluid"></a>
+            <a href="/"><img style="width: 230px;" src="dist/images/logo.png" alt="Logo" class="img-fluid"></a>
         </div>
         <div class="impl_top_header">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12 col-md-12">
                         <div class="impl_top_info">
-                            <ul class="impl_header_social">
+                            {{-- <ul class="impl_header_social">
                                 <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
                                 <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
                                 <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
                                 <li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
-                            </ul>
+                            </ul> --}}
                             <p class="impl_header_time"><i class="fa fa-clock-o" aria-hidden="true"></i> Working Hours -
                                 6 AM To 8 PM <span>sunday closed</span></p>
                             <ul class="impl_header_icons">
                                 <!-- <li class="impl_search"><span><i class="fa fa-search" aria-hidden="true"></i></span>
                                 </li> -->
                                 <li><a href="/compare"><i class="fa fa-exchange" aria-hidden="true"></i></a></li>
-                                <li><a href="/"><img style="width: 80px;height: 30px;" src="dist/images/app-store.jpg"></a></li>
-                                <li><a href="/"><img style="width: 80px;height: 30px;" src="dist/images/play-store.png"></a></li>
+                                <li><a href="/"><img style="width: 100px;" src="dist/images/app-store.png"></a></li>
+                                <li><a href="/"><img style="width: 100px;" src="dist/images/play-store.png"></a></li>
 
                                 <!-- <li class="cart-popup"><a href="#"><i class="fa fa-shopping-cart"
                                             aria-hidden="true"></i></a>
@@ -99,7 +105,7 @@
                                         </div>
                                     </div>
                                 </li> -->
-                                <li><a href="#signin" data-toggle="modal"><i style="font-size: 24px;" class="fa fa-sign-in"
+                                <li><a href="#signin" data-toggle="modal"> <span class="login-text">LOGIN</span>  <i style="font-size: 24px;" class="fa fa-sign-in"
                                             aria-hidden="true"></i></a></li>
                             </ul>
                             <!-- <div class="impl_search_overlay">
@@ -222,7 +228,7 @@
                             <div class="impl_logo_responsive">
                                 <a href="/"><img src="/upload_image/{{$site_infos->logo}}" alt="Logo" class="img-fluid"></a>
                             </div>
-                            <a href="/contact" class="impl_btn">Contact Us</a>
+                            <a href="/auction" class="impl_btn">Auctions</a>
                             <div class="impl_menu">
                                 <nav>
                                     <div class="menu_cross">
@@ -237,7 +243,7 @@
                                                 <li><a href="/buy-now-cars">Buy Now Cars</a></li>
                                             </ul>
                                         </li>
-                                        <li><a href="/auctions">Auctions</a></li>
+                                       
                                         <!-- <li><a href="/shipping">Shipping</a></li> -->
                                         <li class="dropdown"><a href="javascript:;">Support</a>
                                             <ul class="sub-menu">
@@ -248,6 +254,7 @@
                                             </ul>
                                         </li>
                                         <li><a href="/about-us">About Us</a></li>
+                                         <li><a href="/contact">Contact Us</a></li>
                                     </ul>
                                 </nav>
                             </div>

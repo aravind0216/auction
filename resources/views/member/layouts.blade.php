@@ -37,7 +37,17 @@
     <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
     <!-- END: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('toastr/toastr.css')}}">
-
+<style>
+    .bg-primary {
+    background-color: #0e0e0e !important;
+}
+.horizontal-menu .header-navbar.navbar-brand-center .navbar-header .navbar-brand .brand-logo .logo {
+    /* height: 76px; */
+    height: 66px;
+    margin-top: -24px;
+    /* float: left; */
+}
+</style>
     @yield('extra-css')
 
 </head>
@@ -54,7 +64,7 @@
                 <li class="nav-item">
                     <a class="navbar-brand" href="/member/dashboard">
                         <div class="brand-logo"><img class="logo" src="/dist/images/logo.png"></div>
-                        <h2 class="brand-text mb-0">New York Car Auction</h2>
+                        {{-- <h2 class="brand-text mb-0">New York Car Auction</h2> --}}
                     </a>
                 </li>
             </ul>
