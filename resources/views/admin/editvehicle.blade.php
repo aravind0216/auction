@@ -81,10 +81,29 @@
                       </div>
 
                       <div class="form-group row">
-                        <!-- <div class="col-md-4">
-                          <label class="label-control">Model</label>
-                          <input value="{{$vehicle->model}}" type="text" class="form-control" placeholder="Model" name="model" id="model">
-                        </div> -->
+
+                        <div class="col-md-4">
+                          <label class="label-control">Vehicle Model</label>
+                          <input value="{{$vehicle->vehicle_model}}" type="text" class="form-control" placeholder="Vehicle Model" name="vehicle_model" id="vehicle_model">
+                        </div>
+
+                        <div class="col-md-4">
+                          <label class="label-control">Vehicle Status</label>
+                          <select class="form-control" name="vehicle_status" id="vehicle_status">
+                            <option value="">SELECT</option>
+                            <option <?php echo ($vehicle->vehicle_status == 'New') ?  "selected" : "" ;  ?> value="New">New</option>
+                            <option <?php echo ($vehicle->vehicle_status == 'Old') ?  "selected" : "" ;  ?> value="Old">Old</option>
+                          </select>
+                        </div>
+
+                        <div class="col-md-4">
+                          <label class="label-control">Colour</label>
+                          <input value="{{$vehicle->colour}}" type="text" class="form-control" placeholder="Colour" name="colour" id="colour">
+                        </div>
+
+                      </div>
+
+                      <div class="form-group row">
 
                         <div class="col-md-4">
                           <label class="label-control">Vehicle Type</label>
@@ -101,7 +120,7 @@
                         </div>
 
                         <div class="col-md-4">
-                          <label class="label-control">Price</label>
+                          <label class="label-control">Starting Bid Value</label>
                           <input value="{{$vehicle->price}}" type="text" class="form-control" placeholder="Price" name="price" id="price">
                         </div>
 
@@ -230,7 +249,15 @@
 
                         <div class="col-md-4">
                           <label class="label-control">Body Style</label>
-                          <input value="{{$vehicle->body_style}}" type="text" class="form-control" placeholder="Body Style" name="body_style" id="body_style">
+                          <select name="body_style" id="body_style" class="form-control">
+                          <option value="">SELECT</option>
+                          <option <?php echo ($vehicle->body_style == 'Hatchback') ?  "selected" : "" ;  ?> value="Hatchback">Hatchback</option>
+                          <option <?php echo ($vehicle->body_style == 'Sedan') ?  "selected" : "" ;  ?> value="Sedan">Sedan</option>
+                          <option <?php echo ($vehicle->body_style == 'MPV') ?  "selected" : "" ;  ?> value="MPV">MPV</option>
+                          <option <?php echo ($vehicle->body_style == 'SUV') ?  "selected" : "" ;  ?> value="SUV">SUV</option>
+                          <option <?php echo ($vehicle->body_style == 'Couple') ?  "selected" : "" ;  ?> value="Couple">Couple</option>
+                          <option <?php echo ($vehicle->body_style == 'Convertible') ?  "selected" : "" ;  ?> value="Convertible">Convertible</option>
+                          </select>
                         </div>
                       </div>
 

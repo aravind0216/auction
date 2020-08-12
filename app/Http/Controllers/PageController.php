@@ -9,6 +9,13 @@ use App\site_info;
 use App\blog;
 use App\member_password;
 use App\User;
+use App\brand;
+use App\car;
+use App\damage;
+use App\vehicle_image;
+use App\vehicle;
+use App\vehicle_type;
+use App\auction_vehicle;
 use Hash;
 use DB;
 use Mail;
@@ -17,9 +24,14 @@ class PageController extends Controller
 {
     public function index()
     {
+        $damage = damage::all();
+        $vehicle = vehicle::where('is_enable_future_vehicles','1')->where('is_visible_website','1')->orderBy('id','DESC')->take(6)->get();
+        $car = car::all();
+        $brand = brand::all();
+        $vehicle_type = vehicle_type::all();
         $slider = slider::all();
         $blog = blog::take(2)->get();
-        return view('page.home',compact('slider','blog'));
+        return view('page.home',compact('brand','car','vehicle','vehicle_type','damage','slider','blog'));
     }
 
     public function contact()
@@ -36,12 +48,22 @@ class PageController extends Controller
 
     public function allVehicles()
     {
-        return view('page.all_vehicles');
+        $damage = damage::all();
+        $vehicle = vehicle::where('is_visible_website','1')->orderBy('id','DESC')->get();
+        $car = car::all();
+        $brand = brand::all();
+        $vehicle_type = vehicle_type::all();
+        return view('page.all_vehicles',compact('brand','car','vehicle','vehicle_type','damage'));
     }
 
     public function futureVehicles()
     {
-        return view('page.future_vehicles');
+        $damage = damage::all();
+        $vehicle = vehicle::where('is_enable_future_vehicles','1')->where('is_visible_website','1')->orderBy('id','DESC')->get();
+        $car = car::all();
+        $brand = brand::all();
+        $vehicle_type = vehicle_type::all();
+        return view('page.future_vehicles',compact('brand','car','vehicle','vehicle_type','damage'));
     }
 
     public function buyNowCars()
@@ -51,7 +73,67 @@ class PageController extends Controller
 
     public function auctions()
     {
-        return view('page.auctions');
+        $today = date('Y-m-d');
+        $today_auction = auction_vehicle::where('starting_date',$today)->get();
+        $upcoming_auction = auction_vehicle::whereDate('starting_date','>',$today)->get();
+        $vehicle = vehicle::all();
+        $car = car::all();
+        $brand = brand::all();
+        return view('page.auctions',compact('today_auction','vehicle','car','brand','upcoming_auction'));
+    }
+
+    public function liveAuctions($id){
+        $vehicle = vehicle::find($id);
+        $vehicle_image = vehicle_image::where('vehicle_id',$id)->get();
+        $car = car::all();
+        $damage = damage::all();
+        $brand = brand::all();
+        $vehicle_type = vehicle_type::all();
+        return view('page.live_auctions',compact('brand','car','vehicle','vehicle_image','vehicle_type','damage'));
+    }
+
+    public function viewAuctions($id)
+    {
+        $auction = auction_vehicle::find($id);
+        
+        $data = array();
+       foreach(explode(',', $auction->vehicle_ids) as $value) 
+        {
+            $vehicle = vehicle::find($value);
+            
+            $brand = brand::find($vehicle->brand_id);
+            $model = car::find($vehicle->car_id);
+            $vehicle_type = vehicle_type::find($vehicle->vehicle_type);
+
+            $data = array(
+                'vehicle_id' => $vehicle->id,
+                'price' => $vehicle->price,
+                'year' => $vehicle->year,
+                'location' => $vehicle->location,
+                'odometer' => $vehicle->odometer,
+                'document_type' => $vehicle->document_type,
+                'price' => $vehicle->price,
+                'image' => $vehicle->image,
+                'brand' => '',
+                'model' => '',
+                'vehicle_type' => '',
+            );
+
+            if(!empty($brand)){
+                $data['brand'] = $brand->name;
+            }
+            if(!empty($model)){
+                $data['model'] = $model->name;
+            }
+            if(!empty($vehicle_type)){
+                $data['vehicle_type'] = $vehicle_type->name;
+            }
+
+            $datas[] = $data;
+        }
+
+        return view('page.view_auctions',compact('datas'));
+
     }
 
     public function howItWorks()
@@ -83,9 +165,15 @@ class PageController extends Controller
         return view('page.compare');
     }
 
-    public function singleVehicles()
+    public function singleVehicles($id)
     {
-        return view('page.single_vehicles');
+        $vehicle = vehicle::find($id);
+        $vehicle_image = vehicle_image::where('vehicle_id',$id)->get();
+        $car = car::all();
+        $damage = damage::all();
+        $brand = brand::all();
+        $vehicle_type = vehicle_type::all();
+        return view('page.single_vehicles',compact('brand','car','vehicle','vehicle_image','vehicle_type','damage'));
     }
 
 

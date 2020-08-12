@@ -35,64 +35,63 @@
             </div>
         </div> -->
 
-        <div class="content-body">
-            <section id="basic-datatable">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-content">
-                                <div class="card-body card-dashboard">
+<div class="content-body">
+    <section id="basic-datatable">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-body card-dashboard">
 
-                                	<div class="row">
+                        	<div class="row">
 
-                                		<div class="col-md-4">
+                        		<div class="col-md-4">
 
-                    <div class="impl_carparts_inner">
-                        <div class="impl_buy_old_car">
-                            <div class="slider slider-for">
-                                <div><img src="/dist/images/product/old_car.png" alt=""></div>
-                                <div><img src="/dist/images/product/old_car1.png" alt=""></div>
-                                <div><img src="/dist/images/product/old_car2.png" alt=""></div>
-                                <div><img src="/dist/images/product/old_car3.png" alt=""></div>
-                            </div>
-                            <div class="slider slider-nav">
-                                <div>
-                                    <div class="impl_thumb_ovrly"><img src="/dist/images/product/old_car_thumb1.jpg" alt=""></div>
-                                </div>
-                                <div>
-                                    <div class="impl_thumb_ovrly"><img src="/dist/images/product/old_car_thumb2.jpg" alt=""></div>
-                                </div>
-                                <div>
-                                    <div class="impl_thumb_ovrly"><img src="/dist/images/product/old_car_thumb3.jpg" alt=""></div>
-                                </div>
-                                <div>
-                                    <div class="impl_thumb_ovrly"><img src="/dist/images/product/old_car_thumb4.jpg" alt=""></div>
-                                </div>
-                                
-                            </div>
-                        </div>
-                    </div>
+<div class="impl_carparts_inner">
+    <div class="impl_buy_old_car">
+        <div class="slider slider-for">
+            <div><img src="/dist/images/product/old_car.png" alt=""></div>
+            <div><img src="/dist/images/product/old_car1.png" alt=""></div>
+            <div><img src="/dist/images/product/old_car2.png" alt=""></div>
+            <div><img src="/dist/images/product/old_car3.png" alt=""></div>
+        </div>
+        <div class="slider slider-nav">
+            <div>
+                <div class="impl_thumb_ovrly"><img src="/dist/images/product/old_car_thumb1.jpg" alt=""></div>
+            </div>
+            <div>
+                <div class="impl_thumb_ovrly"><img src="/dist/images/product/old_car_thumb2.jpg" alt=""></div>
+            </div>
+            <div>
+                <div class="impl_thumb_ovrly"><img src="/dist/images/product/old_car_thumb3.jpg" alt=""></div>
+            </div>
+            <div>
+                <div class="impl_thumb_ovrly"><img src="/dist/images/product/old_car_thumb4.jpg" alt=""></div>
+            </div>
+        </div>
+    </div>
+</div>
                                 			
-                                		</div>
+                        		</div>
 
-                                		<div class="col-md-4">
-                                			
-                                		</div>
+                        		<div class="col-md-4">
+                        			
+                        		</div>
 
-                                		<div class="col-md-4">
-                                			
-                                		</div>
+                        		<div class="col-md-4">
+                        			
+                        		</div>
 
 
-                                	</div>
+                        	</div>
 
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
         </div>
+    </section>
+</div>
 
     </div>
 </div>

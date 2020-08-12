@@ -18,7 +18,9 @@ class CreateVehiclesTable extends Migration
             $table->string('lot_number')->nullable();
             $table->string('car_id')->nullable();
             $table->string('brand_id')->nullable();
-            $table->string('model')->nullable();
+            $table->string('vehicle_model')->nullable();
+            $table->string('vehicle_status')->nullable();
+            $table->string('colour')->nullable();
             $table->string('vehicle_type')->nullable();
             $table->string('price')->nullable();
             $table->string('year')->nullable();

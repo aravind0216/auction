@@ -41,7 +41,7 @@
     <!------ Header Start ------>
     <div class="impl_header_wrapper">
         <div class="impl_logo">
-            <a href="/"><img style="width: 230px;" src="dist/images/logo.png" alt="Logo" class="img-fluid"></a>
+            <a href="/"><img style="width: 230px;" src="/dist/images/logo.png" alt="Logo" class="img-fluid"></a>
         </div>
         <div class="impl_top_header">
             <div class="container">
@@ -60,8 +60,8 @@
                                 <!-- <li class="impl_search"><span><i class="fa fa-search" aria-hidden="true"></i></span>
                                 </li> -->
                                 <li><a href="/compare"><i class="fa fa-exchange" aria-hidden="true"></i></a></li>
-                                <li><a href="/"><img style="width: 100px;" src="dist/images/app-store.png"></a></li>
-                                <li><a href="/"><img style="width: 100px;" src="dist/images/play-store.png"></a></li>
+                                <li><a href="/"><img style="width: 100px;" src="/dist/images/app-store.png"></a></li>
+                                <li><a href="/"><img style="width: 100px;" src="/dist/images/play-store.png"></a></li>
 
                                 <!-- <li class="cart-popup"><a href="#"><i class="fa fa-shopping-cart"
                                             aria-hidden="true"></i></a>
@@ -105,8 +105,12 @@
                                         </div>
                                     </div>
                                 </li> -->
-                                <li><a href="#signin" data-toggle="modal"> <span class="login-text">LOGIN</span>  <i style="font-size: 24px;" class="fa fa-sign-in"
-                                            aria-hidden="true"></i></a></li>
+                                <!-- <li><a href="#signin" data-toggle="modal"> <span class="login-text">LOGIN</span>  <i style="font-size: 24px;" class="fa fa-sign-in" aria-hidden="true"></i></a></li> -->
+                                <li>
+                                    <a href="/login"> <span class="login-text">LOGIN</span>  
+                                        <i style="font-size: 24px;" class="fa fa-sign-in" aria-hidden="true"></i>
+                                    </a>
+                                </li>
                             </ul>
                             <!-- <div class="impl_search_overlay">
                                 <div class="impl_search_area">
@@ -228,7 +232,7 @@
                             <div class="impl_logo_responsive">
                                 <a href="/"><img src="/upload_image/{{$site_infos->logo}}" alt="Logo" class="img-fluid"></a>
                             </div>
-                            <a href="/auction" class="impl_btn">Auctions</a>
+                            <a href="/auctions" class="impl_btn">Auctions</a>
                             <div class="impl_menu">
                                 <nav>
                                     <div class="menu_cross">

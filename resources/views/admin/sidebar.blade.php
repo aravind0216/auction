@@ -24,31 +24,41 @@
 
                 <li class="brand nav-item">
                     <a href="/admin/brand">
-                        <i class="menu-livicon" data-icon="settings"></i>
-                        <span class="menu-title" data-i18n="Email">Brand</span>
+                        <i class="menu-livicon" data-icon="car"></i>
+                        <span class="menu-title" data-i18n="Brand">Brand</span>
                     </a>
                 </li>
 
                 <li class="vehicle-type nav-item">
                     <a href="/admin/vehicle-type">
-                        <i class="menu-livicon" data-icon="settings"></i>
-                        <span class="menu-title" data-i18n="Email">Vehicle Type</span>
+                        <i class="menu-livicon" data-icon="car"></i>
+                        <span class="menu-title" data-i18n="Vehicle Type">Vehicle Type</span>
                     </a>
                 </li>
 
                 <li class="damage nav-item">
                     <a href="/admin/damage">
-                        <i class="menu-livicon" data-icon="settings"></i>
-                        <span class="menu-title" data-i18n="Email">Damage</span>
+                        <i class="menu-livicon" data-icon="car"></i>
+                        <span class="menu-title" data-i18n="Damage">Damage</span>
                     </a>
                 </li>
 
                 <li class="vehicle nav-item">
                     <a href="/admin/view-vehicles">
-                        <i class="menu-livicon" data-icon="settings"></i>
-                        <span class="menu-title" data-i18n="Email">Vehicles</span>
+                        <i class="menu-livicon" data-icon="car"></i>
+                        <span class="menu-title" data-i18n="Vehicles">Vehicles</span>
                     </a>
                 </li>
+
+                <li class=" navigation-header"><span>Auction</span></li>
+
+                <li class="auction nav-item">
+                    <a href="/admin/view-auction">
+                        <i class="menu-livicon" data-icon="car"></i>
+                        <span class="menu-title" data-i18n="Auction">Auction</span>
+                    </a>
+                </li>
+
 
                 <li class=" navigation-header"><span>Member</span></li>
 
@@ -88,61 +98,61 @@
                 <li class="user nav-item">
                     <a href="/admin/user">
                         <i class="menu-livicon" data-icon="user"></i>
-                        <span class="menu-title" data-i18n="Email">Users</span>
+                        <span class="menu-title" data-i18n="Users">Users</span>
                     </a>
                 </li>
                 <li class="roles nav-item">
                     <a href="/admin/role">
                         <i class="menu-livicon" data-icon="unlock"></i>
-                        <span class="menu-title" data-i18n="Email">Roles</span>
+                        <span class="menu-title" data-i18n="Roles">Roles</span>
                     </a>
                 </li>
 
                 <li class="slider nav-item">
                     <a href="/admin/slider">
                         <i class="menu-livicon" data-icon="settings"></i>
-                        <span class="menu-title" data-i18n="Chat">Slider</span>
+                        <span class="menu-title" data-i18n="Slider">Slider</span>
                     </a>
                 </li>
                 <li class="site-info nav-item">
                     <a href="/admin/site-info">
                         <i class="menu-livicon" data-icon="wrench"></i>
-                        <span class="menu-title" data-i18n="Chat">Site Info</span>
+                        <span class="menu-title" data-i18n="Site Info">Site Info</span>
                     </a>
                 </li>
 
                 <li class="blogs nav-item">
                     <a href="/admin/blog">
                         <i class="menu-livicon" data-icon="magic"></i>
-                        <span class="menu-title" data-i18n="Chat">Blogs</span>
+                        <span class="menu-title" data-i18n="Blogs">Blogs</span>
                     </a>
                 </li>
 
                 <li class="how-it-works nav-item">
                     <a href="/admin/how-it-works">
                         <i class="menu-livicon" data-icon="magic"></i>
-                        <span class="menu-title" data-i18n="Chat">How it Works</span>
+                        <span class="menu-title" data-i18n="How it Works">How it Works</span>
                     </a>
                 </li>
 
                 <li class="services nav-item">
                     <a href="/admin/services">
                         <i class="menu-livicon" data-icon="save"></i>
-                        <span class="menu-title" data-i18n="File Manager">Services</span>
+                        <span class="menu-title" data-i18n="Services">Services</span>
                     </a>
                 </li>
 
                 <li class="member-fees nav-item">
                     <a href="/admin/member-fees">
                         <i class="menu-livicon" data-icon="save"></i>
-                        <span class="menu-title" data-i18n="File Manager">Member Fees</span>
+                        <span class="menu-title" data-i18n="Member Fees">Member Fees</span>
                     </a>
                 </li>
 
                 <li class="terms-and-conditions nav-item">
                     <a href="/admin/terms-and-conditions">
                         <i class="menu-livicon" data-icon="save"></i>
-                        <span class="menu-title" data-i18n="File Manager">Terms and Conditions</span>
+                        <span class="menu-title" data-i18n="Terms and Conditions">Terms and Conditions</span>
                     </a>
                 </li>
 

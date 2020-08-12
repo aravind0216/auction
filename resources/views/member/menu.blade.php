@@ -34,14 +34,14 @@
                 </ul>
             </li>
 
-            <li class="auctions dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="menu-livicon" data-icon="comments"></i><span>Auctions</span></a>
+            <!-- <li class="auctions dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="menu-livicon" data-icon="comments"></i><span>Auctions</span></a>
                 <ul class="dropdown-menu">
-                    <!-- <li data-menu=""><a class="dropdown-item align-items-center" href="app-chat.html" data-toggle="dropdown"><i class="bx bx-right-arrow-alt"></i>Chat</a>
-                    </li> -->
-                    <!-- <li data-menu=""><a class="calendar dropdown-item align-items-center" href="#" data-toggle="dropdown"><i class="bx bx-right-arrow-alt"></i>Calendar</a> -->
+                    <li data-menu=""><a class="dropdown-item align-items-center" href="app-chat.html" data-toggle="dropdown"><i class="bx bx-right-arrow-alt"></i>Chat</a>
+                    </li>
+                    <li data-menu=""><a class="calendar dropdown-item align-items-center" href="#" data-toggle="dropdown"><i class="bx bx-right-arrow-alt"></i>Calendar</a>
                     </li>
                 </ul>
-            </li>
+            </li> -->
 
             <li class="bid-status dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="menu-livicon" data-icon="comments"></i><span>Bid Status</span></a>
                 <ul class="dropdown-menu">

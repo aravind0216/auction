@@ -160,7 +160,7 @@ class VehicleController extends Controller
 
     public function viewVehicles(){
         $damage = damage::all();
-        $vehicle = vehicle::all();
+        $vehicle = vehicle::orderBy('id','DESC')->get();
         $car = car::all();
         $brand = brand::all();
         $vehicle_type = vehicle_type::all();
@@ -181,6 +181,7 @@ class VehicleController extends Controller
     public function saveVehicle(Request $request){
         $request->validate([
             'car_id'=>'required',
+            'vehicle_status'=>'required',
         ]);
 
         //image upload
@@ -198,7 +199,9 @@ class VehicleController extends Controller
 
         $vehicle->brand_id = $car->brand_id;
         $vehicle->image = $fileName;
-        $vehicle->model = $request->model;
+        $vehicle->vehicle_model = $request->vehicle_model;
+        $vehicle->vehicle_status = $request->vehicle_status;
+        $vehicle->colour = $request->colour;
         $vehicle->vehicle_type = $request->vehicle_type;
         $vehicle->price = $request->price;
         $vehicle->year = $request->year;
@@ -247,6 +250,7 @@ class VehicleController extends Controller
     public function updateVehicle(Request $request){
         $request->validate([
             'car_id'=>'required',
+            'vehicle_status'=>'required',
         ]);
 
 
@@ -277,7 +281,9 @@ class VehicleController extends Controller
         $vehicle->brand_id = $car->brand_id;
 
         $vehicle->image = $fileName;
-        $vehicle->model = $request->model;
+        $vehicle->vehicle_model = $request->vehicle_model;
+        $vehicle->vehicle_status = $request->vehicle_status;
+        $vehicle->colour = $request->colour;
         $vehicle->year = $request->year;
         $vehicle->vehicle_type = $request->vehicle_type;
         $vehicle->price = $request->price;

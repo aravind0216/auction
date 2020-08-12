@@ -72,10 +72,29 @@
                       </div>
 
                       <div class="form-group row">
-                        <!-- <div class="col-md-4">
-                          <label class="label-control">Model</label>
-                          <input type="text" class="form-control" placeholder="Model" name="model" id="model">
-                        </div> -->
+
+                        <div class="col-md-4">
+                          <label class="label-control">Vehicle Model</label>
+                          <input type="text" class="form-control" placeholder="Vehicle Model" name="vehicle_model" id="vehicle_model">
+                        </div>
+
+                        <div class="col-md-4">
+                          <label class="label-control">Vehicle Status</label>
+                          <select class="form-control" name="vehicle_status" id="vehicle_status">
+                            <option value="">SELECT</option>
+                            <option value="New">New</option>
+                            <option value="Old">Old</option>
+                          </select>
+                        </div>
+
+                        <div class="col-md-4">
+                          <label class="label-control">Colour</label>
+                          <input type="text" class="form-control" placeholder="Colour" name="colour" id="colour">
+                        </div>
+
+                      </div>
+                      <div class="form-group row">
+                        
 
                         <div class="col-md-4">
                           <label class="label-control">Vehicle Type</label>
@@ -88,8 +107,8 @@
                         </div>
 
                         <div class="col-md-4">
-                          <label class="label-control">Price</label>
-                          <input type="text" class="form-control" placeholder="Price" name="price" id="price">
+                          <label class="label-control">Starting Bid Value</label>
+                          <input type="text" class="form-control" placeholder="Starting Bid Value" name="price" id="price">
                         </div>
 
                         <div class="col-md-4">
@@ -210,7 +229,15 @@
 
                         <div class="col-md-4">
                           <label class="label-control">Body Style</label>
-                          <input type="text" class="form-control" placeholder="Body Style" name="body_style" id="body_style">
+                          <select name="body_style" id="body_style" class="form-control">
+                          <option value="">SELECT</option>
+                          <option value="Hatchback">Hatchback</option>
+                          <option value="Sedan">Sedan</option>
+                          <option value="MPV">MPV</option>
+                          <option value="SUV">SUV</option>
+                          <option value="Couple">Couple</option>
+                          <option value="Convertible">Convertible</option>
+                          </select>
                         </div>
                       </div>
 

@@ -98,7 +98,24 @@ class MemberController extends Controller
     public function updateDepositRequest($id,$status){
         $deposit = deposit::find($id);
         $deposit->status = $status;
+        
+
+        if($status == '1'){
+            $member = User::find($deposit->member_id);
+            $wallet = $member->wallet;
+            $member->wallet = $wallet + $deposit->deposit;
+            $member->save();
+        }
+        if($deposit->status == '1'){
+            $member = User::find($deposit->member_id);
+            $wallet = $member->wallet;
+            $member->wallet = $wallet - $deposit->deposit;
+            $member->save();
+        }
+
         $deposit->save();
+
         return response()->json(['message'=>'Successfully Update'],200); 
     }
+
 }

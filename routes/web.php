@@ -42,10 +42,12 @@ Route::get('/', 'PageController@index');
 Route::get('/contact', 'PageController@contact');
 Route::get('/about-us', 'PageController@aboutUs');
 Route::get('/all-vehicles', 'PageController@allVehicles');
-Route::get('/single-vehicles', 'PageController@singleVehicles');
+Route::get('/single-vehicles/{id}', 'PageController@singleVehicles');
 Route::get('/future-vehicles', 'PageController@futureVehicles');
 Route::get('/buy-now-cars', 'PageController@buyNowCars');
 Route::get('/auctions', 'PageController@auctions');
+Route::get('/view-auctions/{id}', 'PageController@viewAuctions');
+Route::get('/live-auctions/{id}', 'PageController@liveAuctions');
 Route::get('/how-it-works', 'PageController@howItWorks');
 Route::get('/services', 'PageController@services');
 Route::get('/member-fees', 'PageController@memberFees');
@@ -162,6 +164,15 @@ Route::group(['prefix' => 'admin'],function(){
 	Route::get('/notification/{id}', 'NotificationController@editNotification');
 	Route::get('/push-notification', 'NotificationController@Notification');
 	Route::get('/notification-delete/{id}', 'NotificationController@deleteNotification');
+
+	//auction
+	Route::POST('/save-auction', 'AuctionController@saveAuction');
+	Route::POST('/update-auction', 'AuctionController@updateAuction');
+	Route::get('/edit-auction/{id}', 'AuctionController@editAuction');
+	Route::get('/view-auction', 'AuctionController@viewAuction');
+	Route::get('/add-auction', 'AuctionController@addAuction');
+	Route::get('/auction-delete/{id}', 'AuctionController@deleteAuction');
+	Route::get('/get-auction-vehicle/{id}', 'AuctionController@getAuctionVehicle');
 
 	//damage
 	Route::POST('/save-damage', 'DamageController@saveDamage');

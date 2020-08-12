@@ -1,15 +1,15 @@
 @extends('page.app')
 @section('extra-css')
 
-	<link rel="stylesheet" type="text/css" href="dist/css/fonts.css">
-    <link rel="stylesheet" type="text/css" href="dist/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="dist/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="dist/css/ion.rangeSlider.css">
-    <link rel="stylesheet" type="text/css" href="dist/css/ion.rangeSlider.skinFlat.css">
-    <link rel="stylesheet" type="text/css" href="dist/js/plugin/magnific/magnific-popup.css">
-    <link rel="stylesheet" type="text/css" href="dist/js/plugin/slick/slick.css">
-    <link rel="stylesheet" type="text/css" href="dist/js/plugin/slick/slick-theme.css">
-    <link rel="stylesheet" type="text/css" href="dist/css/style.css">
+	<link rel="stylesheet" type="text/css" href="/dist/css/fonts.css">
+    <link rel="stylesheet" type="text/css" href="/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/dist/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/dist/css/ion.rangeSlider.css">
+    <link rel="stylesheet" type="text/css" href="/dist/css/ion.rangeSlider.skinFlat.css">
+    <link rel="stylesheet" type="text/css" href="/dist/js/plugin/magnific/magnific-popup.css">
+    <link rel="stylesheet" type="text/css" href="/dist/js/plugin/slick/slick.css">
+    <link rel="stylesheet" type="text/css" href="/dist/js/plugin/slick/slick-theme.css">
+    <link rel="stylesheet" type="text/css" href="/dist/css/style.css">
 @endsection
 @section('content')
     <!------ Breadcrumbs Start ------>
@@ -30,44 +30,135 @@
     <div class="impl_oldsingle_wrapper">
         <div class="container">
             <div class="row">
-                <div class="col-lg-5 col-md-5">
+                <div class="col-lg-6 col-md-6">
                     <div class="impl_carparts_inner">
                         <div class="impl_buy_old_car">
                             <div class="slider slider-for">
-                                <div><img src="/dist/images/product/old_car.png" alt=""></div>
-                                <div><img src="/dist/images/product/old_car1.png" alt=""></div>
-                                <div><img src="/dist/images/product/old_car2.png" alt=""></div>
-                                <div><img src="/dist/images/product/old_car3.png" alt=""></div>
+                                @foreach($vehicle_image as $row)
+                                <div><img src="{{asset('vehicle_image/').'/'.$row->image}}" alt=""></div>
+                                @endforeach
                             </div>
                             <div class="slider slider-nav">
+                                @foreach($vehicle_image as $row)
                                 <div>
-                                    <div class="impl_thumb_ovrly"><img src="/dist/images/product/old_car_thumb1.jpg" alt=""></div>
+                                    <div class="impl_thumb_ovrly"><img src="{{asset('vehicle_image/').'/'.$row->image}}" alt=""></div>
                                 </div>
-                                <div>
-                                    <div class="impl_thumb_ovrly"><img src="/dist/images/product/old_car_thumb2.jpg" alt=""></div>
-                                </div>
-                                <div>
-                                    <div class="impl_thumb_ovrly"><img src="/dist/images/product/old_car_thumb3.jpg" alt=""></div>
-                                </div>
-                                <div>
-                                    <div class="impl_thumb_ovrly"><img src="/dist/images/product/old_car_thumb4.jpg" alt=""></div>
-                                </div>
-                                
+                                @endforeach
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-3">
+                <div class="col-lg-6 col-md-6">
                     <div class="impl_buycar_data impl_buy_old_car_data">
-                        <h1>Expedition , Centaur</h1>
-                        <h1>AED 81000 </h1>
+                        <h1>@foreach($car as $car1)
+                    @if($car1->id == $vehicle->car_id)
+                    {{$car1->name}}
+                    @endif
+                    @endforeach</h1>
+                        <h1>AED {{$vehicle->price}} </h1>
+                        <h1>Lot #{{$vehicle->id}} </h1>
                         <div class="step_car_features">
-                            <ul>
-                                <li><span class="fea_name">year</span> <span class="fea_colon">: </span><span class="fea_value">2015</span> </li>
-                                <li><span class="fea_name">driven</span> <span class="fea_colon">: </span> <span class="fea_value">12000 kms </span> </li>
-                                <li><span class="fea_name">city</span> <span class="fea_colon">: </span><span class="fea_value">orlando</span> </li>
-                                <li><span class="fea_name">color</span> <span class="fea_colon">: </span><span class="fea_value">white</span> </li>
-                            </ul>
+                            <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <span style="float: left">VIN :</span>
+                                        <span style="float: right">AED 8000</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span style="float: left">Doc Type :</span>
+                                        <span style="float: right">Tuesday Auction</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span style="float: left">Odometer :</span>
+                                        <span style="float: right">Tuesday 19th June 2020</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span style="float: left">Highlights :</span>
+                                        <span style="float: right">Tuesday 19th June 2020</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span style="float: left">Primary Damage :</span>
+                                        <span style="float: right">Tuesday 19th June 2020</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span style="float: left">Secondary Damage :</span>
+                                        <span style="float: right">Tuesday 19th June 2020</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span style="float: left">Est. Retail Value :</span>
+                                        <span style="float: right">Tuesday 19th June 2020</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span style="float: left">Body Style :</span>
+                                        <span style="float: right">Tuesday 19th June 2020</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span style="float: left">Vehicle Type :</span>
+                                        <span style="float: right">Tuesday 19th June 2020</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span style="float: left">Color :</span>
+                                        <span style="float: right">Tuesday 19th June 2020</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span style="float: left">Engine Type :</span>
+                                        <span style="float: right">Tuesday 19th June 2020</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span style="float: left">Cylinders :</span>
+                                        <span style="float: right">Tuesday 19th June 2020</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span style="float: left">Transmission :</span>
+                                        <span style="float: right">Tuesday 19th June 2020</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span style="float: left">Drive :</span>
+                                        <span style="float: right">Tuesday 19th June 2020</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span style="float: left">Fuel :</span>
+                                        <span style="float: right">Tuesday 19th June 2020</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span style="float: left">Drive :</span>
+                                        <span style="float: right">Tuesday 19th June 2020</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            
+                        </table>
                         </div>
                             <!-- <div class="impl_old_buy_btn">
                                 <a href="#" class="impl_btn">add to cart</a>
@@ -75,7 +166,7 @@
                             </div> -->
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-4">
+                <!-- <div class="col-lg-4 col-md-4">
                         
                         <table class="table table-bordered">
                             <thead>
@@ -119,12 +210,12 @@
                             </tbody>
                             
                         </table>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
     <!------ Purchase Car Start ------>
-    <div class="impl_spesi_wrapper">
+    <!-- <div class="impl_spesi_wrapper">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-6 col-md-12">
@@ -180,7 +271,7 @@
             </div>
 
         </div>
-    </div>
+    </div> -->
     <!------ Car description wrapper Start ------>
     <div class="impl_descrip_wrapper impl_old_descrips">
         <div class="container">
@@ -193,8 +284,8 @@
                 <div class="col-lg-3 col-md-4">
                     <div class="impl_descrip_box">
                         <h2>Car Brand</h2>
-                        <p>Expedition ,</p>
-                        <p>Centaur</p>
+                        <p>EPA combined/city/highway : </p>
+                        <p>15-16/13/20-21 mpg</p>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-4">
@@ -259,12 +350,12 @@
 @endsection
 @section('extra-js')
 
-	<script type="text/javascript" src="dist/js/jquery.js"></script>
-    <script type="text/javascript" src="dist/js/popper.js"></script>
-    <script type="text/javascript" src="dist/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="dist/js/ion.rangeSlider.min.js"></script>
-    <script type="text/javascript" src="dist/js/plugin/magnific/jquery.magnific-popup.min.js"></script>
-    <script type="text/javascript" src="dist/js/plugin/slick/slick.min.js"></script>
-    <script type="text/javascript" src="dist/js/custom.js"></script>
+	<script type="text/javascript" src="/dist/js/jquery.js"></script>
+    <script type="text/javascript" src="/dist/js/popper.js"></script>
+    <script type="text/javascript" src="/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/dist/js/ion.rangeSlider.min.js"></script>
+    <script type="text/javascript" src="/dist/js/plugin/magnific/jquery.magnific-popup.min.js"></script>
+    <script type="text/javascript" src="/dist/js/plugin/slick/slick.min.js"></script>
+    <script type="text/javascript" src="/dist/js/custom.js"></script>
 
 @endsection

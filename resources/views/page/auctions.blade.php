@@ -37,25 +37,38 @@
                         <div class="impl_step">
                             <div class="woocommerce">
                                 <form>
-                                    <h1>Live Auctions</h1>
+                                    <h1>Today Auctions</h1>
                                     <table class="table table-bordered shop_table cart">
 										<thead>
 											<tr>
 												<th>Date/Time</th>
                                                 <th>Name</th>
-                                                <th>Location</th>
                                                 <th>Total Cars</th>
-                                                <th>Start In</th>
                                                 <th>View Auction Details</th>
 											</tr>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td><span class="cart_rmv_icon"><i class="fa fa-times" aria-hidden="true"></i></span></td>
-                                            </tr>
+                            @if(!empty($today_auction))                            @foreach($today_auction as $key => $row)
+                            <tr>
+                                <td>{{$row->starting_date}} / {{$row->starting_time}}</td>
+                                <td>{{$row->auction_title}}</td>
+                                <td>
+                                    <?php 
+                                    $x=0;
+                                    foreach(explode(',', $row->vehicle_ids) as $value){
+                                        $x++;
+                                    } 
+                                    ?>
+                                    {{$x}} Vechiles
+                                </td>
+                                <td>
+                                    <a href="/view-auctions/{{$row->id}}"><button type="button" class="impl_btn">View List</button></a>
+                                </td>
+                            </tr>
+                            @endforeach
+                            @else
+                            <tr>
+                                <td colspan="4"><center>There are no auctions available Today.</center></td>
+                            </tr>
+                            @endif
 											
 										</thead>
                                     </table>
@@ -69,20 +82,33 @@
                                             <tr>
                                                 <th>Date/Time</th>
                                                 <th>Name</th>
-                                                <th>Location</th>
                                                 <th>Total Cars</th>
-                                                <th>Start In</th>
                                                 <th>View Auction Details</th>
                                             </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td><span class="cart_rmv_icon"><i class="fa fa-times" aria-hidden="true"></i></span></td>
-                                            </tr>
-                                            
+                            @if(!empty($upcoming_auction))
+                            @foreach($upcoming_auction as $key => $row)
+                            <tr>
+                                <td>{{$row->starting_date}} / {{$row->starting_time}}</td>
+                                <td>{{$row->auction_title}}</td>
+                                <td>
+                                    <?php 
+                                    $x=0;
+                                    foreach(explode(',', $row->vehicle_ids) as $value){
+                                        $x++;
+                                    } 
+                                    ?>
+                                    {{$x}} Vechiles
+                                </td>
+                                <td>
+                                    <a href="/view-auctions/{{$row->id}}"><button type="button" class="impl_btn">View List</button></a>
+                                </td>
+                            </tr>
+                            @endforeach
+                            @else
+                            <tr>
+                                <td colspan="4"><center>There are no auctions available Upcoming Dates.</center></td>
+                            </tr>
+                            @endif
                                         </thead>
                                     </table>
                                     
@@ -91,6 +117,8 @@
                             </div>
                             <!-- <button type="button" name="next" class="next action-button impl_btn" value="Next" > next</button> -->
                         </div>
+
+                        
                         <!--second step-->
                         <div class="impl_step">
                             <h2 class="step-title">Shipping Details</h2>

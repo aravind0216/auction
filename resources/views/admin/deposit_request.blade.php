@@ -126,7 +126,7 @@
 <script type="text/javascript">
 $('.deposit-request').addClass('active');
 
-function updateDeposit(id){
+function updateDeposit(id,id1){
     var r = confirm("Are you sure");
     if (r == true) {
       $.ajax({
