@@ -420,7 +420,7 @@ border: 0;
             <td>{{$row['document_type']}}</td>
             <td>{{$row['price']}}</td>
             <td>
-                <button>Bid Now</button>
+                <a href="/live-auctions/{{$row['vehicle_id']}}"><button>Bid Now</button></a>
             </td>
           </tr>
         @endforeach   

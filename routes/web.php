@@ -50,6 +50,10 @@ Route::get('/view-auctions/{id}', 'PageController@viewAuctions');
 Route::get('/live-auctions/{id}', 'PageController@liveAuctions');
 Route::get('/how-it-works', 'PageController@howItWorks');
 Route::get('/services', 'PageController@services');
+Route::get('/member-registration', 'PageController@memberRegistration');
+Route::POST('/save-member-registration', 'PageController@saveMemberRegistration');
+Route::POST('/home-search', 'PageController@homeSearch');
+Route::POST('/vehicle-search', 'PageController@vehicleSearch');
 Route::get('/member-fees', 'PageController@memberFees');
 Route::get('/terms-and-conditions', 'PageController@termsAndConditions');
 Route::get('/compare', 'PageController@compare');
@@ -183,6 +187,9 @@ Route::group(['prefix' => 'admin'],function(){
 
 	Route::get('/deposit-request', 'MemberController@depositRequest');
 	Route::get('/update-deposit-request/{id}/{id1}', 'MemberController@updateDepositRequest');
+
+	Route::get('/withdrawal-request', 'MemberController@withdrawalRequest');
+	Route::get('/update-withdrawal-request/{id}/{id1}', 'MemberController@updateWithdrawalRequest');
 });
 
 
@@ -198,6 +205,11 @@ Route::group(['prefix' => 'member'],function(){
 
 	Route::post('save-deposit', 'Member\SettingsController@saveDeposit');
 	Route::get('deposit', 'Member\SettingsController@Deposit');
+	Route::get('deposit-delete/{id}', 'Member\SettingsController@DepositDelete');
+
+	Route::post('save-withdrawal', 'Member\SettingsController@saveWithdrawal');
+	Route::get('withdrawal', 'Member\SettingsController@Withdrawal');
+	Route::get('withdrawal-delete/{id}', 'Member\SettingsController@WithdrawalDelete');
 
 });
 

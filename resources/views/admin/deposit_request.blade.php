@@ -65,8 +65,10 @@
                     <td>
                     	@if($row->status == 0)
                     	Pending
-                    	@else
+                    	@elseif($row->status == 1)
                     	Approved
+                        @elseif($row->status == 2)
+                        Denied
                     	@endif
                     </td>
                    
@@ -76,7 +78,7 @@
                 </span>
                 <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-125px, 19px, 0px); top: 0px; left: 0px; will-change: transform;">
                   <a onclick="updateDeposit({{$row->id}},1)" class="dropdown-item" href="#">Approved</a>
-                  <a onclick="updateDeposit({{$row->id}},0)" class="dropdown-item" href="#">Denied</a>
+                  <a onclick="updateDeposit({{$row->id}},2)" class="dropdown-item" href="#">Denied</a>
                 </div>
               </div></td>
                             </tr>

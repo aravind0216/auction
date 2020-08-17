@@ -70,7 +70,7 @@
 
                     <li class="deposit" data-menu=""><a class="deposit dropdown-item align-items-center" href="/member/deposit" data-toggle="dropdown"><i class="bx bx-right-arrow-alt"></i>Add Deposit</a></li>
 
-                    <li data-menu=""><a class="calendar dropdown-item align-items-center" href="#" data-toggle="dropdown"><i class="bx bx-right-arrow-alt"></i>Withdrawal Request</a></li>
+                    <li data-menu=""><a class="calendar dropdown-item align-items-center" href="/member/withdrawal" data-toggle="dropdown"><i class="bx bx-right-arrow-alt"></i>Withdrawal Request</a></li>
 
                 </ul>
             </li>

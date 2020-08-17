@@ -23,6 +23,8 @@
     <!-- Favicon Link -->
     <link rel="shortcut icon" type="image/png" href="/dist/images/favicon.png">
 
+    <link rel="stylesheet" type="text/css" href="{{ asset('toastr/toastr.css')}}">
+
 </head>
 
 <body>
@@ -244,7 +246,7 @@
                                             <ul class="sub-menu">
                                                 <li><a href="/all-vehicles">All Vehicles</a></li>
                                                 <li><a href="/future-vehicles">Future Vehicles</a></li>
-                                                <li><a href="/buy-now-cars">Buy Now Cars</a></li>
+                                                <!-- <li><a href="/buy-now-cars">Buy Now Cars</a></li> -->
                                             </ul>
                                         </li>
                                        
@@ -363,9 +365,10 @@
     </div>
     <!---- Go To Top---->
     <span class="gotop"><img src="{{ asset('dist/images/goto.png')}}" alt=""></span>
+
     
 @yield('extra-js')
-
+    <script src="{{ asset('toastr/toastr.min.js')}}" type="text/javascript"></script>
 </body>
 
 </html>

@@ -32,6 +32,10 @@ class CreateUsersTable extends Migration
             $table->string('buy_vehicles_for',5000)->nullable();
             $table->string('wallet')->default('0');
             $table->string('role_id')->default('0');
+            $table->string('status')->default('0');
+            $table->string('passbook')->nullable();
+            $table->string('passport')->nullable();
+            $table->string('emirate_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

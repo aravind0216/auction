@@ -13,7 +13,7 @@
 @endsection
 @section('content')
     <!------ Breadcrumbs Start ------>
-    <div class="impl_bread_wrapper">
+    <!-- <div class="impl_bread_wrapper">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 col-md-12">
@@ -25,7 +25,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     <!------ Purchase Car Start ------>
     <div class="impl_oldsingle_wrapper">
         <div class="container">
@@ -48,7 +48,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-6">
+                <!-- <div class="col-lg-4 col-md-4">
                     <div class="impl_buycar_data impl_buy_old_car_data">
                         <h1>@foreach($car as $car1)
                     @if($car1->id == $vehicle->car_id)
@@ -57,117 +57,40 @@
                     @endforeach</h1>
                         <h1>AED {{$vehicle->price}} </h1>
                         <h1>Lot #{{$vehicle->id}} </h1>
-                        <div class="step_car_features">
-                            <table class="table">
+                        <div class="compare_table">
+                            <table class="table table-bordered table-responsive">
                             <tbody>
-                                <tr>
-                                    <td>
-                                        <span style="float: left">VIN :</span>
-                                        <span style="float: right">AED 8000</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span style="float: left">Doc Type :</span>
-                                        <span style="float: right">Tuesday Auction</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span style="float: left">Odometer :</span>
-                                        <span style="float: right">Tuesday 19th June 2020</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span style="float: left">Highlights :</span>
-                                        <span style="float: right">Tuesday 19th June 2020</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span style="float: left">Primary Damage :</span>
-                                        <span style="float: right">Tuesday 19th June 2020</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span style="float: left">Secondary Damage :</span>
-                                        <span style="float: right">Tuesday 19th June 2020</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span style="float: left">Est. Retail Value :</span>
-                                        <span style="float: right">Tuesday 19th June 2020</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span style="float: left">Body Style :</span>
-                                        <span style="float: right">Tuesday 19th June 2020</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span style="float: left">Vehicle Type :</span>
-                                        <span style="float: right">Tuesday 19th June 2020</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span style="float: left">Color :</span>
-                                        <span style="float: right">Tuesday 19th June 2020</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span style="float: left">Engine Type :</span>
-                                        <span style="float: right">Tuesday 19th June 2020</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span style="float: left">Cylinders :</span>
-                                        <span style="float: right">Tuesday 19th June 2020</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span style="float: left">Transmission :</span>
-                                        <span style="float: right">Tuesday 19th June 2020</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span style="float: left">Drive :</span>
-                                        <span style="float: right">Tuesday 19th June 2020</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span style="float: left">Fuel :</span>
-                                        <span style="float: right">Tuesday 19th June 2020</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span style="float: left">Drive :</span>
-                                        <span style="float: right">Tuesday 19th June 2020</span>
-                                    </td>
-                                </tr>
+                                
+                                
                             </tbody>
                             
                         </table>
                         </div>
-                            <!-- <div class="impl_old_buy_btn">
+                            <div class="impl_old_buy_btn">
                                 <a href="#" class="impl_btn">add to cart</a>
                                 <a href="#" class="impl_btn">buy now</a>
-                            </div> -->
+                            </div>
                     </div>
-                </div>
-                <!-- <div class="col-lg-4 col-md-4">
-                        
+                </div> -->
+                <div class="col-lg-6 col-md-6">
+                    <div class="impl_buycar_data impl_buy_old_car_data">
+                        <h1>@foreach($car as $car1)
+                    @if($car1->id == $vehicle->car_id)
+                    {{$car1->name}}
+                    @endif
+                    @endforeach</h1>
+                        <h1>AED {{$vehicle->price}} </h1>
+                        <div class="compare_table">
+                            <table class="table table-bordered table-responsive">
+                            <tbody>
+                                
+                                
+                            </tbody>
+                            
+                        </table>
+                        </div>
+                            
+                    </div>
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
@@ -198,7 +121,7 @@
                                 <tr>
                                     <td>
                                         <span style="float: left">Sale Date :</span>
-                                        <span style="float: right">Tuesday 19th June 2020</span>
+                                        <span style="float: right">Tuesday 19th Augest 2020</span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -210,10 +133,137 @@
                             </tbody>
                             
                         </table>
-                </div> -->
+                </div>
             </div>
         </div>
     </div>
+
+<div class="impl_oldsingle_wrapper">
+<div class="container">
+<div class="row">
+<div class="col-lg-6 col-md-6">
+    <div class="compare_table">
+        <table class="table table-bordered table-responsive">
+            <thead>
+                <tr>
+                    <th>Vehicle Information</th>
+                </tr>
+            </thead>
+            <tr class="bg_color">
+                                    <td>
+                                        <span style="float: left">VIN :</span>
+                                        <span style="float: right">{{$vehicle->vin}}</span>
+                                    </td>
+                                </tr>
+                                <tr class="bg_color">
+                                    <td>
+                                        <span style="float: left">Doc Type :</span>
+                                        <span style="float: right">{{$vehicle->document_type}}</span>
+                                    </td>
+                                </tr>
+                                <tr class="bg_color">
+                                    <td>
+                                        <span style="float: left">Odometer :</span>
+                                        <span style="float: right">{{$vehicle->odometer}}</span>
+                                    </td>
+                                </tr>
+                                <tr class="bg_color">
+                                    <td>
+                                        <span style="float: left">Highlights :</span>
+                                        <span style="float: right">{{$vehicle->vin}}</span>
+                                    </td>
+                                </tr>
+                                <tr class="bg_color">
+                                    <td>
+                                        <span style="float: left">Primary Damage :</span>
+                                        <span style="float: right">{{$vehicle->primary_damage}}</span>
+                                    </td>
+                                </tr>
+                                <tr class="bg_color">
+                                    <td>
+                                        <span style="float: left">Secondary Damage :</span>
+                                        <span style="float: right">{{$vehicle->secondary_damage}}</span>
+                                    </td>
+                                </tr>
+                                <tr class="bg_color">
+                                    <td>
+                                        <span style="float: left">Est. Retail Value :</span>
+                                        <span style="float: right">{{$vehicle->price}}</span>
+                                    </td>
+                                </tr>
+                                <tr class="bg_color">
+                                    <td>
+                                        <span style="float: left">Body Style :</span>
+                                        <span style="float: right">{{$vehicle->body_style}}</span>
+                                    </td>
+                                </tr>
+        </table>
+    </div>
+</div>
+
+<div class="col-lg-6 col-md-6">
+    <div class="compare_table">
+        <table class="table table-bordered table-responsive">
+            <thead>
+                <tr>
+                    <th>Vehicle Information</th>
+                </tr>
+            </thead>
+            <tr class="bg_color">
+                                    <td>
+                                        <span style="float: left">Vehicle Type :</span>
+                                        <span style="float: right">{{$vehicle->vehicle_type}}</span>
+                                    </td>
+                                </tr>
+                                <tr class="bg_color">
+                                    <td>
+                                        <span style="float: left">Color :</span>
+                                        <span style="float: right">{{$vehicle->colour}}</span>
+                                    </td>
+                                </tr>
+                                <tr class="bg_color">
+                                    <td>
+                                        <span style="float: left">Engine Type :</span>
+                                        <span style="float: right">{{$vehicle->engine_type}}</span>
+                                    </td>
+                                </tr>
+                                <tr class="bg_color">
+                                    <td>
+                                        <span style="float: left">Cylinders :</span>
+                                        <span style="float: right">{{$vehicle->cylinders}}</span>
+                                    </td>
+                                </tr>
+                                <tr class="bg_color">
+                                    <td>
+                                        <span style="float: left">Transmission :</span>
+                                        <span style="float: right">{{$vehicle->transmission}}</span>
+                                    </td>
+                                </tr>
+                                <tr class="bg_color">
+                                    <td>
+                                        <span style="float: left">Drive :</span>
+                                        <span style="float: right">{{$vehicle->drive}}</span>
+                                    </td>
+                                </tr>
+                                <tr class="bg_color">
+                                    <td>
+                                        <span style="float: left">Fuel :</span>
+                                        <span style="float: right">{{$vehicle->fuel}}</span>
+                                    </td>
+                                </tr>
+                                <tr class="bg_color">
+                                    <td>
+                                        <span style="float: left">Keys :</span>
+                                        <span style="float: right">{{$vehicle->keys}}</span>
+                                    </td>
+                                </tr>
+        </table>
+    </div>
+</div>
+
+</div>
+</div>
+</div>
     <!------ Purchase Car Start ------>
     <!-- <div class="impl_spesi_wrapper">
         <div class="container-fluid">
@@ -281,69 +331,7 @@
                         <h1>description</h1>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-4">
-                    <div class="impl_descrip_box">
-                        <h2>Car Brand</h2>
-                        <p>EPA combined/city/highway : </p>
-                        <p>15-16/13/20-21 mpg</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4">
-                    <div class="impl_descrip_box">
-                        <h2>FUEL ECONOMY</h2>
-                        <p>EPA combined/city/highway : </p>
-                        <p>15-16/13/20-21 mpg</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4">
-                    <div class="impl_descrip_box">
-                        <h2>ENGINE TYPE</h2>
-                        <p>DOHC 32-valve V-8, aluminum</p>
-                        <p>block and heads, port fuel</p>
-                        <p>injection</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4">
-                    <div class="impl_descrip_box">
-                        <h2>TRANSMISSION</h2>
-                        <p>6-speed Automatic With Manual </p>
-                        <p>Shifting Mode</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4">
-                    <div class="impl_descrip_box">
-                        <h2>Displacement</h2>
-                        <p>286 cu in, 4691 cc</p>
-                        <p>Power: 454 hp @ 7000 rpm</p>
-                        <p>Torque: 384 lb-ft @ 4750 rpm</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4">
-                    <div class="impl_descrip_box">
-                        <h2>VEHICLE TYPE</h2>
-                        <p>Front-Engine, </p>
-                        <p>Rear-Wheel-Drive, </p>
-                        <p>4-Passenger, 2-Door </p>
-                        <p>Coupe or Convertible</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4">
-                    <div class="impl_descrip_box">
-                        <h2>PERFORMANCE</h2>
-                        <p>Zero to 60 mph: 4.5-4.7 sec</p>
-                        <p>Standing ¼-mile: 13.0-13.2 sec</p>
-                        <p>Top speed: 178-187 mph</p>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4">
-                    <div class="impl_descrip_box">
-                        <h2>DIMENSIONS</h2>
-                        <p>Wheelbase: 115.8 in</p>
-                        <p>Length: 193.3-193.7 in</p>
-                        <p>Width: 75.4 in Height: 54.3 in</p>
-                        <p>Curb weight : 4400-4600 lb</p>
-                    </div>
-                </div>
+                <?php echo html_entity_decode($vehicle->description); ?>
             </div>
         </div>
     </div>

@@ -331,61 +331,65 @@
             <div class="row">
                 <div class="col-lg-12 col-md-12">
                     <div class="impl_search_box custom_select">
+                        <form enctype="multipart/form-data" method="POST" action="/home-search">
+                        {{ csrf_field() }}
                         <div class="row">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="impl_select_boxes">
-                                    <select>
+                                    <select name="brand" id="brand">
                                         <option>Select Brand</option>
-                                        <option value="1">Brand 1</option>
-                                        <option value="2">Brand 2</option>
-                                        <option value="3">Brand 3</option>
-                                        <option value="4">Brand 4</option>
+                                        @foreach($brand as $brand1)
+                                        <option value="{{$brand1->id}}">{{$brand1->name}}</option>
+                                        @endforeach
                                     </select>
-                                    <select>
+                                    <!-- <select>
                                         <option>Select Status</option>
                                         <option value="b1">Status 1</option>
                                         <option value="b2">Status 2</option>
                                         <option value="b3">Status 3</option>
                                         <option value="b4">Status 4</option>
-                                    </select>
-                                    <select>
+                                    </select> -->
+                                    <select name="model" id="model">
                                         <option>Select Model</option>
-                                        <option value="b1">Model 1</option>
-                                        <option value="b2">Model 2</option>
-                                        <option value="b3">Model 3</option>
-                                        <option value="b4">Model 4</option>
+                                        @foreach($car as $car1)
+                                        <option value="{{$car1->id}}">{{$car1->name}}</option>
+                                        @endforeach
                                     </select>
-                                    <select>
+                                    <select name="year" id="year">
                                         <option>Select Year</option>
-                                        <option value="b1">Year 1</option>
-                                        <option value="b2">Year 2</option>
-                                        <option value="b3">Year 3</option>
-                                        <option value="b4">Year 4</option>
+                                        <?php
+                            $d = date('Y');
+                            for ($x = 1980; $x <= $d; $x++) {
+                            ?>
+                            <option value="<?php echo $x; ?>"><?php echo $x; ?></option>
+                            <?php } ?>
                                     </select>
-                                    <select>
+                                    <select name="colour" id="colour">
                                         <option>Select Color</option>
-                                        <option value="b1">Color 1</option>
-                                        <option value="b2">Color 2</option>
-                                        <option value="b3">Color 3</option>
-                                        <option value="b4">Color 4</option>
+                                        <option>Blue</option>
+                                        <option>Red</option>
+                                        <option>Green</option>
+                                        <option>Black</option>
+                                        <option>Yellow</option>
+                                        <option>White</option>
+                                        
                                     </select>
-                                    <select>
+                                    <select name="vehicle_type" id="vehicle_type">
                                         <option>Select Type</option>
-                                        <option value="b1">Type 1</option>
-                                        <option value="b2">Type 2</option>
-                                        <option value="b3">Type 3</option>
-                                        <option value="b4">Type 4</option>
+                                        @foreach($vehicle_type as $vehicle_type1)
+                                        <option value="{{$vehicle_type1->id}}">{{$vehicle_type1->name}}</option>
+                                        @endforeach
                                     </select>
                                     <div class="price_range">
-                                        <label>price range</label> <input type="text" id="range_24"
-                                            name="ionRangeSlider" value="" />
+                                        <label>price range</label> <input type="text" id="range_24" name="price_range" value="" />
                                     </div>
                                 </div>
                                 <div class="impl_search_btn">
-                                    <button class="impl_btn">search vehicle</button>
+                                    <button type="submit" class="impl_btn">search vehicle</button>
                                 </div>
                             </div>
                         </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -407,42 +411,77 @@
                         <div class="panel-group" id="accordion">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h4 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Lorem ipsum dolor sit amet,           consectetur adipiscing elit.</a></h4>
+                                    <h4 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Join New York Car Auction</a></h4>
                                 </div>
                                 <div id="collapseOne" class="panel-collapse collapse in show">
-                                    <div class="panel-body">
+                                    <!-- <div class="panel-body">
                                         Vivamus malesuada orci a sapien rutrum, ut iaculis turpis posuere. Proin mollis
                                         sodales aliquet. Suspendisse iaculis, justo ac feugiat accumsan, turpis urna
                                         consequat mauris.
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h4 class="panel-title"><a class="accordion-toggle" data-toggle="collapse"
-                                            data-parent="#accordion" href="#collapseTwo">Lorem ipsum dolor sit amet,
-                                            consectetur adipiscing elit.</a></h4>
+                                    <h4 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Add a Deposit</a></h4>
                                 </div>
                                 <div id="collapseTwo" class="panel-collapse collapse">
-                                    <div class="panel-body">
+                                    <!-- <div class="panel-body">
                                         Vivamus malesuada orci a sapien rutrum, ut iaculis turpis posuere. Proin mollis
                                         sodales aliquet. Suspendisse iaculis, justo ac feugiat accumsan, turpis urna
                                         consequat mauris.
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h4 class="panel-title"><a class="accordion-toggle" data-toggle="collapse"
-                                            data-parent="#accordion" href="#collapseThree">Lorem ipsum dolor sit amet,
-                                            consectetur adipiscing elit.</a></h4>
+                                    <h4 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">Search Vehicles</a></h4>
                                 </div>
                                 <div id="collapseThree" class="panel-collapse collapse">
-                                    <div class="panel-body">
+                                    <!-- <div class="panel-body">
                                         Vivamus malesuada orci a sapien rutrum, ut iaculis turpis posuere. Proin mollis
                                         sodales aliquet. Suspendisse iaculis, justo ac feugiat accumsan, turpis urna
                                         consequat mauris.
-                                    </div>
+                                    </div> -->
+                                </div>
+                            </div>
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">Join Auctions</a></h4>
+                                </div>
+                                <div id="collapseFour" class="panel-collapse collapse">
+                                    <!-- <div class="panel-body">
+                                        Vivamus malesuada orci a sapien rutrum, ut iaculis turpis posuere. Proin mollis
+                                        sodales aliquet. Suspendisse iaculis, justo ac feugiat accumsan, turpis urna
+                                        consequat mauris.
+                                    </div> -->
+                                </div>
+                            </div>
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseFive">Place Bids</a></h4>
+                                </div>
+                                <div id="collapseFive" class="panel-collapse collapse">
+                                    <!-- <div class="panel-body">
+                                        Vivamus malesuada orci a sapien rutrum, ut iaculis turpis posuere. Proin mollis
+                                        sodales aliquet. Suspendisse iaculis, justo ac feugiat accumsan, turpis urna
+                                        consequat mauris.
+                                    </div> -->
+                                </div>
+                            </div>
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseSix">Pay and Pick Up</a></h4>
+                                </div>
+                                <div id="collapseSix" class="panel-collapse collapse">
+                                    <!-- <div class="panel-body">
+                                        Vivamus malesuada orci a sapien rutrum, ut iaculis turpis posuere. Proin mollis
+                                        sodales aliquet. Suspendisse iaculis, justo ac feugiat accumsan, turpis urna
+                                        consequat mauris.
+                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -459,9 +498,7 @@
         <div class="impl_service_video">
             <div class="impl_video_inner">
                 <div class="impl_servdo_video">
-                    <span class="impl_play_icon"><a class="impl-popup-youtube"
-                            href="https://www.youtube.com/watch?v=BqjuObIH1nY"><i class="fa fa-play"
-                                aria-hidden="true"></i></a></span>
+                    <span class="impl_play_icon"><a class="impl-popup-youtube" href="https://www.youtube.com/watch?v=BqjuObIH1nY"><i class="fa fa-play" aria-hidden="true"></i></a></span>
                 </div>
             </div>
         </div>

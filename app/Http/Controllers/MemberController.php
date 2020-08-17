@@ -7,6 +7,7 @@ use App\User;
 use App\car;
 use App\member_password;
 use App\deposit;
+use App\withdrawal;
 use Mail;
 use DB;
 
@@ -97,23 +98,56 @@ class MemberController extends Controller
 
     public function updateDepositRequest($id,$status){
         $deposit = deposit::find($id);
-        $deposit->status = $status;
         
-
         if($status == '1'){
+            $deposit->status = $status;
             $member = User::find($deposit->member_id);
             $wallet = $member->wallet;
             $member->wallet = $wallet + $deposit->deposit;
             $member->save();
         }
-        if($deposit->status == '1'){
-            $member = User::find($deposit->member_id);
-            $wallet = $member->wallet;
-            $member->wallet = $wallet - $deposit->deposit;
-            $member->save();
+        elseif($status == '2'){
+            if($deposit->status == '1'){
+                $member = User::find($deposit->member_id);
+                $wallet = $member->wallet;
+                $member->wallet = $wallet - $deposit->deposit;
+                $member->save();
+            }
+            $deposit->status = $status;
         }
 
         $deposit->save();
+
+        return response()->json(['message'=>'Successfully Update'],200); 
+    }
+
+    public function withdrawalRequest(){
+        $withdrawal = withdrawal::all();
+        $member = User::all();
+        return view('admin.withdrawal_request',compact('withdrawal','member'));
+    }
+
+    public function updateWithdrawalRequest($id,$status){
+        $withdrawal = withdrawal::find($id);
+
+        if($status == '1'){
+            $withdrawal->status = $status;
+            $member = User::find($withdrawal->member_id);
+            $wallet = $member->wallet;
+            $member->wallet = $wallet - $withdrawal->amount;
+            $member->save();
+        }
+        elseif($status == '2'){
+            if($withdrawal->status == '1'){
+                $member = User::find($withdrawal->member_id);
+                $wallet = $member->wallet;
+                $member->wallet = $wallet + $withdrawal->amount;
+                $member->save();
+            }
+            $withdrawal->status = $status;
+        }
+
+        $withdrawal->save();
 
         return response()->json(['message'=>'Successfully Update'],200); 
     }

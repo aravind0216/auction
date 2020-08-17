@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\car;
 use App\User;
 use App\deposit;
+use App\withdrawal;
 use Auth;
 
 class SettingsController extends Controller
@@ -45,7 +46,8 @@ class SettingsController extends Controller
 
     public function saveDeposit(Request $request){
         $request->validate([
-            'deposit'=>'required',
+            'deposit'=>'required|numeric',
+            'image'=>'required',
         ]);
         //image upload
         $fileName = null;
@@ -60,6 +62,48 @@ class SettingsController extends Controller
         $deposit->image = $fileName;
         $deposit->save();
         return response()->json('successfully save');
+    }
+
+
+    public function DepositDelete($id){
+        $deposit = deposit::find($id);
+        $deposit->delete();
+        return response()->json(['message'=>'Successfully Delete'],200); 
+    }
+
+
+    public function Withdrawal()
+    {
+        $withdrawal = withdrawal::where('member_id',Auth::user()->id)->get();
+        $member = User::find(Auth::user()->id);
+        return view('member.withdrawal',compact('withdrawal','member'));
+    }
+
+    public function saveWithdrawal(Request $request){
+        $request->validate([
+            'amount'=>'required|numeric',
+            'bank_name'=>'required',
+            'iban_number'=>'required',
+            'account_name'=>'required',
+            'account_number'=>'required',
+        ]);
+
+        $withdrawal = new withdrawal;
+        $withdrawal->member_id = Auth::user()->id;
+        $withdrawal->amount = $request->amount;
+        $withdrawal->iban_number = $request->iban_number;
+        $withdrawal->account_name = $request->account_name;
+        $withdrawal->account_number = $request->account_number;
+        $withdrawal->bank_name = $request->bank_name;
+        $withdrawal->save();
+        return response()->json('successfully save');
+    }
+
+
+    public function WithdrawalDelete($id){
+        $withdrawal = withdrawal::find($id);
+        $withdrawal->delete();
+        return response()->json(['message'=>'Successfully Delete'],200); 
     }
 
 }

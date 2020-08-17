@@ -50,6 +50,7 @@
                     <th>Slip</th>  
                     <th>Date & Time</th>
                     <th>Status</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -62,11 +63,24 @@
                     <td>{{$row->created_at}}</td>
                     <td>
                     	@if($row->status == 0)
-                    	Pending
-                    	@else
-                    	Approved
-                    	@endif
+                      Pending
+                      @elseif($row->status == 1)
+                      Approved
+                      @elseif($row->status == 2)
+                        Denied
+                      @endif
                     </td>
+                    <td>
+            <div class="dropdown">
+                <span class="bx bx-dots-horizontal-rounded font-medium-3 dropdown-toggle nav-hide-arrow cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu">
+                </span>
+                <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-125px, 19px, 0px); top: 0px; left: 0px; will-change: transform;">
+                  @if($row->status == 0)
+                  <a onclick="Delete({{$row->id}})" class="dropdown-item" href="#"><i class="bx bx-trash mr-1"></i> Delete</a>
+                  @endif
+                </div>
+            </div>
+                   </td>
                    </tr>
                   @php $x++ @endphp
                   @endforeach
@@ -78,6 +92,7 @@
                     <th>Slip</th>  
                     <th>Date & Time</th>
                     <th>Status</th>
+                    <th>Action</th>
                   </tr>
                 </tfoot>
             </table>
@@ -115,7 +130,7 @@
 	          	<div class="form-group row">
 		            <label class="col-md-3 label-control">Deposit</label>
 		            <div class="col-md-9">
-		              <input value="0" type="text" id="deposit" class="form-control" name="deposit">
+		              <input type="text" id="deposit" class="form-control" name="deposit">
 		            </div>
 	          	</div>
 
@@ -229,20 +244,20 @@ function Save(){
 //   });
 // }
 
-// function Delete(id){
-//     var r = confirm("Are you sure");
-//     if (r == true) {
-//       $.ajax({
-//         url : '/member/deposit-delete/'+id,
-//         type: "GET",
-//         dataType: "JSON",
-//         success: function(data)
-//         {
-//           toastr.success(data, 'Successfully Delete');
-//           $('.zero-configuration').load(location.href+' .zero-configuration');
-//         }
-//       });
-//     } 
-// }
+function Delete(id){
+    var r = confirm("Are you sure");
+    if (r == true) {
+      $.ajax({
+        url : '/member/deposit-delete/'+id,
+        type: "GET",
+        dataType: "JSON",
+        success: function(data)
+        {
+          toastr.success(data, 'Successfully Delete');
+          $('.zero-configuration').load(location.href+' .zero-configuration');
+        }
+      });
+    } 
+}
 </script>
 @endsection

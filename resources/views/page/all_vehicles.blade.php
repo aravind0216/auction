@@ -53,6 +53,8 @@
                     <div class="impl_purchase_inner">
                         <div class="row">
                             <div class="col-lg-3 col-md-4">
+                                <form enctype="multipart/form-data" method="POST" action="/vehicle-search">
+                                {{ csrf_field() }}
                                 <div class="impl_sidebar">
                                     <div class="impl_product_search widget woocommerce">
                                         <div class="impl_footer_subs">
@@ -64,48 +66,16 @@
                                     <div class="impl_product_brand widget woocommerce">
                                         <h2 class="widget-title">brands</h2>
                                         <ul>
+                                            @foreach($brand as $brand1)
+                                        
                                             <li>
                                                 <label class="brnds_check_label">
-												Paradox
-												<input type="checkbox" name="check"> 
+												{{$brand1->name}}
+												<input value="{{$brand1->id}}" type="checkbox" name="brand_id[]"> 
 												<span class="label-text"></span>
 											</label>
                                             </li>
-                                            <li>
-                                                <label class="brnds_check_label">
-												Voyage
-												<input type="checkbox" name="check"> 
-												<span class="label-text"></span>
-											</label>
-                                            </li>
-                                            <li>
-                                                <label class="brnds_check_label">
-											Passion
-												<input type="checkbox" name="check"> 
-												<span class="label-text"></span>
-											</label>
-                                            </li>
-                                            <li>
-                                                <label class="brnds_check_label">
-											Curiosity
-												<input type="checkbox" name="check"> 
-												<span class="label-text"></span>
-											</label>
-                                            </li>
-                                            <li>
-                                                <label class="brnds_check_label">
-											Ivory
-												<input type="checkbox" name="check"> 
-												<span class="label-text"></span>
-											</label>
-                                            </li>
-                                            <li>
-                                                <label class="brnds_check_label">
-											Dawn
-												<input type="checkbox" name="check"> 
-												<span class="label-text"></span>
-											</label>
-                                            </li>
+                                            @endforeach
                                         </ul>
                                     </div>
                                     <!--Colors-->
@@ -115,70 +85,76 @@
                                             <li>
                                                 <label class="brnds_check_label">
 												black
-												<input type="checkbox" name="check"> 
+												<input value="black" type="checkbox" name="colour[]"> 
 												<span class="label-text"></span>
 											</label>
                                             </li>
                                             <li>
                                                 <label class="brnds_check_label">
 												blue
-												<input type="checkbox" name="check"> 
+												<input value="blue" type="checkbox" name="colour[]"> 
 												<span class="label-text"></span>
 											</label>
                                             </li>
                                             <li>
                                                 <label class="brnds_check_label">
 												white
-												<input type="checkbox" name="check"> 
+												<input value="white" type="checkbox" name="colour[]"> 
 												<span class="label-text"></span>
 											</label>
                                             </li>
                                             <li>
                                                 <label class="brnds_check_label">
 												yellow
-												<input type="checkbox" name="check"> 
+												<input value="yellow" type="checkbox" name="colour[]"> 
 												<span class="label-text"></span>
 											</label>
                                             </li>
                                             <li>
                                                 <label class="brnds_check_label">
 												red
-												<input type="checkbox" name="check"> 
+												<input value="red" type="checkbox" name="colour[]"> 
 												<span class="label-text"></span>
 											</label>
                                             </li>
                                             <li>
                                                 <label class="brnds_check_label">
 												grey 	
-												<input type="checkbox" name="check"> 
+												<input value="grey" type="checkbox" name="colour[]"> 
 												<span class="label-text"></span>
 											</label>
                                             </li>
                                             <li>
                                                 <label class="brnds_check_label">
 												brown
-												<input type="checkbox" name="check"> 
+												<input value="brown" type="checkbox" name="colour[]"> 
 												<span class="label-text"></span>
 											</label>
                                             </li>
                                             <li>
                                                 <label class="brnds_check_label">
 												orange
-												<input type="checkbox" name="check"> 
+												<input value="orange" type="checkbox" name="colour[]"> 
 												<span class="label-text"></span>
 											</label>
                                             </li>
                                         </ul>
                                     </div>
                                     <!--Price Range-->
-                                    <!-- <div class="impl_product_price widget woocommerce">
+                                    <div class="impl_product_price widget woocommerce">
                                         <h2 class="widget-title">price range</h2>
                                         <div class="price_range">
-                                            <input type="text" id="range_24" name="ionRangeSlider" value="" />
+                                            <input type="text" id="range_24" name="price_range" value="" />
                                         </div>
-                                    </div> -->
+                                    </div>
+
+                                    <div class="impl_product_price widget woocommerce">
+                                        <div class="impl_fea_btn">
+                                            <button type="submit" class="impl_btn">search vehicle</button>
+                                        </div>
+                                    </div>
                                     <!--Car Type-->
-                                    <div class="impl_product_type widget woocommerce">
+                                    <!-- <div class="impl_product_type widget woocommerce">
                                         <h2 class="widget-title">car type</h2>
                                         <ul>
                                             <li><a href="#">Hatchback</a></li>
@@ -188,8 +164,9 @@
                                             <li><a href="#">Couple</a></li>
                                             <li><a href="#">Convertible</a></li>
                                         </ul>
-                                    </div>
+                                    </div> -->
                                 </div>
+                                </form>
                             </div>
                             <div class="col-lg-9 col-md-8">
                                 <div class="row">
@@ -227,20 +204,23 @@
                 @endforeach
                                     
                                     
-                                    <!--pagination start-->
-                                    <div class="col-lg-12 col-md-12">
-                                        <div class="impl_pagination_wrapper">
-                                            <nav aria-label="Page navigation example">
-                                                <ul class="pagination">
-                                                    <li class="page-item"><a class="page-link" href="#"><i class="fa fa-angle-left" aria-hidden="true"></i></a></li>
-                                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                                    <li class="page-item"><a class="page-link active" href="#">2</a></li>
-                                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                                    <li class="page-item"><a class="page-link" href="#"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-                                                </ul>
-                                            </nav>
-                                        </div>
-                                    </div>
+                <!--pagination start-->
+                <div class="col-lg-12 col-md-12">
+                    <div class="impl_pagination_wrapper">
+                        <nav aria-label="Page navigation example">
+                            <!-- <ul class="pagination">
+                                <li class="page-item"><a class="page-link" href="#"><i class="fa fa-angle-left" aria-hidden="true"></i></a></li>
+                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item"><a class="page-link active" href="#">2</a></li>
+                                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                <li class="page-item"><a class="page-link" href="#"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                            </ul> -->
+                            <center>{{$vehicle->setPath(url()->full())}}</center>
+                        </nav>
+                    </div>
+                </div>
+
+
                                 </div>
                             </div>
                         </div>

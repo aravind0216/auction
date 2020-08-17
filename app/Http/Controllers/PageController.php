@@ -12,6 +12,7 @@ use App\User;
 use App\brand;
 use App\car;
 use App\damage;
+use App\deposit;
 use App\vehicle_image;
 use App\vehicle;
 use App\vehicle_type;
@@ -19,6 +20,7 @@ use App\auction_vehicle;
 use Hash;
 use DB;
 use Mail;
+
 
 class PageController extends Controller
 {
@@ -49,7 +51,7 @@ class PageController extends Controller
     public function allVehicles()
     {
         $damage = damage::all();
-        $vehicle = vehicle::where('is_visible_website','1')->orderBy('id','DESC')->get();
+    $vehicle = vehicle::where('is_visible_website','1')->orderBy('id','DESC')->paginate(9);
         $car = car::all();
         $brand = brand::all();
         $vehicle_type = vehicle_type::all();
@@ -198,6 +200,130 @@ class PageController extends Controller
         
         return response()->json('successfully save'); 
     }
+
+
+    public function memberRegistration(){
+        $member = User::all();
+        $car = car::all();
+        $site_info = site_info::find('1');
+        return view('page.member_registration',compact('member','car','site_info'));
+    }
+
+    public function saveMemberRegistration(Request $request){
+        $request->validate([
+            'name'=>'required',
+        ]);
+
+        $member = new User;
+        $member->name = $request->name;
+        $member->email = $request->email;
+        $member->busisness_type = $request->busisness_type;
+        $member->company_name = $request->company_name;
+        $member->address = $request->address;
+        $member->country = $request->country;
+        $member->state = $request->state;
+        $member->city = $request->city;
+        $member->postal_code = $request->postal_code;
+        $member->phone_number = $request->phone_number;
+        $member->phone_extension = $request->phone_extension;
+        $member->most_intrested = $request->most_intrested;
+        $member->buy_vehicles_for = $request->buy_vehicles_for;
+        $member->save();
+
+        $member_password = new member_password;
+        $member_password->date = date('Y-m-d');
+        $member_password->end_date = date('Y-m-d', strtotime("+14 days"));
+        $member_password->member_id = $member->id;
+        $member_password->name = $member->name;
+        $member_password->email = $member->email;
+        $member_password->save();
+
+        $all = $member_password::find($member_password->id);
+        Mail::send('mail.member_send_mail',compact('all'),function($message) use($all){
+            $message->to($all['email'])->subject('Create your Own Password');
+            $message->from('aravind.0216@gmail.com','New York Car Auction Website');
+        });
+        return response()->json('successfully save'); 
+    }
+
+
+public function homeSearch(Request $request){
+    // $fdate = date('Y-m-d',strtotime($request->from_date));
+    // $tdate = date('Y-m-d',strtotime($request->to_date));
+
+    $price = explode(';', $request->price_range);
+    $price1 = $price[0];
+    $price2 = $price[1];
+
+    $q =DB::table('vehicles as v');
+// if ( $request->from_date && !empty($request->from_date) && $request->to_date && !empty($request->to_date) )
+// {
+//     $q->whereBetween('s.date', [$fdate, $tdate]);
+// }
+if ( $request->brand && !empty($request->brand) )
+{
+    $q->where('v.brand_id', $request->brand);
+}
+elseif ( $request->model && !empty($request->model) )
+{
+    $q->where('v.car_id', $request->model);
+}
+elseif ( $request->year && !empty($request->year) )
+{
+    $q->where('v.year', $request->year);
+}
+elseif ( $request->colour && !empty($request->colour) )
+{
+    $q->where('v.colour', $request->colour);
+}
+elseif ( $request->vehicle_type && !empty($request->vehicle_type) )
+{
+    $q->where('v.vehicle_type', $request->vehicle_type);
+}
+elseif ( $request->price_range && !empty($request->price_range) )
+{
+    $q->whereBetween('v.price', [ $price1 , $price2 ]);
+}
+    // $q->select('*');
+    $q->orderBy('id','DESC');
+    $vehicle = $q->paginate(9);
+
+    $damage = damage::all();
+    $car = car::all();
+    $brand = brand::all();
+    $vehicle_type = vehicle_type::all();
+    return view('page.all_vehicles',compact('brand','car','vehicle','vehicle_type','damage'));
+}
+
+
+public function vehicleSearch(Request $request){
+    $price = explode(';', $request->price_range);
+    $price1 = $price[0];
+    $price2 = $price[1];
+
+    $q =DB::table('vehicles as v');
+if ( $request->brand_id && !empty($request->brand_id) )
+{
+    $q->whereIn('v.brand_id', $request->brand_id);
+}
+elseif ( $request->colour && !empty($request->colour) )
+{
+    $q->whereIn('v.colour', $request->colour);
+}
+elseif ( $request->price_range && !empty($request->price_range) )
+{
+    $q->whereBetween('v.price', [ $price1 , $price2 ]);
+}
+    // $q->select('*');
+    $q->orderBy('id','DESC');
+    $vehicle = $q->paginate(9);
+
+    $damage = damage::all();
+    $car = car::all();
+    $brand = brand::all();
+    $vehicle_type = vehicle_type::all();
+    return view('page.all_vehicles',compact('brand','car','vehicle','vehicle_type','damage'));
+}
 
     
 }
