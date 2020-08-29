@@ -1,14 +1,16 @@
 @extends('page.app')
 @section('extra-css')
 
-	<link rel="stylesheet" type="text/css" href="dist/css/fonts.css">
-    <link rel="stylesheet" type="text/css" href="dist/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="dist/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="dist/css/ion.rangeSlider.css">
-    <link rel="stylesheet" type="text/css" href="dist/css/ion.rangeSlider.skinFlat.css">
-    <link rel="stylesheet" type="text/css" href="dist/js/plugin/magnific/magnific-popup.css">
-    <link rel="stylesheet" type="text/css" href="dist/js/plugin/nice_select/nice-select.css">
-    <link rel="stylesheet" type="text/css" href="dist/css/style.css">
+	<link rel="stylesheet" type="text/css" href="/dist/css/fonts.css">
+    <link rel="stylesheet" type="text/css" href="/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/dist/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/dist/css/ion.rangeSlider.css">
+    <link rel="stylesheet" type="text/css" href="/dist/css/ion.rangeSlider.skinFlat.css">
+    <link rel="stylesheet" type="text/css" href="/dist/js/plugin/magnific/magnific-popup.css">
+    <link rel="stylesheet" type="text/css" href="/dist/js/plugin/slick/slick.css">
+    <link rel="stylesheet" type="text/css" href="/dist/js/plugin/slick/slick-theme.css">
+    <link rel="stylesheet" type="text/css" href="/dist/css/style.css">
+
 @endsection
 @section('content')
     <!------ Breadcrumbs Start ------>
@@ -67,13 +69,12 @@
                                         <h2 class="widget-title">brands</h2>
                                         <ul>
                                             @foreach($brand as $brand1)
-                                        
                                             <li>
                                                 <label class="brnds_check_label">
 												{{$brand1->name}}
 												<input value="{{$brand1->id}}" type="checkbox" name="brand_id[]"> 
 												<span class="label-text"></span>
-											</label>
+											    </label>
                                             </li>
                                             @endforeach
                                         </ul>
@@ -148,11 +149,6 @@
                                         </div>
                                     </div>
 
-                                    <div class="impl_product_price widget woocommerce">
-                                        <div class="impl_fea_btn">
-                                            <button type="submit" class="impl_btn">search vehicle</button>
-                                        </div>
-                                    </div>
                                     <!--Car Type-->
                                     <!-- <div class="impl_product_type widget woocommerce">
                                         <h2 class="widget-title">car type</h2>
@@ -165,6 +161,61 @@
                                             <li><a href="#">Convertible</a></li>
                                         </ul>
                                     </div> -->
+                                    <div class="impl_product_color widget woocommerce">
+                                        <h2 class="widget-title">Car Type</h2>
+                                        <ul>
+                                            <li>
+                                                <label class="brnds_check_label">
+                                                Hatchback
+                                                <input value="Hatchback" type="checkbox" name="body_style[]"> 
+                                                <span class="label-text"></span>
+                                                </label>
+                                            </li>
+                                            <li>
+                                                <label class="brnds_check_label">
+                                                Sedan
+                                                <input value="Sedan" type="checkbox" name="body_style[]"> 
+                                                <span class="label-text"></span>
+                                            </label>
+                                            </li>
+                                            <li>
+                                                <label class="brnds_check_label">
+                                                MPV
+                                                <input value="MPV" type="checkbox" name="body_style[]"> 
+                                                <span class="label-text"></span>
+                                            </label>
+                                            </li>
+                                            <li>
+                                                <label class="brnds_check_label">
+                                                SUV
+                                                <input value="SUV" type="checkbox" name="body_style[]"> 
+                                                <span class="label-text"></span>
+                                            </label>
+                                            </li>
+                                            <li>
+                                                <label class="brnds_check_label">
+                                                Couple
+                                                <input value="Couple" type="checkbox" name="body_style[]"> 
+                                                <span class="label-text"></span>
+                                            </label>
+                                            </li>
+                                            <li>
+                                                <label class="brnds_check_label">
+                                                Convertible    
+                                                <input value="Convertible" type="checkbox" name="body_style[]"> 
+                                                <span class="label-text"></span>
+                                            </label>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <div class="impl_product_price widget woocommerce">
+                                        <div class="impl_fea_btn">
+                                            <button type="submit" class="impl_btn">search vehicle</button>
+                                        </div>
+                                    </div>
+
+                                    
                                 </div>
                                 </form>
                             </div>
@@ -175,7 +226,7 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="impl_fea_car_box">
                         <div class="impl_fea_car_img">
-                            <img src="{{asset('vehicle_image/').'/'.$vehicle1->image}}" alt="" class="img-fluid impl_frst_car_img" />
+                            <img style="width: 350px;height: 200px;" src="{{asset('vehicle_image/').'/'.$vehicle1->image}}" alt="" class="img-fluid impl_frst_car_img" />
                             <!-- <img src="dist/images/product/fea_car1_hover.jpg" alt="" class="img-fluid impl_hover_car_img" /> -->
                             <span class="impl_img_tag" title="compare"><a href="/compare"><i class="fa fa-exchange" aria-hidden="true"></i></a></span>
                         </div>
@@ -196,7 +247,7 @@
                                     <span class="impl_fea_name">{{$vehicle1->colour}}</span></li>
                             </ul>
                             <div class="impl_fea_btn">
-                                <button class="impl_btn"><span class="impl_doller">AED {{$vehicle1->price}} </span><a href="single-vehicles/{{$vehicle1->id}}"><span class="impl_bnw">View Details</span></a></button>
+                                <button class="impl_btn"><span class="impl_doller">AED {{$vehicle1->price}} </span><a onclick="viewDetails({{$vehicle1->id}})"><span class="impl_bnw">View Details</span></a></button>
                             </div>
                         </div>
                     </div>
@@ -229,23 +280,48 @@
             </div>
         </div>
     </div>
-    
+<style type="text/css">
+            .product_view .modal-dialog{max-width: 800px; width: 100%;}
+        .pre-cost{text-decoration: line-through; color: #a5a5a5;}
+        .space-ten{padding: 10px 0;}
+
+</style>
+<div class="modal fade product_view" id="popup_modal">
+    <div class="modal-dialog">
+        <div class="modal-content" id="view-details">
+            
+        </div>
+    </div>
+</div>
 @endsection
 @section('extra-js')
-    
-	<script type="text/javascript" src="dist/js/jquery.js"></script>
-    <script type="text/javascript" src="dist/js/popper.js"></script>
-    <script type="text/javascript" src="dist/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="dist/js/ion.rangeSlider.min.js"></script>
-    <script type="text/javascript" src="dist/js/plugin/magnific/jquery.magnific-popup.min.js"></script>
-    <script type="text/javascript" src="dist/js/plugin/nice_select/jquery.nice-select.min.js"></script>
-    <script type="text/javascript" src="dist/js/custom.js"></script>
+	<script type="text/javascript" src="/dist/js/jquery.js"></script>
+    <script type="text/javascript" src="/dist/js/popper.js"></script>
+    <script type="text/javascript" src="/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/dist/js/ion.rangeSlider.min.js"></script>
+    <script type="text/javascript" src="/dist/js/plugin/magnific/jquery.magnific-popup.min.js"></script>
+    <script type="text/javascript" src="/dist/js/plugin/slick/slick.min.js"></script>
+    <script type="text/javascript" src="/dist/js/custom.js"></script>
 <script type="text/javascript">
 $( "#search_lot" ).click(function() {
     var lot_number = $('#lot_number').val();
     window.location = "/single-vehicles/"+lot_number;
 });
 
+
+
+function viewDetails(id)
+{
+    $.ajax({
+    url : '/vehicle-quick-view/'+id,
+    type: "GET",
+    success: function(data)
+    {
+        $('#view-details').html(data);
+        $('#popup_modal').modal('show');
+    }
+  });
+}
 </script>
 @endsection
     

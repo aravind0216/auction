@@ -54,13 +54,24 @@
                      
                       <div class="form-group row">
                         <div class="col-md-6">
-                          <label class="label-control" for="projectinput9">Choose Model</label>
-                          <select name="car_id" id="car_id" class="form-control">
+                          <label class="label-control">Choose Brand</label>
+                          <select onclick="changeBrand()" name="brand_id" id="brand_id" class="form-control select2">
+                          <option value="">SELECT</option>
+                          @foreach($brand as $brand1)
+                          <option value="{{$brand1->id}}">{{$brand1->name}}</option>
+                          @endforeach
+                          </select>
+
+                          <br>
+
+                          <label class="label-control">Choose Model</label>
+                          <select name="car_id" id="car_id" class="form-control select2">
                           <option value="">SELECT</option>
                           @foreach($car as $car1)
                           <option value="{{$car1->id}}">{{$car1->name}}</option>
                           @endforeach
                           </select>
+
                         </div>
 
                         <div class="col-md-6">
@@ -344,6 +355,20 @@ $("#single-product").click(function () {
 
 $('.input-images-1').imageUploader();
 
+
+function changeBrand(){
+  var id = $("#brand_id").val();
+  $.ajax({
+    url : '/admin/get-brand-car/'+id,
+    type: "GET",
+    success: function(data)
+    {
+        $('#car_id').html(data);
+    }
+  });
+}
+
+
 function Save(){
 var formData = new FormData($('#form')[0]);
 $.ajax({
@@ -355,17 +380,23 @@ $.ajax({
         dataType: "JSON",
         success: function(data)
         {                
-            $("#form")[0].reset();
-            toastr.success(data, 'Successfully Save');
-            window.location = "/admin/view-vehicles";
+          $("#form")[0].reset();
+          toastr.success(data, 'Successfully Save');
+          window.location = "/admin/view-vehicles";
         },error: function (data) {
-            var errorData = data.responseJSON.errors;
+          var errorData = data.responseJSON.errors;
             $.each(errorData, function(i, obj) {
             toastr.error(obj[0]);
-      });
-    }
+          });
+        }
     });
 }
 
+</script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+<script type="text/javascript">
+    var dropdownselect2 = $(".select2");
+    dropdownselect2.select2();
 </script>
 @endsection

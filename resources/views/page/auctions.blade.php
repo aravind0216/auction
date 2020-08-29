@@ -60,7 +60,7 @@
                                     {{$x}} Vechiles
                                 </td>
                                 <td>
-                                    <a href="/view-auctions/{{$row->id}}"><button type="button" class="impl_btn">View List</button></a>
+                                    <a href="/live-auctions/{{$row->id}}"><button type="button" class="impl_btn">View List</button></a>
                                 </td>
                             </tr>
                             @endforeach
@@ -100,7 +100,7 @@
                                     {{$x}} Vechiles
                                 </td>
                                 <td>
-                                    <a href="/view-auctions/{{$row->id}}"><button type="button" class="impl_btn">View List</button></a>
+                                    <a href="/live-auctions/{{$row->id}}"><button type="button" class="impl_btn">View List</button></a>
                                 </td>
                             </tr>
                             @endforeach

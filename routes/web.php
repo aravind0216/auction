@@ -39,15 +39,18 @@
 
 
 Route::get('/', 'PageController@index');
+Route::get('/auction', 'PageController@auction');
 Route::get('/contact', 'PageController@contact');
 Route::get('/about-us', 'PageController@aboutUs');
 Route::get('/all-vehicles', 'PageController@allVehicles');
 Route::get('/single-vehicles/{id}', 'PageController@singleVehicles');
+Route::get('/vehicle-quick-view/{id}', 'PageController@vehicleQuickView');
 Route::get('/future-vehicles', 'PageController@futureVehicles');
 Route::get('/buy-now-cars', 'PageController@buyNowCars');
 Route::get('/auctions', 'PageController@auctions');
 Route::get('/view-auctions/{id}', 'PageController@viewAuctions');
 Route::get('/live-auctions/{id}', 'PageController@liveAuctions');
+Route::get('/live-vehicle-quick-view/{id}', 'PageController@liveVehicleQuickView');
 Route::get('/how-it-works', 'PageController@howItWorks');
 Route::get('/services', 'PageController@services');
 Route::get('/member-registration', 'PageController@memberRegistration');
@@ -129,6 +132,11 @@ Route::group(['prefix' => 'admin'],function(){
 	Route::get('/view-vehicles', 'VehicleController@viewVehicles');
 	Route::get('/vehicle-delete/{id}', 'VehicleController@deleteVehicle');
 	Route::get('/vehicle-image-delete/{id}', 'VehicleController@deleteVehicleImage');
+
+	Route::get('/get-brand-car/{id}', 'VehicleController@getBrandCar');
+
+	Route::POST('/import-excel', 'VehicleController@import');
+	Route::get('/export-excel', 'VehicleController@export');
 
 	//slider
 	Route::POST('/save-vehicle-type', 'VehicleController@saveVehicleType');

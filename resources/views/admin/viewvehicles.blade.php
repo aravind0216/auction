@@ -29,13 +29,46 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
-                                <div class="card-header">
-        <!-- new task button -->
+    <div class="card-header">
+    @if(count($errors) > 0)
+    <div class="alert alert-danger">
+     Upload Validation Error<br><br>
+     <ul>
+      @foreach($errors->all() as $error)
+      <li>{{ $error }}</li>
+      @endforeach
+     </ul>
+    </div>
+   @endif
+
+   @if($message = Session::get('success'))
+   <div class="alert alert-success alert-block">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+           <strong>{{ $message }}</strong>
+   </div>
+   @endif
+        <form method="POST" enctype="multipart/form-data" action="/admin/import-excel">
+        {{ csrf_field() }}
+        <div class="form-group">
+         <table class="table">
+          <tr>
+           <td width="40%" align="right"><label>Select File for Upload</label></td>
+           <td width="30">
+            <input type="file" name="select_file" />
+           </td>
+           <td width="30%" align="left">
+            <input type="submit" name="upload" class="btn btn-primary" value="Upload">
+           </td>
+          </tr>
+         </table>
+        </div>
+       </form>
+
         <button id="open_model" style="width: 200px;" type="button" class="btn btn-primary add-task-btn btn-block my-1">
           <i class="bx bx-plus"></i>
           <span>Add Vehicle</span>
         </button>
-        </div>
+    </div>
         <div class="card-content">
             <div class="card-body card-dashboard">
                 <!-- <p class="card-text">In this Table Show All type of Salon Information, Booking Details and Payment Details.</p> -->
@@ -160,7 +193,7 @@ function Delete(id){
     success: function(data)
     {
       toastr.success('Vehicle Delete Successfully', 'Successfully Delete');
-      $('.table').load(location.href+' .table');
+      $('.zero-configuration').load(location.href+' .zero-configuration');
     }
   });
   }

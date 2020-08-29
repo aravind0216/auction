@@ -113,7 +113,13 @@
                                         <i style="font-size: 24px;" class="fa fa-sign-in" aria-hidden="true"></i>
                                     </a>
                                 </li>
+                                <li>
+                                    <a href="/member-registration"> <span class="login-text">SIGNUP</span>  
+                                        <i style="font-size: 20px;" class="fa fa-user-plus" aria-hidden="true"></i>
+                                    </a>
+                                </li>
                             </ul>
+                            
                             <!-- <div class="impl_search_overlay">
                                 <div class="impl_search_area">
                                     <div class="srch_inner">
@@ -260,7 +266,8 @@
                                             </ul>
                                         </li>
                                         <li><a href="/about-us">About Us</a></li>
-                                         <li><a href="/contact">Contact Us</a></li>
+                                        <!-- <li><a href="/member-registration">Member Registration</a></li> -->
+                                        <li><a href="/contact">Contact Us</a></li>
                                     </ul>
                                 </nav>
                             </div>

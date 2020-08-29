@@ -34,14 +34,22 @@
                     <div class="impl_carparts_inner">
                         <div class="impl_buy_old_car">
                             <div class="slider slider-for">
+                                @if(!empty($vehicle->image))
+                                <div><img style="width: 700px;height: 400px;" src="{{asset('vehicle_image/').'/'.$vehicle->image}}" alt=""></div>
+                                @endif
                                 @foreach($vehicle_image as $row)
-                                <div><img src="{{asset('vehicle_image/').'/'.$row->image}}" alt=""></div>
+                                <div><img style="width: 700px;height: 400px;" src="{{asset('vehicle_image/').'/'.$row->image}}" alt=""></div>
                                 @endforeach
                             </div>
                             <div class="slider slider-nav">
+                                @if(!empty($vehicle->image))
+                                <div>
+                                    <div class="impl_thumb_ovrly"><img style="width: 100px;height: 100px;" src="{{asset('vehicle_image/').'/'.$vehicle->image}}" alt=""></div>
+                                </div>
+                                @endif
                                 @foreach($vehicle_image as $row)
                                 <div>
-                                    <div class="impl_thumb_ovrly"><img src="{{asset('vehicle_image/').'/'.$row->image}}" alt=""></div>
+                                    <div class="impl_thumb_ovrly"><img style="width: 100px;height: 100px;" src="{{asset('vehicle_image/').'/'.$row->image}}" alt=""></div>
                                 </div>
                                 @endforeach
                             </div>

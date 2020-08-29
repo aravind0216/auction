@@ -53,10 +53,24 @@
                     <div class="form-body">
                      
                       <div class="form-group row">
+
                         <div class="col-md-6">
-                          <label class="label-control" for="projectinput9">Choose Model</label>
-                          <select name="car_id" id="car_id" class="form-control">
+                          <label class="label-control">Choose Brand</label>
+                          <select onclick="changeBrand()" name="brand_id" id="brand_id" class="form-control">
                           <option value="">SELECT</option>
+                          @foreach($brand as $brand1)
+                          @if($brand1->id == $vehicle->brand_id)
+                          <option selected value="{{$brand1->id}}">{{$brand1->name}}</option>
+                          @else
+                          <option value="{{$brand1->id}}">{{$brand1->name}}</option>
+                          @endif
+                          @endforeach
+                          </select>
+
+                          <br>
+
+                          <label class="label-control">Choose Model</label>
+                          <select name="car_id" id="car_id" class="form-control">
                           @foreach($car as $car1)
                           @if($car1->id == $vehicle->car_id)
                           <option selected value="{{$car1->id}}">{{$car1->name}}</option>
@@ -65,6 +79,7 @@
                           @endif
                           @endforeach
                           </select>
+
                         </div>
 
                         <div class="col-md-6">
@@ -146,7 +161,7 @@
                           <select name="primary_damage" id="primary_damage" class="form-control">
                           <option value="">SELECT</option>
                           @foreach($damage as $damage1)
-                          @if($damage1->id == $vehicle->damage)
+                          @if($damage1->id == $vehicle->primary_damage)
                           <option selected value="{{$damage1->id}}">{{$damage1->damage}}</option>
                           @else
                           <option value="{{$damage1->id}}">{{$damage1->damage}}</option>
@@ -160,7 +175,7 @@
                           <select name="secondary_damage" id="secondary_damage" class="form-control">
                           <option value="">SELECT</option>
                           @foreach($damage as $damage1)
-                          @if($damage1->id == $vehicle->damage)
+                          @if($damage1->id == $vehicle->secondary_damage)
                           <option selected value="{{$damage1->id}}">{{$damage1->damage}}</option>
                           @else
                           <option value="{{$damage1->id}}">{{$damage1->damage}}</option>
@@ -174,7 +189,6 @@
                           <input value="{{$vehicle->document_type}}" type="text" class="form-control" placeholder="Document Type" name="document_type" id="document_type">
                         </div>
 
-                        
                       </div>
 
 
@@ -416,5 +430,17 @@ function imageDelete(id){
   }
 }
 
+
+function changeBrand(){
+  var id = $("#brand_id").val();
+  $.ajax({
+    url : '/admin/get-brand-car/'+id,
+    type: "GET",
+    success: function(data)
+    {
+        $('#car_id').html(data);
+    }
+  });
+}
 </script>
 @endsection

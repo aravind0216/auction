@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Login V1</title>
+    <title>NYC Auction - Member Login</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->  
@@ -81,7 +81,7 @@
                     </div>
 
                     <div class="text-center p-t-136">
-                        <a class="txt2" href="#">
+                        <a class="txt2" href="/member-registration">
                             Create your Account
                             <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
                         </a>

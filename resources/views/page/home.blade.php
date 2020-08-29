@@ -325,6 +325,56 @@
             </div>
         </div>
     </div>
+<style type="text/css">
+.select2-results{
+    color: #000 !important;
+}
+
+.select2 {
+    -webkit-tap-highlight-color: transparent;
+    background-color: #fff;
+    border-radius: 5px;
+    border: solid 1px #e8e8e8;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: block;
+    float: left;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: normal;
+    height: 42px;
+    line-height: 40px;
+    outline: none;
+    padding-left: 18px;
+    padding-right: 30px;
+    position: relative;
+    text-align: left !important;
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    white-space: nowrap;
+    width: auto;
+}
+
+
+.select2-container--default .select2-selection--single {
+     /*background-color: #fff; 
+     border: 1px solid #aaa; 
+     border-radius: 4px; */
+     background-color: #fff; 
+     border: none !important; 
+     border-radius: none !important; 
+     margin-top: 5px;
+}
+.select2-selection__arrow{
+    margin-top: 5px;
+}
+
+
+</style>
     <!------ Search Box Start ------>
     <div class="impl_searchbox_wrapper">
         <div class="container">
@@ -336,7 +386,7 @@
                         <div class="row">
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div class="impl_select_boxes">
-                                    <select name="brand" id="brand">
+                                    <select class="select2" name="brand" id="brand">
                                         <option>Select Brand</option>
                                         @foreach($brand as $brand1)
                                         <option value="{{$brand1->id}}">{{$brand1->name}}</option>
@@ -349,22 +399,13 @@
                                         <option value="b3">Status 3</option>
                                         <option value="b4">Status 4</option>
                                     </select> -->
-                                    <select name="model" id="model">
+                                    <select class="select2" name="model" id="model">
                                         <option>Select Model</option>
                                         @foreach($car as $car1)
                                         <option value="{{$car1->id}}">{{$car1->name}}</option>
                                         @endforeach
                                     </select>
-                                    <select name="year" id="year">
-                                        <option>Select Year</option>
-                                        <?php
-                            $d = date('Y');
-                            for ($x = 1980; $x <= $d; $x++) {
-                            ?>
-                            <option value="<?php echo $x; ?>"><?php echo $x; ?></option>
-                            <?php } ?>
-                                    </select>
-                                    <select name="colour" id="colour">
+                                    <select class="select2" name="colour" id="colour">
                                         <option>Select Color</option>
                                         <option>Blue</option>
                                         <option>Red</option>
@@ -374,18 +415,15 @@
                                         <option>White</option>
                                         
                                     </select>
-                                    <select name="vehicle_type" id="vehicle_type">
+                                    <select class="select2" name="vehicle_type" id="vehicle_type">
                                         <option>Select Type</option>
                                         @foreach($vehicle_type as $vehicle_type1)
                                         <option value="{{$vehicle_type1->id}}">{{$vehicle_type1->name}}</option>
                                         @endforeach
                                     </select>
-                                    <div class="price_range">
-                                        <label>price range</label> <input type="text" id="range_24" name="price_range" value="" />
-                                    </div>
                                 </div>
                                 <div class="impl_search_btn">
-                                    <button type="submit" class="impl_btn">search vehicle</button>
+                                    <button style="top: -30px;" type="submit" class="impl_btn">search vehicle</button>
                                 </div>
                             </div>
                         </div>
@@ -563,7 +601,7 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="impl_fea_car_box">
                         <div class="impl_fea_car_img">
-                            <img src="{{asset('vehicle_image/').'/'.$vehicle1->image}}" alt="" class="img-fluid impl_frst_car_img" />
+                            <img style="width: 350px;height: 200px;" src="{{asset('vehicle_image/').'/'.$vehicle1->image}}" alt="" class="img-fluid impl_frst_car_img" />
                             <!-- <img src="{{asset('vehicle_image/').'/'.$vehicle1->image}}" alt=""
                                 class="img-fluid impl_hover_car_img" /> -->
                             <span class="impl_img_tag" title="compare"><i class="fa fa-exchange" aria-hidden="true"></i></span>
@@ -718,8 +756,12 @@
     <script type="text/javascript" src="{{ asset('dist/js/plugin/revolution/js/revolution.addon.slicey.min.js')}}"></script>
 <!----------Revolution slider start---------->
 <script type="text/javascript" src="{{ asset('dist/js/custom.js')}}"></script>
-
-
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+<script type="text/javascript">
+    var dropdownselect2 = $(".select2");
+    dropdownselect2.select2();
+</script>
 
 @endsection
     

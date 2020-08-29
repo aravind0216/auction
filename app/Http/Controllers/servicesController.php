@@ -21,6 +21,7 @@ class servicesController extends Controller
     public function dashboard()
     {
         return view('admin.dashboard');
+        //echo Browser::isMobile();
     }
 
     public function editUser($id){

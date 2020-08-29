@@ -38,6 +38,7 @@ class CreateVehiclesTable extends Migration
             $table->string('vin')->nullable();
             $table->string('keys')->nullable();
             $table->string('body_style')->nullable();
+            $table->string('sales_type')->nullable();
             $table->TEXT('description',100000)->nullable();
             $table->string('is_enable_future_vehicles')->nullable();
             $table->string('is_visible_website')->nullable();

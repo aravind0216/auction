@@ -42,6 +42,11 @@ class PageController extends Controller
         return view('page.contact',compact('site_info'));
     }
 
+    public function auction()
+    {
+        return view('auction');
+    }
+
     public function aboutUs()
     {
         $site_info = site_info::find('1');
@@ -84,14 +89,59 @@ class PageController extends Controller
         return view('page.auctions',compact('today_auction','vehicle','car','brand','upcoming_auction'));
     }
 
-    public function liveAuctions($id){
+    public function liveAuctions($id1){
+        
+        $auction = auction_vehicle::find($id1);
+
+        foreach(explode(',', $auction->vehicle_ids) as $value) 
+        {
+           $id = $value; 
+        }
+
         $vehicle = vehicle::find($id);
         $vehicle_image = vehicle_image::where('vehicle_id',$id)->get();
-        $car = car::all();
+        $car = car::find($vehicle->car_id);
         $damage = damage::all();
-        $brand = brand::all();
-        $vehicle_type = vehicle_type::all();
-        return view('page.live_auctions',compact('brand','car','vehicle','vehicle_image','vehicle_type','damage'));
+        $brand = brand::find($vehicle->brand_id);
+        $vehicle_type = vehicle_type::find($vehicle->vehicle_type);
+
+        $data = array();
+       foreach(explode(',', $auction->vehicle_ids) as $value) 
+        {
+            $vehicle1= vehicle::find($value);
+            $brand1 = brand::find($vehicle1->brand_id);
+            $model1 = car::find($vehicle1->car_id);
+            $vehicle_type1 = vehicle_type::find($vehicle1->vehicle_type);
+
+            $data = array(
+                'auction_id' => $auction->id,
+                'vehicle_id' => $vehicle1->id,
+                'price' => $vehicle1->price,
+                'year' => $vehicle1->year,
+                'location' => $vehicle1->location,
+                'odometer' => $vehicle1->odometer,
+                'document_type' => $vehicle1->document_type,
+                'price' => $vehicle1->price,
+                'image' => $vehicle1->image,
+                'brand' => '',
+                'model' => '',
+                'vehicle_type' => '',
+            );
+
+            if(!empty($brand1)){
+                $data['brand'] = $brand1->name;
+            }
+            if(!empty($model1)){
+                $data['model'] = $model1->name;
+            }
+            if(!empty($vehicle_type1)){
+                $data['vehicle_type'] = $vehicle_type1->name;
+            }
+
+            $datas[] = $data;
+        }
+        
+        return view('page.live_auctions',compact('brand','car','vehicle','vehicle_image','vehicle_type','damage','auction','datas'));
     }
 
     public function viewAuctions($id)
@@ -108,6 +158,7 @@ class PageController extends Controller
             $vehicle_type = vehicle_type::find($vehicle->vehicle_type);
 
             $data = array(
+                'auction_id' => $auction->id,
                 'vehicle_id' => $vehicle->id,
                 'price' => $vehicle->price,
                 'year' => $vehicle->year,
@@ -248,18 +299,7 @@ class PageController extends Controller
 
 
 public function homeSearch(Request $request){
-    // $fdate = date('Y-m-d',strtotime($request->from_date));
-    // $tdate = date('Y-m-d',strtotime($request->to_date));
-
-    $price = explode(';', $request->price_range);
-    $price1 = $price[0];
-    $price2 = $price[1];
-
     $q =DB::table('vehicles as v');
-// if ( $request->from_date && !empty($request->from_date) && $request->to_date && !empty($request->to_date) )
-// {
-//     $q->whereBetween('s.date', [$fdate, $tdate]);
-// }
 if ( $request->brand && !empty($request->brand) )
 {
     $q->where('v.brand_id', $request->brand);
@@ -267,10 +307,6 @@ if ( $request->brand && !empty($request->brand) )
 elseif ( $request->model && !empty($request->model) )
 {
     $q->where('v.car_id', $request->model);
-}
-elseif ( $request->year && !empty($request->year) )
-{
-    $q->where('v.year', $request->year);
 }
 elseif ( $request->colour && !empty($request->colour) )
 {
@@ -280,12 +316,8 @@ elseif ( $request->vehicle_type && !empty($request->vehicle_type) )
 {
     $q->where('v.vehicle_type', $request->vehicle_type);
 }
-elseif ( $request->price_range && !empty($request->price_range) )
-{
-    $q->whereBetween('v.price', [ $price1 , $price2 ]);
-}
     // $q->select('*');
-    $q->orderBy('id','DESC');
+    $q->orderBy('v.id','DESC');
     $vehicle = $q->paginate(9);
 
     $damage = damage::all();
@@ -310,6 +342,10 @@ elseif ( $request->colour && !empty($request->colour) )
 {
     $q->whereIn('v.colour', $request->colour);
 }
+elseif ( $request->body_style && !empty($request->body_style) )
+{
+    $q->whereIn('v.body_style', $request->body_style);
+}
 elseif ( $request->price_range && !empty($request->price_range) )
 {
     $q->whereBetween('v.price', [ $price1 , $price2 ]);
@@ -324,6 +360,152 @@ elseif ( $request->price_range && !empty($request->price_range) )
     $vehicle_type = vehicle_type::all();
     return view('page.all_vehicles',compact('brand','car','vehicle','vehicle_type','damage'));
 }
+
+
+
+public function vehicleQuickView($id)
+    {
+        $vehicle = vehicle::find($id);
+        $car = car::find($vehicle->car_id);
+        $output = '
+        <div class="modal-header">
+                <h3 style="color: #000;" class="modal-title">'.$car->name.'</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6 product_img">
+                        <img src="vehicle_image/'.$vehicle->image.'" class="img-responsive">
+                    </div>
+                    <div class="col-md-6 product_content">
+                        <h4 style="color: #000;">Lot Number: <span>'.$vehicle->id.'</span></h4>
+                            <table style="color:#000;" class="table table-bordered table-responsive">
+                                <tr>
+                                    <td>
+                                        <span style="float: left">VIN :</span>
+                                        <span style="float: right">'.$vehicle->vin.'</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span style="float: left">Doc Type :</span>
+                                        <span style="float: right">'.$vehicle->document_type.'</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span style="float: left">Odometer :</span>
+                                        <span style="float: right">'.$vehicle->odometer.'</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span style="float: left">Highlights :</span>
+                                        <span style="float: right">'.$vehicle->vin.'</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span style="float: left">Primary Damage :</span>
+                                        <span style="float: right">'.$vehicle->primary_damage.'</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span style="float: left">Secondary Damage :</span>
+                                        <span style="float: right">'.$vehicle->secondary_damage.'</span>
+                                    </td>
+                                </tr>
+                        </table>
+                        <h3 style="color: #000;" class="cost"><span class="glyphicon glyphicon-usd"></span>AED '.$vehicle->price.' </h3>
+                        <div class="space-ten"></div>
+                        <div class="btn-ground">
+                            <a href="single-vehicles/'.$vehicle->id.'"><button type="button" class="btn btn-primary"><span class="glyphicon glyphicon-shopping-cart"></span> Bid Now
+                            </button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        ';
+
+
+        echo $output;
+    }
+
+
+public function liveVehicleQuickView($id)
+    {
+        $vehicle = vehicle::find($id);
+        $car = car::find($vehicle->car_id);
+        $output = '
+        <div class="modal-header">
+                <h3 style="color: #000;" class="modal-title">'.$car->name.'</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6 product_img">
+                        <img src="/vehicle_image/'.$vehicle->image.'" class="img-responsive">
+                    </div>
+                    <div class="col-md-6 product_content">
+                        <h4 style="color: #000;">Lot Number: <span>'.$vehicle->id.'</span></h4>
+                            <table style="color:#000;" class="table table-bordered table-responsive">
+                                <tr>
+                                    <td>
+                                        <span style="float: left">VIN :</span>
+                                        <span style="float: right">'.$vehicle->vin.'</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span style="float: left">Doc Type :</span>
+                                        <span style="float: right">'.$vehicle->document_type.'</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span style="float: left">Odometer :</span>
+                                        <span style="float: right">'.$vehicle->odometer.'</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span style="float: left">Highlights :</span>
+                                        <span style="float: right">'.$vehicle->vin.'</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span style="float: left">Primary Damage :</span>
+                                        <span style="float: right">'.$vehicle->primary_damage.'</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span style="float: left">Secondary Damage :</span>
+                                        <span style="float: right">'.$vehicle->secondary_damage.'</span>
+                                    </td>
+                                </tr>
+                        </table>
+                        <h3 style="color: #000;" class="cost"><span class="glyphicon glyphicon-usd"></span>AED '.$vehicle->price.' </h3>
+                        <div class="space-ten"></div>
+                        <div class="btn-ground">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        ';
+
+
+        echo $output;
+    }
 
     
 }

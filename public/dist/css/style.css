@@ -1190,7 +1190,7 @@ p.slogan strong {
     padding: 30px 41px 0px 30px;
     background-color: #f15b5b;
 }
-.impl_search_box .nice-select {
+.impl_search_box .select2 {
     border-radius: 0;
     border: none;
     color: #5d5d5d;
@@ -1204,19 +1204,19 @@ p.slogan strong {
     margin-bottom: 30px;
     width: 21.1%;
 }
-.impl_search_box .nice-select:after {
+.impl_search_box .select2:after {
     border-bottom: 2px solid #5d5d5d;
     border-right: 2px solid #5d5d5d;
     height: 7px;
     right: 22px;
     width: 7px;
 }
-.impl_search_box .nice-select .list {
+.impl_search_box .select2 .list {
     width: 100%;
     border-radius: 0;
     border: 1px solid #ffff;
 }
-.impl_search_box .nice-select .option {
+.impl_search_box .select2 .option {
     color: #5d5d5d;
 }
 .impl_search_btn {
@@ -3114,7 +3114,7 @@ h2.widget-title {
 .impl_product_color.widget.woocommerce ul li {
     margin-bottom: 13px;
 }
-.impl_product_color ul li:nth-child(2) label input[type="checkbox"] + .label-text {
+/*.impl_product_color ul li:nth-child(2) label input[type="checkbox"] + .label-text {
     background-color: #2095f2;
 }
 .impl_product_color ul li:nth-child(3) label input[type="checkbox"] + .label-text {
@@ -3134,7 +3134,7 @@ h2.widget-title {
 }
 .impl_product_color ul li:nth-child(8) label input[type="checkbox"] + .label-text {
     background-color: #fe5621;
-}
+}*/
 .impl_product_color ul li label input[type="checkbox"] + .label-text:before {
     font-family: "FontAwesome";
     font-style: normal;

@@ -9,6 +9,10 @@ use App\vehicle;
 use App\damage;
 use App\vehicle_image;
 use App\vehicle_type;
+use DB;
+use App\Imports\vehiclesImport;
+use App\Exports\vehiclesExport;
+use Maatwebsite\Excel\Facades\Excel;  
 
 class VehicleController extends Controller
 {
@@ -180,6 +184,7 @@ class VehicleController extends Controller
 
     public function saveVehicle(Request $request){
         $request->validate([
+            'brand_id'=>'required',
             'car_id'=>'required',
             'vehicle_status'=>'required',
         ]);
@@ -194,10 +199,7 @@ class VehicleController extends Controller
 
         $vehicle = new vehicle;
         $vehicle->car_id = $request->car_id;
-
-        $car = car::find($request->car_id);
-
-        $vehicle->brand_id = $car->brand_id;
+        $vehicle->brand_id = $request->brand_id;
         $vehicle->image = $fileName;
         $vehicle->vehicle_model = $request->vehicle_model;
         $vehicle->vehicle_status = $request->vehicle_status;
@@ -249,6 +251,7 @@ class VehicleController extends Controller
 
     public function updateVehicle(Request $request){
         $request->validate([
+            'brand_id'=>'required',
             'car_id'=>'required',
             'vehicle_status'=>'required',
         ]);
@@ -273,13 +276,8 @@ class VehicleController extends Controller
         }
 
         $vehicle = vehicle::find($request->id);
-
         $vehicle->car_id = $request->car_id;
-
-        $car = car::find($request->car_id);
-
-        $vehicle->brand_id = $car->brand_id;
-
+        $vehicle->brand_id = $request->brand_id;
         $vehicle->image = $fileName;
         $vehicle->vehicle_model = $request->vehicle_model;
         $vehicle->vehicle_status = $request->vehicle_status;
@@ -400,6 +398,65 @@ class VehicleController extends Controller
         $vehicle_type->delete();
         return response()->json(['message'=>'Successfully Delete'],200);
     }
+
+
+
+    function import(Request $request)
+    {
+     $this->validate($request, [
+      'select_file'  => 'required|mimes:xls,xlsx'
+     ]);
+
+     Excel::import(new vehiclesImport,request()->file('select_file'));
+
+     // $path = $request->file('select_file')->getRealPath();
+
+     // $data = Excel::import($path)->get();
+
+
+     // if($data->count() > 0)
+     // {
+     //  foreach($data->toArray() as $key => $value)
+     //  {
+     //   foreach($value as $row)
+     //   {
+     //    $insert_data[] = array(
+     //     'car_id'  => $row['car_id'],
+     //     'brand_id'   => $row['brand_id'],
+     //     'vehicle_model'   => $row['vehicle_model'],
+     //     'vehicle_status'    => $row['vehicle_status'],
+     //     'colour'  => $row['colour'],
+     //     'vehicle_type'   => $row['vehicle_type']
+     //    );
+     //   }
+     //  }
+
+     //  if(!empty($insert_data))
+     //  {
+     //   DB::table('vehicles')->insert($insert_data);
+     //  }
+     // }
+     return back()->with('success', 'Excel Data Imported successfully.');
+    }
+
+
+    public function export() 
+    {
+        return Excel::download(new vehiclesExport, 'vehicle.xlsx');
+    }
+
+
+    public function getBrandCar($id){ 
+        $data = car::where('brand_id',$id)->get();
+
+        $output ='<option value="">SELECT</option>';
+        foreach ($data as $key => $value) {
+        $output .= '<option value="'.$value->id.'">'.$value->name.'</option>';
+        }
+          
+        echo $output;
+    }
+
 
 
 }

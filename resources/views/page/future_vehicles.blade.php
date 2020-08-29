@@ -64,7 +64,7 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="impl_fea_car_box">
                         <div class="impl_fea_car_img">
-                            <img src="{{asset('vehicle_image/').'/'.$vehicle1->image}}" alt="" class="img-fluid impl_frst_car_img" />
+                            <img style="width: 350px;height: 200px;" src="{{asset('vehicle_image/').'/'.$vehicle1->image}}" alt="" class="img-fluid impl_frst_car_img" />
                             <!-- <img src="{{asset('vehicle_image/').'/'.$vehicle1->image}}" alt=""
                                 class="img-fluid impl_hover_car_img" /> -->
                             <span class="impl_img_tag" title="compare"><i class="fa fa-exchange" aria-hidden="true"></i></span>
