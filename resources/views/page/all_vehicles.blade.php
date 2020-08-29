@@ -27,6 +27,56 @@
             </div>
         </div>
     </div>
+
+<style type="text/css">
+.select2-results{
+    color: #000 !important;
+}
+
+.select2 {
+    -webkit-tap-highlight-color: transparent;
+    background-color: #fff;
+    border-radius: 5px;
+    border: solid 1px #e8e8e8;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: block;
+    float: left;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: normal;
+    height: 42px;
+    line-height: 40px;
+    outline: none;
+    padding-left: 18px;
+    padding-right: 30px;
+    position: relative;
+    text-align: left !important;
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    white-space: nowrap;
+    width: auto;
+}
+
+
+.select2-container--default .select2-selection--single {
+     /*background-color: #fff; 
+     border: 1px solid #aaa; 
+     border-radius: 4px; */
+     background-color: #fff; 
+     border: none !important; 
+     border-radius: none !important; 
+     margin-top: 5px;
+}
+.select2-selection__arrow{
+    margin-top: 5px;
+}
+</style>
+
     <!------ Purchase new section Start ------>
     <div class="impl_purchase_wrapper">
         <div class="container">
@@ -65,7 +115,7 @@
                                         </div>
                                     </div>
                                     <!--Brands-->
-                                    <div class="impl_product_brand widget woocommerce">
+                                    <div class="impl_product_color widget woocommerce">
                                         <h2 class="widget-title">brands</h2>
                                         <ul>
                                             @foreach($brand as $brand1)
@@ -80,66 +130,47 @@
                                         </ul>
                                     </div>
                                     <!--Colors-->
+                                    <!-- <div class="impl_product_color widget woocommerce">
+                                        <h2 class="widget-title">Brands</h2>
+                                        <select onchange="changeBrand()" style="width: 100% !important;" class="select2 form-control" name="brand_id" id="brand_id">
+                                        <option>Select Brand</option>
+                                        @foreach($brand as $brand1)
+                                        <option value="{{$brand1->id}}">{{$brand1->name}}</option>
+                                        @endforeach
+                                        </select>
+                                    </div> -->
+
                                     <div class="impl_product_color widget woocommerce">
-                                        <h2 class="widget-title">color</h2>
-                                        <ul>
-                                            <li>
-                                                <label class="brnds_check_label">
-												black
-												<input value="black" type="checkbox" name="colour[]"> 
-												<span class="label-text"></span>
-											</label>
-                                            </li>
-                                            <li>
-                                                <label class="brnds_check_label">
-												blue
-												<input value="blue" type="checkbox" name="colour[]"> 
-												<span class="label-text"></span>
-											</label>
-                                            </li>
-                                            <li>
-                                                <label class="brnds_check_label">
-												white
-												<input value="white" type="checkbox" name="colour[]"> 
-												<span class="label-text"></span>
-											</label>
-                                            </li>
-                                            <li>
-                                                <label class="brnds_check_label">
-												yellow
-												<input value="yellow" type="checkbox" name="colour[]"> 
-												<span class="label-text"></span>
-											</label>
-                                            </li>
-                                            <li>
-                                                <label class="brnds_check_label">
-												red
-												<input value="red" type="checkbox" name="colour[]"> 
-												<span class="label-text"></span>
-											</label>
-                                            </li>
-                                            <li>
-                                                <label class="brnds_check_label">
-												grey 	
-												<input value="grey" type="checkbox" name="colour[]"> 
-												<span class="label-text"></span>
-											</label>
-                                            </li>
-                                            <li>
-                                                <label class="brnds_check_label">
-												brown
-												<input value="brown" type="checkbox" name="colour[]"> 
-												<span class="label-text"></span>
-											</label>
-                                            </li>
-                                            <li>
-                                                <label class="brnds_check_label">
-												orange
-												<input value="orange" type="checkbox" name="colour[]"> 
-												<span class="label-text"></span>
-											</label>
-                                            </li>
-                                        </ul>
+                                        <h2 class="widget-title">Model</h2>
+                                        <select style="width: 100% !important;" class="select2 form-control" name="car_id" id="car_id">
+                                        <option>Select Model</option>
+                                        @foreach($car as $car1)
+                                        <option value="{{$car1->id}}">{{$car1->name}}</option>
+                                        @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="impl_product_color widget woocommerce">
+                                        <h2 class="widget-title">Year</h2>
+                                        <select style="width: 100% !important;" class="select2 form-control" name="year" id="year">
+                                        <option value="">SELECT YEAR</option>
+                                        <?php
+                                        $d = date('Y');
+                                        for ($x = 1980; $x <= $d; $x++) {
+                                        ?>
+                                        <option value="<?php echo $x; ?>"><?php echo $x; ?></option>
+                                        <?php } ?>
+                                        </select>
+                                    </div>
+
+                                    <div class="impl_product_color widget woocommerce">
+                                        <h2 class="widget-title">Damage</h2>
+                                        <select style="width: 100% !important;" class="select2 form-control" name="damage" id="damage">
+                                        <option>Select Damage</option>
+                                        @foreach($damage as $damage1)
+                                        <option value="{{$damage1->id}}">{{$damage1->damage}}</option>
+                                        @endforeach
+                                        </select>
                                     </div>
                                     <!--Price Range-->
                                     <div class="impl_product_price widget woocommerce">
@@ -226,7 +257,9 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="impl_fea_car_box">
                         <div class="impl_fea_car_img">
-                            <img style="width: 350px;height: 200px;" src="{{asset('vehicle_image/').'/'.$vehicle1->image}}" alt="" class="img-fluid impl_frst_car_img" />
+                            <img style="object-fit: cover;
+  width: 320px;
+  height: 180px;" src="{{asset('vehicle_image/').'/'.$vehicle1->image}}" alt="" class="img-fluid impl_frst_car_img" />
                             <!-- <img src="dist/images/product/fea_car1_hover.jpg" alt="" class="img-fluid impl_hover_car_img" /> -->
                             <span class="impl_img_tag" title="compare"><a href="/compare"><i class="fa fa-exchange" aria-hidden="true"></i></a></span>
                         </div>
@@ -281,10 +314,9 @@
         </div>
     </div>
 <style type="text/css">
-            .product_view .modal-dialog{max-width: 800px; width: 100%;}
-        .pre-cost{text-decoration: line-through; color: #a5a5a5;}
-        .space-ten{padding: 10px 0;}
-
+    .product_view .modal-dialog{max-width: 800px; width: 100%;}
+    .pre-cost{text-decoration: line-through; color: #a5a5a5;}
+    .space-ten{padding: 10px 0;}
 </style>
 <div class="modal fade product_view" id="popup_modal">
     <div class="modal-dialog">
@@ -302,13 +334,20 @@
     <script type="text/javascript" src="/dist/js/plugin/magnific/jquery.magnific-popup.min.js"></script>
     <script type="text/javascript" src="/dist/js/plugin/slick/slick.min.js"></script>
     <script type="text/javascript" src="/dist/js/custom.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
+<script type="text/javascript">
+    var dropdownselect2 = $(".select2");
+    dropdownselect2.select2();
+</script>
+
 <script type="text/javascript">
 $( "#search_lot" ).click(function() {
     var lot_number = $('#lot_number').val();
     window.location = "/single-vehicles/"+lot_number;
 });
-
-
 
 function viewDetails(id)
 {
@@ -319,6 +358,18 @@ function viewDetails(id)
     {
         $('#view-details').html(data);
         $('#popup_modal').modal('show');
+    }
+  });
+}
+
+function changeBrand(){
+  var id = $("#brand_id").val();
+  $.ajax({
+    url : '/admin/get-brand-car/'+id,
+    type: "GET",
+    success: function(data)
+    {
+        $('#car_id').html(data);
     }
   });
 }

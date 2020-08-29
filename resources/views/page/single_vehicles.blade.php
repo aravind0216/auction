@@ -35,21 +35,21 @@
                         <div class="impl_buy_old_car">
                             <div class="slider slider-for">
                                 @if(!empty($vehicle->image))
-                                <div><img style="width: 700px;height: 400px;" src="{{asset('vehicle_image/').'/'.$vehicle->image}}" alt=""></div>
+                                <div><img style="object-fit: cover;width: 700px;height: 400px;" src="{{asset('vehicle_image/').'/'.$vehicle->image}}" alt=""></div>
                                 @endif
                                 @foreach($vehicle_image as $row)
-                                <div><img style="width: 700px;height: 400px;" src="{{asset('vehicle_image/').'/'.$row->image}}" alt=""></div>
+                                <div><img style="object-fit: cover;width: 700px;height: 400px;" src="{{asset('vehicle_image/').'/'.$row->image}}" alt=""></div>
                                 @endforeach
                             </div>
                             <div class="slider slider-nav">
                                 @if(!empty($vehicle->image))
                                 <div>
-                                    <div class="impl_thumb_ovrly"><img style="width: 100px;height: 100px;" src="{{asset('vehicle_image/').'/'.$vehicle->image}}" alt=""></div>
+                                    <div class="impl_thumb_ovrly"><img style="object-fit: cover;width: 100px;height: 100px;" src="{{asset('vehicle_image/').'/'.$vehicle->image}}" alt=""></div>
                                 </div>
                                 @endif
                                 @foreach($vehicle_image as $row)
                                 <div>
-                                    <div class="impl_thumb_ovrly"><img style="width: 100px;height: 100px;" src="{{asset('vehicle_image/').'/'.$row->image}}" alt=""></div>
+                                    <div class="impl_thumb_ovrly"><img style="object-fit: cover;width: 100px;height: 100px;" src="{{asset('vehicle_image/').'/'.$row->image}}" alt=""></div>
                                 </div>
                                 @endforeach
                             </div>

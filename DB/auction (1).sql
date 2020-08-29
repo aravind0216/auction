@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 26, 2020 at 08:29 PM
+-- Generation Time: Aug 29, 2020 at 08:18 PM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.8
 
@@ -68,7 +68,7 @@ CREATE TABLE `auction_vehicles` (
 --
 
 INSERT INTO `auction_vehicles` (`id`, `auction_title`, `starting_date`, `starting_time`, `vehicle_ids`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'SALVAGE VEHICLES', '2020-08-26', '12:00 PM', '29,34,35,30,31,32,33,34', '0', '2020-08-08 06:01:13', '2020-08-26 09:41:09'),
+(1, 'SALVAGE VEHICLES', '2020-08-29', '12:00 PM', '29,34,35,30,31,32,33,34', '0', '2020-08-08 06:01:13', '2020-08-26 09:41:09'),
 (2, 'Auction Title', '2020-08-19', '10:00 AM', '1', '0', '2020-08-08 07:08:46', '2020-08-08 10:12:16'),
 (3, 'Auction Title', '2020-08-20', '06:00 PM', '1,1,1', '0', '2020-08-08 07:10:09', '2020-08-08 10:12:27');
 

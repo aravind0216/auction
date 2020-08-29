@@ -405,21 +405,23 @@
                                         <option value="{{$car1->id}}">{{$car1->name}}</option>
                                         @endforeach
                                     </select>
-                                    <select class="select2" name="colour" id="colour">
-                                        <option>Select Color</option>
-                                        <option>Blue</option>
-                                        <option>Red</option>
-                                        <option>Green</option>
-                                        <option>Black</option>
-                                        <option>Yellow</option>
-                                        <option>White</option>
-                                        
+                                    <select class="select2" name="from_year" id="from_year">
+                                        <option value="">SELECT YEAR</option>
+                                        <?php
+                                        $d = date('Y');
+                                        for ($x = 1980; $x <= $d; $x++) {
+                                        ?>
+                                        <option value="<?php echo $x; ?>"><?php echo $x; ?></option>
+                                        <?php } ?>
                                     </select>
-                                    <select class="select2" name="vehicle_type" id="vehicle_type">
-                                        <option>Select Type</option>
-                                        @foreach($vehicle_type as $vehicle_type1)
-                                        <option value="{{$vehicle_type1->id}}">{{$vehicle_type1->name}}</option>
-                                        @endforeach
+                                    <select class="select2" name="to_year" id="to_year">
+                                        <option value="">SELECT YEAR</option>
+                                        <?php
+                                        $d = date('Y');
+                                        for ($x = 1980; $x <= $d; $x++) {
+                                        ?>
+                                        <option value="<?php echo $x; ?>"><?php echo $x; ?></option>
+                                        <?php } ?>
                                     </select>
                                 </div>
                                 <div class="impl_search_btn">
