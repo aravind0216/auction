@@ -47,7 +47,7 @@
            <strong>{{ $message }}</strong>
    </div>
    @endif
-        <form method="POST" enctype="multipart/form-data" action="/admin/import-excel">
+        <!-- <form method="POST" enctype="multipart/form-data" action="/admin/import-excel">
         {{ csrf_field() }}
         <div class="form-group">
          <table class="table">
@@ -62,7 +62,7 @@
           </tr>
          </table>
         </div>
-       </form>
+       </form> -->
 
         <button id="open_model" style="width: 200px;" type="button" class="btn btn-primary add-task-btn btn-block my-1">
           <i class="bx bx-plus"></i>

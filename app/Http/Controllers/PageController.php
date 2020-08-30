@@ -89,62 +89,60 @@ class PageController extends Controller
         return view('page.auctions',compact('today_auction','vehicle','car','brand','upcoming_auction'));
     }
 
-    public function liveAuctions($id1){
+    public function liveAuctions($id){
         
-        $auction = auction_vehicle::find($id1);
-        // foreach(explode(',', $auction->vehicle_ids) as $value) 
+        $auction = auction_vehicle::find($id);
+
+        // $data = array();
+        // foreach(explode(',', $auction->vehicle_ids) as $key => $value) 
         // {
-        //    $id = $value; 
-        // }
+        //     if($key == 0){
+        //         $vehicle = vehicle::find($value);
+        //         $vehicle_image = vehicle_image::where('vehicle_id',$value)->get();
+        //         $car = car::find($vehicle->car_id);
+        //         $damage = damage::all();
+        //         $brand = brand::find($vehicle->brand_id);
+        //         $vehicle_type = vehicle_type::find($vehicle->vehicle_type);
+        //     }
+        //     else{
+        //         $vehicle1= vehicle::find($value);
+        //         $brand1 = brand::find($vehicle1->brand_id);
+        //         $model1 = car::find($vehicle1->car_id);
+        //         $vehicle_type1 = vehicle_type::find($vehicle1->vehicle_type);
 
-        $data = array();
-        foreach(explode(',', $auction->vehicle_ids) as $key => $value) 
-        {
-            if($key == 0){
-                $vehicle = vehicle::find($value);
-                $vehicle_image = vehicle_image::where('vehicle_id',$value)->get();
-                $car = car::find($vehicle->car_id);
-                $damage = damage::all();
-                $brand = brand::find($vehicle->brand_id);
-                $vehicle_type = vehicle_type::find($vehicle->vehicle_type);
-            }
-            else{
-                $vehicle1= vehicle::find($value);
-                $brand1 = brand::find($vehicle1->brand_id);
-                $model1 = car::find($vehicle1->car_id);
-                $vehicle_type1 = vehicle_type::find($vehicle1->vehicle_type);
+        //         $data = array(
+        //             'auction_id' => $auction->id,
+        //             'vehicle_id' => $vehicle1->id,
+        //             'price' => $vehicle1->price,
+        //             'year' => $vehicle1->year,
+        //             'location' => $vehicle1->location,
+        //             'odometer' => $vehicle1->odometer,
+        //             'document_type' => $vehicle1->document_type,
+        //             'price' => $vehicle1->price,
+        //             'image' => $vehicle1->image,
+        //             'sales_type' => $vehicle1->sales_type,
+        //             'brand' => '',
+        //             'model' => '',
+        //             'vehicle_type' => '',
+        //         );
 
-                $data = array(
-                    'auction_id' => $auction->id,
-                    'vehicle_id' => $vehicle1->id,
-                    'price' => $vehicle1->price,
-                    'year' => $vehicle1->year,
-                    'location' => $vehicle1->location,
-                    'odometer' => $vehicle1->odometer,
-                    'document_type' => $vehicle1->document_type,
-                    'price' => $vehicle1->price,
-                    'image' => $vehicle1->image,
-                    'brand' => '',
-                    'model' => '',
-                    'vehicle_type' => '',
-                );
-
-                if(!empty($brand1)){
-                    $data['brand'] = $brand1->name;
-                }
-                if(!empty($model1)){
-                    $data['model'] = $model1->name;
-                }
-                if(!empty($vehicle_type1)){
-                    $data['vehicle_type'] = $vehicle_type1->name;
-                }
-                $datas[] = $data;
-            }
+        //         if(!empty($brand1)){
+        //             $data['brand'] = $brand1->name;
+        //         }
+        //         if(!empty($model1)){
+        //             $data['model'] = $model1->name;
+        //         }
+        //         if(!empty($vehicle_type1)){
+        //             $data['vehicle_type'] = $vehicle_type1->name;
+        //         }
+        //         $datas[] = $data;
+        //     }
 
             
-        }
+        // }
 
-        return view('page.live_auctions',compact('brand','car','vehicle','vehicle_image','vehicle_type','damage','auction','datas'));
+        //return view('page.live_auctions',compact('brand','car','vehicle','vehicle_image','vehicle_type','damage','auction','datas'));
+        return view('page.live_auctions',compact('id','auction'));
     }
 
     public function viewAuctions($id)
@@ -265,7 +263,9 @@ class PageController extends Controller
 
     public function saveMemberRegistration(Request $request){
         $request->validate([
+            'busisness_type'=>'required',
             'name'=>'required',
+            'email'=>'required',
         ]);
 
         $member = new User;
@@ -295,7 +295,7 @@ class PageController extends Controller
         $all = $member_password::find($member_password->id);
         Mail::send('mail.member_send_mail',compact('all'),function($message) use($all){
             $message->to($all['email'])->subject('Create your Own Password');
-            $message->from('aravind.0216@gmail.com','New York Car Auction Website');
+            $message->from('contact@lrbinfotech.com','New York Car Auction');
         });
         return response()->json('successfully save'); 
     }
@@ -327,6 +327,16 @@ elseif ( $request->from_year && !empty($request->from_year) && $request->to_year
     return view('page.all_vehicles',compact('brand','car','vehicle','vehicle_type','damage'));
 }
 
+    public function getBrandCar(Request $request){ 
+        $data = car::whereIn('brand_id',$request->id)->get();
+
+        $output ='<option value="">Select Model</option>';
+        foreach ($data as $key => $value) {
+        $output .= '<option value="'.$value->id.'">'.$value->name.'</option>';
+        }
+          
+        echo $output;
+    }
 
 public function vehicleSearch(Request $request){
     $price = explode(';', $request->price_range);
@@ -385,7 +395,7 @@ public function vehicleQuickView($id)
             <div style="background-color: #000;" class="modal-body">
                 <div class="row">
                     <div class="col-md-6 product_img">
-                        <img src="vehicle_image/'.$vehicle->image.'" class="img-responsive">
+                        <img style="object-fit: cover;height:500px;width:400px;" src="vehicle_image/'.$vehicle->image.'" class="img-responsive">
                     </div>
                     <div class="col-md-6 product_content">
                         <h4 style="color: #fff;">Lot Number: <span>'.$vehicle->id.'</span></h4>
@@ -449,20 +459,20 @@ public function liveVehicleQuickView($id)
         $vehicle = vehicle::find($id);
         $car = car::find($vehicle->car_id);
         $output = '
-        <div class="modal-header">
+        <div style="background-color: #f15b5b;" class="modal-header">
                 <h3 style="color: #000;" class="modal-title">'.$car->name.'</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div style="background-color: #000;" class="modal-body">
                 <div class="row">
                     <div class="col-md-6 product_img">
-                        <img src="/vehicle_image/'.$vehicle->image.'" class="img-responsive">
+                        <img style="object-fit: cover;height:500px;width:400px;" src="/vehicle_image/'.$vehicle->image.'" class="img-responsive">
                     </div>
                     <div class="col-md-6 product_content">
-                        <h4 style="color: #000;">Lot Number: <span>'.$vehicle->id.'</span></h4>
-                            <table style="color:#000;" class="table table-bordered table-responsive">
+                        <h4 style="color: #fff;">Lot Number: <span>'.$vehicle->id.'</span></h4>
+                            <table style="color:#fff;" class="table table-bordered table-responsive">
                                 <tr>
                                     <td>
                                         <span style="float: left">VIN :</span>
@@ -500,7 +510,7 @@ public function liveVehicleQuickView($id)
                                     </td>
                                 </tr>
                         </table>
-                        <h3 style="color: #000;" class="cost"><span class="glyphicon glyphicon-usd"></span>AED '.$vehicle->price.' </h3>
+                        <h3 style="color: #fff;" class="cost"><span class="glyphicon glyphicon-usd"></span>AED '.$vehicle->price.' </h3>
                         <div class="space-ten"></div>
                         <div class="btn-ground">
                             

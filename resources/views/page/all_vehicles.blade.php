@@ -122,7 +122,7 @@
                                             <li>
                                                 <label class="brnds_check_label">
 												{{$brand1->name}}
-												<input value="{{$brand1->id}}" type="checkbox" name="brand_id[]"> 
+												<input onclick="changeBrand()" value="{{$brand1->id}}" type="checkbox" name="brand_id"> 
 												<span class="label-text"></span>
 											    </label>
                                             </li>
@@ -264,7 +264,7 @@
                             <span class="impl_img_tag" title="compare"><a href="/compare"><i class="fa fa-exchange" aria-hidden="true"></i></a></span>
                         </div>
                         <div class="impl_fea_car_data">
-                            <h2><a href="single-vehicles/{{$vehicle1->id}}">
+                            <h2><a href="#" onclick="viewDetails({{$vehicle1->id}})">
                     @foreach($car as $car1)
                     @if($car1->id == $vehicle1->car_id)
                     {{$car1->name}}
@@ -363,10 +363,15 @@ function viewDetails(id)
 }
 
 function changeBrand(){
-  var id = $("#brand_id").val();
+  // var id = $('input[name="brand_id[]"]').val();
+    var id = [];
+    $("input[name='brand_id']:checked").each(function(){
+        id.push(this.value);
+    });
   $.ajax({
-    url : '/admin/get-brand-car/'+id,
+    url : '/get-brand-car',
     type: "GET",
+    data: {id:id},
     success: function(data)
     {
         $('#car_id').html(data);

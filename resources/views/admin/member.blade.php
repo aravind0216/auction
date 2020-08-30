@@ -246,6 +246,7 @@ $('#busisness_type').change(function(){
 });
 
 function Save(){
+  $('#saveButton').prop('disabled', true);
   var formData = new FormData($('#form')[0]);
   if(action_type == 1){
     $.ajax({
@@ -261,10 +262,12 @@ function Save(){
             $('#popup_modal').modal('hide');
             $('.zero-configuration').load(location.href+' .zero-configuration');
             toastr.success(data, 'Successfully Save');
+            $('#saveButton').prop('disabled', false);
         },error: function (data) {
             var errorData = data.responseJSON.errors;
             $.each(errorData, function(i, obj) {
             toastr.error(obj[0]);
+            $('#saveButton').prop('disabled', false);
       });
     }
     });

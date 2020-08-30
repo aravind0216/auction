@@ -70,7 +70,7 @@
                             <span class="impl_img_tag" title="compare"><i class="fa fa-exchange" aria-hidden="true"></i></span>
                         </div>
                         <div class="impl_fea_car_data">
-                            <h2><a href="single-vehicles/{{$vehicle1->id}}">
+                            <h2><a href="#" onclick="viewDetails({{$vehicle1->id}})">
                     @foreach($car as $car1)
                     @if($car1->id == $vehicle1->car_id)
                     {{$car1->name}}
@@ -85,7 +85,7 @@
                                     <span class="impl_fea_name">{{$vehicle1->colour}}</span></li>
                             </ul>
                             <div class="impl_fea_btn">
-                                <button class="impl_btn"><span class="impl_doller">AED {{$vehicle1->price}} </span><a href="single-vehicles/{{$vehicle1->id}}"><span class="impl_bnw">View Details</span></a></button>
+                                <button class="impl_btn"><span class="impl_doller">AED {{$vehicle1->price}} </span><a href="#" onclick="viewDetails({{$vehicle1->id}})"><span class="impl_bnw">View Details</span></a></button>
                             </div>
                         </div>
                     </div>
@@ -96,6 +96,19 @@
             </div>
         </div>
     </div>
+
+<style type="text/css">
+    .product_view .modal-dialog{max-width: 800px; width: 100%;}
+    .pre-cost{text-decoration: line-through; color: #a5a5a5;}
+    .space-ten{padding: 10px 0;}
+</style>
+<div class="modal fade product_view" id="popup_modal">
+    <div class="modal-dialog">
+        <div class="modal-content" id="view-details">
+            
+        </div>
+    </div>
+</div>
 @endsection
 @section('extra-js')
 
@@ -107,5 +120,19 @@
     <script type="text/javascript" src="dist/js/plugin/nice_select/jquery.nice-select.min.js"></script>
     <script type="text/javascript" src="dist/js/custom.js"></script>
 
+<script type="text/javascript">
+function viewDetails(id)
+{
+    $.ajax({
+    url : '/vehicle-quick-view/'+id,
+    type: "GET",
+    success: function(data)
+    {
+        $('#view-details').html(data);
+        $('#popup_modal').modal('show');
+    }
+  });
+}
+</script>
 @endsection
     

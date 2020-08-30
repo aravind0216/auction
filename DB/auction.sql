@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 29, 2020 at 08:18 PM
+-- Generation Time: Aug 30, 2020 at 09:56 PM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.8
 
@@ -68,9 +68,39 @@ CREATE TABLE `auction_vehicles` (
 --
 
 INSERT INTO `auction_vehicles` (`id`, `auction_title`, `starting_date`, `starting_time`, `vehicle_ids`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'SALVAGE VEHICLES', '2020-08-29', '12:00 PM', '29,34,35,30,31,32,33,34', '0', '2020-08-08 06:01:13', '2020-08-26 09:41:09'),
-(2, 'Auction Title', '2020-08-19', '10:00 AM', '1', '0', '2020-08-08 07:08:46', '2020-08-08 10:12:16'),
-(3, 'Auction Title', '2020-08-20', '06:00 PM', '1,1,1', '0', '2020-08-08 07:10:09', '2020-08-08 10:12:27');
+(1, 'SALVAGE VEHICLES', '2020-08-30', '09:34 PM', '29,35,30,31,32,33,34', '0', '2020-08-08 06:01:13', '2020-08-26 09:41:09'),
+(2, 'Auction Title', '2020-08-31', '10:00 AM', '1', '0', '2020-08-08 07:08:46', '2020-08-08 10:12:16'),
+(3, 'Auction Title', '2020-08-31', '06:00 PM', '1,1,1', '0', '2020-08-08 07:10:09', '2020-08-08 10:12:27');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `auction_vehicle_ids`
+--
+
+CREATE TABLE `auction_vehicle_ids` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `auction_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `vehicle_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `auction_vehicle_ids`
+--
+
+INSERT INTO `auction_vehicle_ids` (`id`, `auction_id`, `vehicle_id`, `status`, `created_at`, `updated_at`) VALUES
+(1, '1', '29', '0', NULL, NULL),
+(2, '1', '35', '0', NULL, NULL),
+(3, '1', '30', '0', NULL, NULL),
+(4, '1', '31', '0', NULL, NULL),
+(5, '1', '32', '0', NULL, NULL),
+(6, '1', '33', '0', NULL, NULL),
+(7, '1', '34', '0', NULL, NULL),
+(8, '2', '1', '0', NULL, NULL),
+(9, '3', '1', '0', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -80,6 +110,25 @@ INSERT INTO `auction_vehicles` (`id`, `auction_title`, `starting_date`, `startin
 
 CREATE TABLE `banks` (
   `id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bid_values`
+--
+
+CREATE TABLE `bid_values` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `date` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `time` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `auction_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `member_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `vehicle_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bid_amount` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -255,9 +304,10 @@ CREATE TABLE `member_passwords` (
 --
 
 INSERT INTO `member_passwords` (`id`, `date`, `end_date`, `member_id`, `name`, `email`, `status`, `created_at`, `updated_at`) VALUES
-(1, '2020-07-21', '2020-08-04', '6', 'Aravind', 'aravind.0216@gmail.com', '0', '2020-07-21 03:33:02', '2020-07-21 03:33:02'),
-(2, '2020-07-21', '2020-08-04', '7', 'Aravind', 'aravind.0216@gmail.com', '1', '2020-07-21 03:35:31', '2020-07-21 06:40:24'),
-(3, '2020-08-23', '2020-09-06', '8', 'Aravind', 'aravind.0216@gmail.com', '1', '2020-08-23 08:45:10', '2020-08-23 08:46:33');
+(8, '2020-08-30', '2020-09-13', '49', 'Aravind', 'aravind.0216@gmail.com', '0', '2020-08-30 07:49:02', '2020-08-30 07:49:02'),
+(9, '2020-08-30', '2020-09-13', '50', 'aravind', 'aravind.0216@gmail.com', '0', '2020-08-30 07:53:27', '2020-08-30 07:53:27'),
+(10, '2020-08-30', '2020-09-13', '51', 'aravind', 'aravind.0216@gmail.com', '0', '2020-08-30 09:51:03', '2020-08-30 09:51:03'),
+(11, '2020-08-30', '2020-09-13', '52', 'aravind', 'aravind.0216@gmail.com', '0', '2020-08-30 09:56:46', '2020-08-30 09:56:46');
 
 -- --------------------------------------------------------
 
@@ -294,7 +344,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (19, '2020_07_27_074835_create_banks_table', 10),
 (20, '2020_07_27_075651_create_deposits_table', 10),
 (21, '2020_08_07_133647_create_auction_vehicles_table', 11),
-(22, '2020_08_15_082853_create_withdrawals_table', 12);
+(22, '2020_08_15_082853_create_withdrawals_table', 12),
+(23, '2020_08_30_150354_create_bid_values_table', 13),
+(24, '2020_08_30_175929_create_auction_vehicle_ids_table', 14);
 
 -- --------------------------------------------------------
 
@@ -442,7 +494,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `busisness_type`, `company_name`, `address`, `country`, `state`, `city`, `postal_code`, `phone_number`, `phone_extension`, `most_intrested`, `buy_vehicles_for`, `wallet`, `role_id`, `status`, `passbook`, `passport`, `emirate_id`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'Admin', 'admin@gmail.com', NULL, '$2y$10$e5D4Q5L954x3DeH0.CHqtu0AVXdOaYCtoHkTYBqgjRkxgn.Dm1AI2', '2', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', NULL, '0', '0', '0', NULL, NULL, NULL, NULL, '2020-06-10 06:30:45', '2020-08-15 08:39:33'),
-(8, 'Aravind', 'aravind.0216@gmail.com', NULL, '$2y$10$g3S0e3Qsy3c.K3Z86iQ1DOVOHykWRYrwa.JRw0or31fXQvjyLiIN6', '2', NULL, NULL, NULL, NULL, NULL, NULL, '8883191962', NULL, '8', NULL, '0', '0', '0', NULL, NULL, NULL, NULL, '2020-08-23 08:45:10', '2020-08-23 08:46:33');
+(52, 'aravind', 'aravind.0216@gmail.com', NULL, NULL, '2', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '7', NULL, '0', '0', '0', NULL, NULL, NULL, NULL, '2020-08-30 09:56:46', '2020-08-30 09:56:46');
 
 -- --------------------------------------------------------
 
@@ -460,6 +512,7 @@ CREATE TABLE `vehicles` (
   `colour` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `vehicle_type` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `price` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `minimum_bid_value` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT '0',
   `year` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `document_type` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `exterior_color` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -475,6 +528,7 @@ CREATE TABLE `vehicles` (
   `vin` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `keys` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `body_style` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sales_type` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `image` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `is_enable_future_vehicles` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT '0',
@@ -490,15 +544,15 @@ CREATE TABLE `vehicles` (
 -- Dumping data for table `vehicles`
 --
 
-INSERT INTO `vehicles` (`id`, `lot_number`, `car_id`, `brand_id`, `vehicle_model`, `vehicle_status`, `colour`, `vehicle_type`, `price`, `year`, `document_type`, `exterior_color`, `interior_color`, `odometer`, `engine_type`, `highlights`, `primary_damage`, `transmission`, `secondary_damage`, `cylinders`, `fuel`, `vin`, `keys`, `body_style`, `description`, `image`, `is_enable_future_vehicles`, `is_visible_website`, `drive`, `location`, `status`, `created_at`, `updated_at`) VALUES
-(29, NULL, '12', '2', 'VXi', 'Old', 'White', '1', '695000', '2017', 'clear', 'White', NULL, '26,600 km', '1.2 Vxi BSIV', NULL, NULL, 'Manual', NULL, '4', 'Petrol', '0001', 'Manual key', 'Sedan', NULL, '1162312672.webp', '1', '1', 'FWD', 'Dubai Industrials', '0', '2020-08-26 07:00:07', '2020-08-26 09:56:16'),
-(30, NULL, '13', '5', '2.5 GX BS IV', 'Old', 'white', '1', '1200000', '2015', 'clear', 'white', NULL, '26000 km', '2.5', NULL, NULL, 'Manual', NULL, '4', 'Diesel', '0002', 'Remote key', 'SUV', NULL, '174973685.webp', '1', '1', 'RWD', NULL, '0', '2020-08-26 07:23:25', '2020-08-26 07:23:25'),
-(31, NULL, '14', '6', '1.5 TDI CR', 'Old', 'Silver', '1', '690000', '2015', 'Clear', 'Silver', 'Beige', '60,000 KM', 'BS IV', NULL, NULL, 'Automatic', NULL, '4', 'Diesel', '0003', 'Remote Controlled key', 'Sedan', NULL, '1110853525.webp', '0', '1', 'FWD', NULL, '0', '2020-08-26 07:46:22', '2020-08-26 07:46:22'),
-(32, NULL, '1', '1', 'i20 Active', 'Old', 'white', '1', '600000', '2016', 'clear', 'white', 'Beige', '33,062 km', 'BS IV', NULL, NULL, 'Manual', NULL, '4 cylinder', 'Petrol', '0004', 'Remote Controlled key', NULL, NULL, '1948597218.webp', '1', '1', 'Front Wheel Drive', NULL, '0', '2020-08-26 08:06:59', '2020-08-26 08:06:59'),
-(33, NULL, '2', '1', '1.6 SX Plus Auto', 'Old', 'Bordeaux/Maroon', '1', '1550000', '2019', 'Clear', 'Bordeaux/Maroon', 'Grey', '12,500 km', 'BS VI', NULL, NULL, 'Automatic', NULL, '4 cylinder', 'Diesel', '0005', 'Remote Controlled key', 'SUV', NULL, '185262435.webp', '1', '1', 'Front Wheel Drive', NULL, '0', '2020-08-26 08:13:43', '2020-08-26 08:13:43'),
-(34, NULL, '12', '2', 'ZDi', 'Old', 'Blue', '1', '795000', '2018', 'Clear', 'Blue', 'Beige', '20,321 km', 'BS IV', NULL, NULL, 'Manual', NULL, NULL, 'Diesel', '0006', 'Remote Controlled key', 'Sedan', NULL, '246976188.webp', '1', '1', 'Front Wheel Drive', NULL, '0', '2020-08-26 08:21:00', '2020-08-26 08:30:57'),
-(35, NULL, '15', '7', 'ZLX', 'Old', 'White', '1', '750000', '2016', 'Clear', 'White', 'Brown', '87,000 km', NULL, NULL, NULL, 'Manual', '1', NULL, 'Diesel', '0007', 'Manual Controlled key', 'SUV', NULL, '592973581.webp', '1', '1', '4 Wheel Drive', NULL, '0', '2020-08-26 08:30:39', '2020-08-26 08:30:39'),
-(36, NULL, '16', '8', '1.8 V MT', 'Old', 'Black', '1', '200000', '2008', 'Clear', 'Black', 'Beige', '52,000 km', 'BS III', NULL, NULL, 'Manual', NULL, '4 cylinder', 'Petrol', NULL, 'Manual Controlled key', 'Hatchback', NULL, '721727031.webp', '1', '1', 'Front Wheel Drive', NULL, '0', '2020-08-26 09:16:53', '2020-08-26 09:16:53');
+INSERT INTO `vehicles` (`id`, `lot_number`, `car_id`, `brand_id`, `vehicle_model`, `vehicle_status`, `colour`, `vehicle_type`, `price`, `minimum_bid_value`, `year`, `document_type`, `exterior_color`, `interior_color`, `odometer`, `engine_type`, `highlights`, `primary_damage`, `transmission`, `secondary_damage`, `cylinders`, `fuel`, `vin`, `keys`, `body_style`, `sales_type`, `description`, `image`, `is_enable_future_vehicles`, `is_visible_website`, `drive`, `location`, `status`, `created_at`, `updated_at`) VALUES
+(29, NULL, '12', '2', 'VXi', 'Old', 'White', '1', '695000', '1000', '2017', 'clear', 'White', NULL, '26,600 km', '1.2 Vxi BSIV', NULL, NULL, 'Manual', NULL, '4', 'Petrol', '0001', 'Manual key', 'Sedan', 'On Reserve', NULL, '1162312672.webp', '1', '1', 'FWD', 'Dubai Industrials', '0', '2020-08-26 07:00:07', '2020-08-30 08:49:35'),
+(30, NULL, '13', '5', '2.5 GX BS IV', 'Old', 'white', '1', '1200000', '0', '2015', 'clear', 'white', NULL, '26000 km', '2.5', NULL, NULL, 'Manual', NULL, '4', 'Diesel', '0002', 'Remote key', 'SUV', 'On Reserve', NULL, '174973685.webp', '1', '1', 'RWD', NULL, '0', '2020-08-26 07:23:25', '2020-08-26 07:23:25'),
+(31, NULL, '14', '6', '1.5 TDI CR', 'Old', 'Silver', '1', '690000', '0', '2015', 'Clear', 'Silver', 'Beige', '60,000 KM', 'BS IV', NULL, NULL, 'Automatic', NULL, '4', 'Diesel', '0003', 'Remote Controlled key', 'Sedan', 'On Reserve', NULL, '1110853525.webp', '0', '1', 'FWD', NULL, '0', '2020-08-26 07:46:22', '2020-08-26 07:46:22'),
+(32, NULL, '1', '1', 'i20 Active', 'Old', 'white', '1', '600000', '0', '2016', 'clear', 'white', 'Beige', '33,062 km', 'BS IV', NULL, NULL, 'Manual', NULL, '4 cylinder', 'Petrol', '0004', 'Remote Controlled key', NULL, 'On Reserve', NULL, '1948597218.webp', '1', '1', 'Front Wheel Drive', NULL, '0', '2020-08-26 08:06:59', '2020-08-26 08:06:59'),
+(33, NULL, '2', '1', '1.6 SX Plus Auto', 'Old', 'Bordeaux/Maroon', '1', '1550000', '0', '2019', 'Clear', 'Bordeaux/Maroon', 'Grey', '12,500 km', 'BS VI', NULL, NULL, 'Automatic', NULL, '4 cylinder', 'Diesel', '0005', 'Remote Controlled key', 'SUV', 'On Reserve', NULL, '185262435.webp', '1', '1', 'Front Wheel Drive', NULL, '0', '2020-08-26 08:13:43', '2020-08-26 08:13:43'),
+(34, NULL, '12', '2', 'ZDi', 'Old', 'Blue', '1', '795000', '1000', '2018', 'Clear', 'Blue', 'Beige', '20,321 km', 'BS IV', NULL, NULL, 'Manual', NULL, NULL, 'Diesel', '0006', 'Remote Controlled key', 'Sedan', 'On Reserve', NULL, '246976188.webp', '1', '1', 'Front Wheel Drive', NULL, '0', '2020-08-26 08:21:00', '2020-08-30 08:49:14'),
+(35, NULL, '15', '7', 'ZLX', 'Old', 'White', '1', '750000', '0', '2016', 'Clear', 'White', 'Brown', '87,000 km', NULL, NULL, NULL, 'Manual', '1', NULL, 'Diesel', '0007', 'Manual Controlled key', 'SUV', 'On Reserve', NULL, '592973581.webp', '1', '1', '4 Wheel Drive', NULL, '0', '2020-08-26 08:30:39', '2020-08-26 08:30:39'),
+(36, NULL, '16', '8', '1.8 V MT', 'Old', 'Black', '1', '200000', '1000', '2008', 'Clear', 'Black', 'Beige', '52,000 km', 'BS III', NULL, NULL, 'Manual', NULL, '4 cylinder', 'Petrol', NULL, 'Manual Controlled key', 'Hatchback', 'On Reserve', NULL, '721727031.webp', '1', '1', 'Front Wheel Drive', NULL, '0', '2020-08-26 09:16:53', '2020-08-30 08:47:29');
 
 -- --------------------------------------------------------
 
@@ -627,9 +681,21 @@ ALTER TABLE `auction_vehicles`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `auction_vehicle_ids`
+--
+ALTER TABLE `auction_vehicle_ids`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `banks`
 --
 ALTER TABLE `banks`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `bid_values`
+--
+ALTER TABLE `bid_values`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -758,9 +824,21 @@ ALTER TABLE `auction_vehicles`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `auction_vehicle_ids`
+--
+ALTER TABLE `auction_vehicle_ids`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
 -- AUTO_INCREMENT for table `banks`
 --
 ALTER TABLE `banks`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `bid_values`
+--
+ALTER TABLE `bid_values`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
@@ -803,13 +881,13 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `member_passwords`
 --
 ALTER TABLE `member_passwords`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `models`
@@ -839,7 +917,7 @@ ALTER TABLE `sliders`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT for table `vehicles`

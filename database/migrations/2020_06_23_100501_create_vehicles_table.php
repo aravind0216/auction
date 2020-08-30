@@ -23,6 +23,7 @@ class CreateVehiclesTable extends Migration
             $table->string('colour')->nullable();
             $table->string('vehicle_type')->nullable();
             $table->string('price')->nullable();
+            $table->string('minimum_bid_value')->nullable();
             $table->string('year')->nullable();
             $table->string('document_type')->nullable();
             $table->string('exterior_color')->nullable();

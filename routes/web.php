@@ -37,6 +37,10 @@
  });
  
 
+Route::get('test', function () {
+    event(new App\Events\StatusLiked('Someone'));
+    return "Event has been sent!";
+});
 
 Route::get('/', 'PageController@index');
 Route::get('/auction', 'PageController@auction');
@@ -50,6 +54,9 @@ Route::get('/buy-now-cars', 'PageController@buyNowCars');
 Route::get('/auctions', 'PageController@auctions');
 Route::get('/view-auctions/{id}', 'PageController@viewAuctions');
 Route::get('/live-auctions/{id}', 'PageController@liveAuctions');
+
+Route::get('/get-live-auctions/{id}', 'LiveauctionController@getLiveAuctions');
+
 Route::get('/live-vehicle-quick-view/{id}', 'PageController@liveVehicleQuickView');
 Route::get('/how-it-works', 'PageController@howItWorks');
 Route::get('/services', 'PageController@services');
@@ -57,6 +64,9 @@ Route::get('/member-registration', 'PageController@memberRegistration');
 Route::POST('/save-member-registration', 'PageController@saveMemberRegistration');
 Route::POST('/home-search', 'PageController@homeSearch');
 Route::POST('/vehicle-search', 'PageController@vehicleSearch');
+
+Route::get('/get-brand-car', 'PageController@getBrandCar');
+
 Route::get('/member-fees', 'PageController@memberFees');
 Route::get('/terms-and-conditions', 'PageController@termsAndConditions');
 Route::get('/compare', 'PageController@compare');

@@ -45,7 +45,7 @@ class MemberController extends Controller
         $all = $member_password::find($member_password->id);
         Mail::send('mail.member_send_mail',compact('all'),function($message) use($all){
             $message->to($all['email'])->subject('Create your Own Password');
-            $message->from('aravind.0216@gmail.com','New York Car Auction Website');
+            $message->from('contact@lrbinfotech.com','New York Car Auction');
         });
         return response()->json('successfully save'); 
     }

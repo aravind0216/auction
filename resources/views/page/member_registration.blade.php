@@ -119,7 +119,7 @@
                             </div>
                             <div class="response"></div>
                             <div class="col-lg-12 col-md-12">
-                                <button onclick="Save()" id="saveButton" type="button" class="impl_btn submitForm">Member Registration</button>
+                                <button onclick="Save()" id="saveButton" type="button" class="btn btn-primary">Member Registration</button>
                             </div>
                         </form>
                     </div>
@@ -164,6 +164,7 @@ $('#busisness_type').change(function(){
 });
 
 function Save(){
+$('#saveButton').prop('disabled', true);
   var formData = new FormData($('#form')[0]);
     $.ajax({
         url : '/save-member-registration',
@@ -178,11 +179,13 @@ function Save(){
             $('#popup_modal').modal('hide');
             //$('.zero-configuration').load(location.href+' .zero-configuration');
             toastr.success(data, 'Successfully Save');
+            $('#saveButton').prop('disabled', false);
         },error: function (data) {
             var errorData = data.responseJSON.errors;
             $.each(errorData, function(i, obj) {
             toastr.error(obj[0]);
       		});
+            $('#saveButton').prop('disabled', false);
     	}
     });
 }

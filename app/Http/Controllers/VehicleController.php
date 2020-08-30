@@ -203,6 +203,9 @@ class VehicleController extends Controller
         $vehicle->image = $fileName;
         $vehicle->vehicle_model = $request->vehicle_model;
         $vehicle->vehicle_status = $request->vehicle_status;
+        $vehicle->colour = $request->exterior_color;
+        $vehicle->minimum_bid_value = $request->minimum_bid_value;
+        $vehicle->sales_type = 'On Reserve';
         $vehicle->colour = $request->colour;
         $vehicle->vehicle_type = $request->vehicle_type;
         $vehicle->price = $request->price;
@@ -281,7 +284,9 @@ class VehicleController extends Controller
         $vehicle->image = $fileName;
         $vehicle->vehicle_model = $request->vehicle_model;
         $vehicle->vehicle_status = $request->vehicle_status;
-        $vehicle->colour = $request->colour;
+        $vehicle->colour = $request->exterior_color;
+        $vehicle->minimum_bid_value = $request->minimum_bid_value;
+        $vehicle->sales_type = 'On Reserve';
         $vehicle->year = $request->year;
         $vehicle->vehicle_type = $request->vehicle_type;
         $vehicle->price = $request->price;

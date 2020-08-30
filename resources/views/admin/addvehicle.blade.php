@@ -98,14 +98,10 @@
                           </select>
                         </div>
 
-                        <div class="col-md-4">
+                        <!-- <div class="col-md-4">
                           <label class="label-control">Colour</label>
                           <input type="text" class="form-control" placeholder="Colour" name="colour" id="colour">
-                        </div>
-
-                      </div>
-                      <div class="form-group row">
-                        
+                        </div> -->
 
                         <div class="col-md-4">
                           <label class="label-control">Vehicle Type</label>
@@ -117,9 +113,17 @@
                           </select>
                         </div>
 
+                      </div>
+                      <div class="form-group row">
+                        
                         <div class="col-md-4">
                           <label class="label-control">Starting Bid Value</label>
                           <input type="text" class="form-control" placeholder="Starting Bid Value" name="price" id="price">
+                        </div>
+
+                        <div class="col-md-4">
+                          <label class="label-control">Minimum Bid Value</label>
+                          <input type="text" class="form-control" placeholder="Minimum Bid Value" name="minimum_bid_value" id="minimum_bid_value">
                         </div>
 
                         <div class="col-md-4">
