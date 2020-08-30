@@ -108,6 +108,18 @@
                                     </div>
                                 </li> -->
                                 <!-- <li><a href="#signin" data-toggle="modal"> <span class="login-text">LOGIN</span>  <i style="font-size: 24px;" class="fa fa-sign-in" aria-hidden="true"></i></a></li> -->
+                                @if(\Auth::check())
+                                  <li>
+                                  <p>Welcome {{\Auth::user()->name}}</p>
+                                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"> <span class="login-text" style="margin-top: -17px;">Logout</span>  
+                                        <i class="fa fa-sign-out" aria-hidden="true" style="position: absolute;
+    top: 24px;"></i>
+                                    </a>
+                                      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                                </li>
+                                @else
                                 <li>
                                     <a href="/login"> <span class="login-text">LOGIN</span>  
                                         <i style="font-size: 24px;" class="fa fa-sign-in" aria-hidden="true"></i>
@@ -119,7 +131,7 @@
                                     </a>
                                 </li>
                             </ul>
-                            
+                            @endif
                             <!-- <div class="impl_search_overlay">
                                 <div class="impl_search_area">
                                     <div class="srch_inner">

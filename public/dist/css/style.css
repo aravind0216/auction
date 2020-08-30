@@ -4379,7 +4379,7 @@ ul.step_car_img li:hover .step_view_img_over {
     box-shadow: none;
 }
 .impl_descrip_wrapper {
-    background-image: url(http://via.placeholder.com/1920x450/f15b5b);
+    background-image: url(/app-assets/images/banner/car_spesi.jpg);
     padding: 45px 0px 5px;
     background-size: cover;
 }

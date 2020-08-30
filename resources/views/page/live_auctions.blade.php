@@ -119,9 +119,26 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 48px;
+font-size: 35px;
+    font-family: sans-serif;
+    text-align: center;
 }
     </style>
+     <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+  <script>
+
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('21f77edf77b168e9187d', {
+      cluster: 'ap2'
+    });
+
+    var channel = pusher.subscribe('my-channel');
+    channel.bind('my-event', function(data) {
+      alert(JSON.stringify(data));
+    });
+  </script>
 @endsection
 @section('content')
     <!------ Breadcrumbs Start ------>
@@ -178,18 +195,50 @@
                 <div class="col-lg-6 col-md-12">
                     <div class="impl_buycar_data">
                         <h1>{{$brand->name}} , {{$car->name}} </h1>
-                        <h1>AED {{$vehicle->price}} </h1>
+                        {{-- <h1>AED {{$vehicle->price}} </h1> --}}
                         <div class="car_emi_wrapper">
-                            <span>Emi Starts at $2400 /- *</span>
-                            <a href="#"><i class="fa fa-info-circle" aria-hidden="true"></i> Get EMI Assistance</a>
+                            <span>Lot: {{$car->lot_number}}00003 </span>
+                
+                            <a href="#"><i class="fa fa-info-circle" aria-hidden="true"></i> Item No : 20</a>
                         </div>
+                        <br>
+                        <h3>On Reserve</h3>
+                        <br>
                         <div id="app"></div>
-                        <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
-                        <div class="impl_old_buy_btn">
-                            <a href="checkout.html" class="impl_btn">add to cart</a>
-                            <a href="#" class="impl_btn">buy now</a>
-                            <a href="compare.html" class="impl_btn">compare</a>
+                        
+                    <div style="margin-left: 79px;
+    letter-spacing: 1px;
+    padding-top: 10px;
+    padding-bottom: 10px;">
+                        <h5 style="color:#ed3833">All Bids in AED</h5>
+                        <br>
+                        @if(!\Auth::check())
+                        <h5>Sign in to Bid</h5>
+                         @endif
+                    </div>
+                    @if(\Auth::check())
+                        <div class="row">
+                            <div class="col-md-6">
+                               <div class="input-group">
+      <input type="text" class="form-control" readonly aria-describedby="basic-addon2">
+      <div class="input-group-append">
+        <button class="btn btn-outline-secondary" type="button"><i class="fa fa-minus" aria-hidden="true"></i></button>
+        <button class="btn btn-outline-secondary" type="button"><i class="fa fa-plus" aria-hidden="true"></i></button>
+      </div>
+    </div>
+                            </div>
+                      
                         </div>
+                        <br>
+                        <a href="checkout.html" class="impl_btn" style="margin-left: 70px;">Bid Now</a>
+                    @else
+
+                        <div class="impl_old_buy_btn">
+                            <a href="checkout.html" class="impl_btn">Sign In</a>
+                            <a href="#" class="impl_btn">Register</a>
+                            
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -290,13 +339,13 @@
                 </div>
             @foreach($datas as $data)
              <div class="col-lg-3 col-md-4">
-                <div class="impl_fea_car_box">
+                <div class="impl_fea_car_box" style="box-shadow: 1px 1px 10px 2px #ffffff;" onclick="viewDetails({{$data['vehicle_id']}})">
                     <div class="impl_fea_car_img">
-                        <img style="width: 300px;height: 150px;" src="{{asset('vehicle_image/').'/'.$data['image']}}" alt="" class="img-fluid impl_frst_car_img">
+                        <img style="width: 300px;height: 150px; padding:10px;cursor: pointer;" src="{{asset('vehicle_image/').'/'.$data['image']}}" alt="" class="img-fluid impl_frst_car_img">
                         <!-- <img src="/app-assets/images/featured/fea_car1_hover.jpg" alt="" class="img-fluid impl_hover_car_img"> -->
                     </div>
-                    <div class="impl_fea_car_data">
-                        <h2> <a href="#" onclick="viewDetails({{$data['vehicle_id']}})">{{$data['model']}}</a></h2>
+                    <div class="impl_fea_car_data" style="background: #F44336;">
+                        <h2> <a href="javascript:void(null)" onclick="viewDetails({{$data['vehicle_id']}})">{{$data['model']}}</a></h2>
                         <ul>
                             <li><span class="impl_fea_title">Lot</span>
                                 <span class="impl_fea_name">{{$data['vehicle_id']}}</span>
@@ -375,7 +424,7 @@ const COLOR_CODES = {
   }
 };
 
-const TIME_LIMIT = 20;
+const TIME_LIMIT = 10;
 let timePassed = 0;
 let timeLeft = TIME_LIMIT;
 let timerInterval = null;
@@ -399,9 +448,10 @@ document.getElementById("app").innerHTML = `
       ></path>
     </g>
   </svg>
-  <span id="base-timer-label" class="base-timer__label">${formatTime(
-    timeLeft
-  )}</span>
+ 
+  <span id="base-timer-label" class="base-timer__label"> {{$vehicle->price}} <br>
+  Bid!
+  </span>
 </div>
 `;
 
@@ -415,9 +465,9 @@ function startTimer() {
   timerInterval = setInterval(() => {
     timePassed = timePassed += 1;
     timeLeft = TIME_LIMIT - timePassed;
-    document.getElementById("base-timer-label").innerHTML = formatTime(
-      timeLeft
-    );
+    // document.getElementById("base-timer-label").innerHTML = formatTime(
+    //   timeLeft
+    // );
     setCircleDasharray();
     setRemainingPathColor(timeLeft);
 

@@ -186,9 +186,9 @@
                         <div id="app"></div>
                         <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
                         <div class="impl_old_buy_btn">
-                            <a href="checkout.html" class="impl_btn">add to cart</a>
-                            <a href="#" class="impl_btn">buy now</a>
-                            <a href="compare.html" class="impl_btn">compare</a>
+                            <a href="checkout.html" class="impl_btn">Sign In</a>
+                            <a href="#" class="impl_btn">Register</a>
+                           
                         </div>
                     </div>
                 </div>
