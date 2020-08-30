@@ -92,57 +92,10 @@ class PageController extends Controller
     public function liveAuctions($id){
         
         $auction = auction_vehicle::find($id);
+        
+        $member = User::find(Auth::user()->id);
 
-        // $data = array();
-        // foreach(explode(',', $auction->vehicle_ids) as $key => $value) 
-        // {
-        //     if($key == 0){
-        //         $vehicle = vehicle::find($value);
-        //         $vehicle_image = vehicle_image::where('vehicle_id',$value)->get();
-        //         $car = car::find($vehicle->car_id);
-        //         $damage = damage::all();
-        //         $brand = brand::find($vehicle->brand_id);
-        //         $vehicle_type = vehicle_type::find($vehicle->vehicle_type);
-        //     }
-        //     else{
-        //         $vehicle1= vehicle::find($value);
-        //         $brand1 = brand::find($vehicle1->brand_id);
-        //         $model1 = car::find($vehicle1->car_id);
-        //         $vehicle_type1 = vehicle_type::find($vehicle1->vehicle_type);
-
-        //         $data = array(
-        //             'auction_id' => $auction->id,
-        //             'vehicle_id' => $vehicle1->id,
-        //             'price' => $vehicle1->price,
-        //             'year' => $vehicle1->year,
-        //             'location' => $vehicle1->location,
-        //             'odometer' => $vehicle1->odometer,
-        //             'document_type' => $vehicle1->document_type,
-        //             'price' => $vehicle1->price,
-        //             'image' => $vehicle1->image,
-        //             'sales_type' => $vehicle1->sales_type,
-        //             'brand' => '',
-        //             'model' => '',
-        //             'vehicle_type' => '',
-        //         );
-
-        //         if(!empty($brand1)){
-        //             $data['brand'] = $brand1->name;
-        //         }
-        //         if(!empty($model1)){
-        //             $data['model'] = $model1->name;
-        //         }
-        //         if(!empty($vehicle_type1)){
-        //             $data['vehicle_type'] = $vehicle_type1->name;
-        //         }
-        //         $datas[] = $data;
-        //     }
-
-            
-        // }
-
-        //return view('page.live_auctions',compact('brand','car','vehicle','vehicle_image','vehicle_type','damage','auction','datas'));
-        return view('page.live_auctions',compact('id','auction'));
+        return view('page.live_auctions',compact('id','auction','member'));
     }
 
     public function viewAuctions($id)

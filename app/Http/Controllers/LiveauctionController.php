@@ -57,7 +57,7 @@ class LiveauctionController extends Controller
 
         $auction_count = auction_vehicle_id::where('auction_id',$auction->id)->count();
 
-
+        $member = User::find(Auth::user()->id);
         $data = array();
         foreach ($auction_id as $key => $value) {
             if($key == 0){
@@ -178,6 +178,7 @@ class LiveauctionController extends Controller
                             <div class="col-md-6">
                                <div class="input-group">
           <input type="hidden" name="_token" id="token" value="'.csrf_token().'">
+       <input type="hidden" name="wallet" id="wallet" value="'.$member->wallet.'" >    
        <input type="hidden" name="auction_id" id="auction_id" value="'.$auction->id.'" >    
        <input type="hidden" name="vehicle_id" id="vehicle_id" value="'.$vehicle->id.'" >';
 
