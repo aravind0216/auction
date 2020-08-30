@@ -18,13 +18,38 @@ use App\vehicle;
 use App\vehicle_type;
 use App\auction_vehicle;
 use App\auction_vehicle_id;
+use App\bid_value;
 use Hash;
 use DB;
 use Mail;
 
 
+
 class LiveauctionController extends Controller
 {
+
+	public function saveBidValue(Request $request){
+        // $request->validate([
+        //     'busisness_type'=>'required',
+        //     'name'=>'required',
+        //     'email'=>'required',
+        // ]);
+		date_default_timezone_set("Asia/Dubai");
+        date_default_timezone_get();
+
+
+        $bid_value = new bid_value;
+        $bid_value->date = date('Y-m-d');
+        $bid_value->time = date("h:i A");
+        $bid_value->member_id = Auth::user()->id;
+        $bid_value->auction_id = $request->auction_id;
+        $bid_value->vehicle_id = $request->vehicle_id;
+        $bid_value->bid_amount = $request->bid_amount;
+        $bid_value->save();
+
+        return response()->json('successfully save'); 
+    }
+
     public function getLiveAuctions($id)
     {
         $auction = auction_vehicle::find($id);
@@ -152,8 +177,12 @@ class LiveauctionController extends Controller
                         $output.='<div class="row">
                             <div class="col-md-6">
                                <div class="input-group">
-                    
-      <input type="text" value="'.$vehicle->minimum_bid_value.'" class="form-control" readonly aria-describedby="basic-addon2">
+          <input type="hidden" name="_token" id="token" value="'.csrf_token().'">
+       <input type="hidden" name="auction_id" id="auction_id" value="'.$auction->id.'" >    
+       <input type="hidden" name="vehicle_id" id="vehicle_id" value="'.$vehicle->id.'" >';
+
+       $bid_amount = $vehicle->minimum_bid_value + $vehicle->price;
+      $output.='<input style="width:300x !important;" name="bid_amount" id="bid_amount" type="text" value="'.$bid_amount.'" class="form-control" readonly aria-describedby="basic-addon2">
       <div class="input-group-append">
         <button class="btn btn-outline-secondary" type="button"><i class="fa fa-minus" aria-hidden="true"></i></button>
         <button class="btn btn-outline-secondary" type="button"><i class="fa fa-plus" aria-hidden="true"></i></button>
@@ -163,7 +192,7 @@ class LiveauctionController extends Controller
                       
                         </div>
                         <br>
-                        <a href="/" class="impl_btn" style="margin-left: 70px;">Bid Now</a>';
+                        <button style="margin-left: 70px;" onclick="SaveBid()" id="saveBid" type="button" class="btn btn-primary impl_btn">Bid Now</button>';
                     }else{
 
                         $output.='<div class="impl_old_buy_btn">

@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="/dist/js/plugin/slick/slick.css">
     <link rel="stylesheet" type="text/css" href="/dist/js/plugin/slick/slick-theme.css">
     <link rel="stylesheet" type="text/css" href="/dist/css/style.css">
+    <meta name="csrf-token" content="{{csrf_token()}}">
     <style>
         .impl_fea_car_data {
     padding: 5px 12px;
@@ -363,6 +364,41 @@ function viewAuction(auction_id)
         $('#base-timer-label').html(data.vehicle_price + '<br> Bid!');
     }
   });
+}
+
+function SaveBid(){
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
+    var auction_id = $("#auction_id").val();
+    var vehicle_id = $("#vehicle_id").val();
+    var bid_amount = $("#bid_amount").val();
+    var token = $("#token").val();
+    var data = { _token: token, auction_id: auction_id, vehicle_id: vehicle_id, bid_amount: bid_amount };
+
+    $.ajax({
+        url : '/save-bid-value',
+        type: "POST",
+        data: data,
+        contentType: false,
+        processData: false,
+        dataType: "JSON",
+        success: function(data)
+        {                
+            $("#form")[0].reset();
+            $('#popup_modal').modal('hide');
+            //$('.zero-configuration').load(location.href+' .zero-configuration');
+            toastr.success(data, 'Successfully Save');
+        },error: function (data) {
+            var errorData = data.responseJSON.errors;
+            $.each(errorData, function(i, obj) {
+            toastr.error(obj[0]);
+            });
+        }
+    });
 }
 </script>
 @endsection

@@ -56,6 +56,7 @@ Route::get('/view-auctions/{id}', 'PageController@viewAuctions');
 Route::get('/live-auctions/{id}', 'PageController@liveAuctions');
 
 Route::get('/get-live-auctions/{id}', 'LiveauctionController@getLiveAuctions');
+Route::POST('/save-bid-value', 'LiveauctionController@saveBidValue');
 
 Route::get('/live-vehicle-quick-view/{id}', 'PageController@liveVehicleQuickView');
 Route::get('/how-it-works', 'PageController@howItWorks');
