@@ -22,7 +22,7 @@ use App\bid_value;
 use Hash;
 use DB;
 use Mail;
-
+use App\Events\LiveAuction;
 
 
 class LiveauctionController extends Controller
@@ -34,6 +34,8 @@ class LiveauctionController extends Controller
         //     'name'=>'required',
         //     'email'=>'required',
         // ]);
+        $bidAmount = $request->bid_amount;
+        event(new LiveAuction($bidAmount));
 		date_default_timezone_set("Asia/Dubai");
         date_default_timezone_get();
 
@@ -170,13 +172,15 @@ class LiveauctionController extends Controller
                         if(!\Auth::check()){
                         $output.='<h5>Sign in to Bid</h5>';
                         }else{
-                        $output.='<h5>Minimum Bid Value : '.$vehicle->minimum_bid_value.' AED</h5>';
+                        $output.='<h5 style="margin-left: -78px;
+    padding-bottom: 10px;">Minimum Bid Value : '.$vehicle->minimum_bid_value.' AED</h5>';
                         }
                     $output.='</div>';
                     if(\Auth::check()){
                         $output.='<div class="row">
                             <div class="col-md-6">
                                <div class="input-group">
+                               <input type="hidden" id="min_bid_value" value="'.$vehicle->minimum_bid_value.'">
           <input type="hidden" name="_token" id="token" value="'.csrf_token().'">
        <input type="hidden" name="wallet" id="wallet" value="'.$member->wallet.'" >    
        <input type="hidden" name="auction_id" id="auction_id" value="'.$auction->id.'" >    
@@ -185,8 +189,8 @@ class LiveauctionController extends Controller
        $bid_amount = $vehicle->minimum_bid_value + $vehicle->price;
       $output.='<input style="width:300x !important;" name="bid_amount" id="bid_amount" type="text" value="'.$bid_amount.'" class="form-control" readonly aria-describedby="basic-addon2">
       <div class="input-group-append">
-        <button class="btn btn-outline-secondary" type="button"><i class="fa fa-minus" aria-hidden="true"></i></button>
-        <button class="btn btn-outline-secondary" type="button"><i class="fa fa-plus" aria-hidden="true"></i></button>
+        <button class="btn btn-outline-secondary" type="button" onclick=btnMinus()><i class="fa fa-minus" aria-hidden="true"></i></button>
+        <button class="btn btn-outline-secondary" type="button" onclick=btnPlus()><i class="fa fa-plus" aria-hidden="true"></i></button>
       </div>
     </div>
                             </div>

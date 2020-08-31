@@ -127,6 +127,7 @@ font-size: 35px;
     </style>
      <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
   <script>
+    var circleBid='';
 
     // Enable pusher logging - don't include this in production
     Pusher.logToConsole = true;
@@ -137,7 +138,11 @@ font-size: 35px;
 
     var channel = pusher.subscribe('my-channel');
     channel.bind('my-event', function(data) {
-      alert(JSON.stringify(data));
+      // alert(JSON.stringify(data));
+      clearInterval(timerInterval);
+      bidding_timer();
+      var bid_amount = parseInt($('#bid_amount').val());
+       $('#base-timer-label').html(bid_amount+ '<br> Bid!');
     });
   </script>
 
@@ -221,6 +226,9 @@ function viewDetails(id)
 </script>
 <script>
 function bidding_timer() {
+  const TIME_LIMIT = 10;
+  let timeLeft = TIME_LIMIT;
+ 
 
 const FULL_DASH_ARRAY = 283;
 const WARNING_THRESHOLD = 10;
@@ -240,10 +248,11 @@ const COLOR_CODES = {
   }
 };
 
-const TIME_LIMIT = 10;
+
 let timePassed = 0;
-let timeLeft = TIME_LIMIT;
-let timerInterval = null;
+
+window.timerInterval = null;
+
 let remainingPathColor = COLOR_CODES.info.color;
 
 document.getElementById("app").innerHTML = `
@@ -275,6 +284,10 @@ startTimer();
 function onTimesUp() {
   clearInterval(timerInterval);
 }
+// var onTimesUp2=null;
+// window.onTimesUp2 = correctData() => {
+// console.log('Okay')
+// }
 
 function startTimer() {
   timerInterval = setInterval(() => {
@@ -285,23 +298,25 @@ function startTimer() {
     // );
     setCircleDasharray();
     setRemainingPathColor(timeLeft);
-
-    if (timeLeft === 0) {
+    console.log(timeLeft);
+    if (timeLeft <= 0) {
+      console.log('cal timesup')
+       clearInterval(timerInterval);
       onTimesUp();
     }
   }, 1000);
 }
 
-function formatTime(time) {
-  const minutes = Math.floor(time / 60);
-  let seconds = time % 60;
+// function formatTime(time) {
+//   const minutes = Math.floor(time / 60);
+//   let seconds = time % 60;
 
-  if (seconds < 10) {
-    seconds = `0${seconds}`;
-  }
+//   if (seconds < 10) {
+//     seconds = `0${seconds}`;
+//   }
 
-  return `${minutes}:${seconds}`;
-}
+//   return `${minutes}:${seconds}`;
+// }
 
 function setRemainingPathColor(timeLeft) {
   const { alert, warning, info } = COLOR_CODES;
@@ -348,7 +363,9 @@ function setCircleDasharray() {
     <script type="text/javascript" src="/dist/js/custom.js"></script>
 
 <script type="text/javascript">
-var auction_id = <?php echo $id; ?>;
+
+var auction_id = '+<?php echo $id; ?>';
+
 viewAuction(auction_id);
 function viewAuction(auction_id)
 {
@@ -361,7 +378,9 @@ function viewAuction(auction_id)
         
         $('#view-auction').html(data.html);
         bidding_timer();
-        $('#base-timer-label').html(data.vehicle_price + '<br> Bid!');
+        circleBid = parseInt(data.vehicle_price);
+        $('#base-timer-label').html(circleBid + '<br> Bid!');
+        
     }
   });
 }
@@ -372,7 +391,6 @@ $.ajaxSetup({
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
 });
-
     var auction_id = $("#auction_id").val();
     var vehicle_id = $("#vehicle_id").val();
     var bid_amount = $("#bid_amount").val();
@@ -388,7 +406,7 @@ $.ajaxSetup({
         dataType: "JSON",
         success: function(data)
         {                
-            $("#form")[0].reset();
+            // $("#form")[0].reset();
             $('#popup_modal').modal('hide');
             //$('.zero-configuration').load(location.href+' .zero-configuration');
             toastr.success(data, 'Successfully Save');
@@ -400,5 +418,23 @@ $.ajaxSetup({
         }
     });
 }
+function btnPlus(){
+  var min_bid = parseInt($('#min_bid_value').val());
+  var bid_amount = parseInt($('#bid_amount').val());
+  var totalValue = parseInt(min_bid + circleBid);
+  bid_amount = parseInt(bid_amount + min_bid);
+  $('#bid_amount').val(bid_amount);
+}
+function btnMinus(){
+   var min_bid = parseInt($('#min_bid_value').val());
+  var bid_amount = parseInt($('#bid_amount').val());
+  var totalValue = parseInt(min_bid + circleBid);
+if(totalValue < bid_amount){
+  bid_amount = parseInt(bid_amount - min_bid);
+  $('#bid_amount').val(bid_amount);
+}
+}
+
+ 
 </script>
 @endsection
