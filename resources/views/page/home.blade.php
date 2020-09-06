@@ -372,7 +372,10 @@
 .select2-selection__arrow{
     margin-top: 5px;
 }
-
+.year_select{
+    margin-top: -19px;
+   
+}
 
 </style>
     <!------ Search Box Start ------>
@@ -414,6 +417,7 @@
                                         <option value="<?php echo $x; ?>"><?php echo $x; ?></option>
                                         <?php } ?>
                                     </select>
+                                  <div class="year_select">TO</div>
                                     <select class="select2" name="to_year" id="to_year">
                                         <option value="">SELECT YEAR</option>
                                         <?php
@@ -606,7 +610,7 @@
                             <img style="width: 350px;height: 200px;" src="{{asset('vehicle_image/').'/'.$vehicle1->image}}" alt="" class="img-fluid impl_frst_car_img" />
                             <!-- <img src="{{asset('vehicle_image/').'/'.$vehicle1->image}}" alt=""
                                 class="img-fluid impl_hover_car_img" /> -->
-                            <span class="impl_img_tag" title="compare"><i class="fa fa-exchange" aria-hidden="true"></i></span>
+                            <!-- <span class="impl_img_tag" title="compare"><i class="fa fa-exchange" aria-hidden="true"></i></span> -->
                         </div>
                         <div class="impl_fea_car_data">
                             <h2><a href="#" onclick="viewDetails({{$vehicle1->id}})">

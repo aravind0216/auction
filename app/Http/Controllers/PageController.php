@@ -17,6 +17,7 @@ use App\vehicle_image;
 use App\vehicle;
 use App\vehicle_type;
 use App\auction_vehicle;
+use App\auction_vehicle_id;
 use Hash;
 use DB;
 use Mail;
@@ -84,18 +85,17 @@ class PageController extends Controller
         $today_auction = auction_vehicle::where('starting_date',$today)->get();
         $upcoming_auction = auction_vehicle::whereDate('starting_date','>',$today)->get();
         $vehicle = vehicle::all();
+        $auction_id = auction_vehicle_id::all();
         $car = car::all();
         $brand = brand::all();
-        return view('page.auctions',compact('today_auction','vehicle','car','brand','upcoming_auction'));
+        return view('page.auctions',compact('today_auction','vehicle','car','brand','upcoming_auction','auction_id'));
     }
 
     public function liveAuctions($id){
         
         $auction = auction_vehicle::find($id);
-        
-        $member = User::find(Auth::user()->id);
 
-        return view('page.live_auctions',compact('id','auction','member'));
+        return view('page.live_auctions',compact('id','auction'));
     }
 
     public function viewAuctions($id)
@@ -180,7 +180,7 @@ class PageController extends Controller
         $damage = damage::all();
         $brand = brand::all();
         $vehicle_type = vehicle_type::all();
-        return view('page.single_vehicles',compact('brand','car','vehicle','vehicle_image','vehicle_type','damage'));
+        return view('page.single_vehicles',compact('brand','car','vehicle','vehicle_image','vehicle_type','damage','id'));
     }
 
 
@@ -338,7 +338,7 @@ public function vehicleQuickView($id)
     {
         $vehicle = vehicle::find($id);
         $car = car::find($vehicle->car_id);
-        $output = '
+        $output = '<link rel="stylesheet" type="text/css" href="/dist/css/fonts.css">
         <div style="background-color: #f15b5b;" class="modal-header">
                 <h3 style="color: #000;" class="modal-title">'.$car->name.'</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -352,7 +352,8 @@ public function vehicleQuickView($id)
                     </div>
                     <div class="col-md-6 product_content">
                         <h4 style="color: #fff;">Lot Number: <span>'.$vehicle->id.'</span></h4>
-                            <table style="color:#fff;border-color:#f15b5b" class="table table-bordered table-responsive">
+                            <br>
+                            <table style="color:#fff;border-color:#f15b5b;width:100% !important;" class="table table-bordered">
                                 <tr>
                                     <td>
                                         <span style="float: left">VIN :</span>
@@ -390,7 +391,7 @@ public function vehicleQuickView($id)
                                     </td>
                                 </tr>
                         </table>
-                        <h3 style="color: #fff;" class="cost"><span class="glyphicon glyphicon-usd"></span>AED '.$vehicle->price.' </h3>
+                        <br><h3 style="color: #f15b5b;" class="cost">'.$vehicle->price.' AED</h3>
                         <div class="space-ten"></div>
                         <div class="btn-ground">
                             <a href="single-vehicles/'.$vehicle->id.'"><button style="background-color: #f15b5b;" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-shopping-cart"></span> Bid Now
@@ -411,7 +412,7 @@ public function liveVehicleQuickView($id)
     {
         $vehicle = vehicle::find($id);
         $car = car::find($vehicle->car_id);
-        $output = '
+        $output = '<link rel="stylesheet" type="text/css" href="/dist/css/fonts.css">
         <div style="background-color: #f15b5b;" class="modal-header">
                 <h3 style="color: #000;" class="modal-title">'.$car->name.'</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -425,7 +426,8 @@ public function liveVehicleQuickView($id)
                     </div>
                     <div class="col-md-6 product_content">
                         <h4 style="color: #fff;">Lot Number: <span>'.$vehicle->id.'</span></h4>
-                            <table style="color:#fff;" class="table table-bordered table-responsive">
+                        <br>
+                        <table style="color:#fff;border-color:#f15b5b;width:100% !important;" class="table table-bordered">
                                 <tr>
                                     <td>
                                         <span style="float: left">VIN :</span>
@@ -463,7 +465,8 @@ public function liveVehicleQuickView($id)
                                     </td>
                                 </tr>
                         </table>
-                        <h3 style="color: #fff;" class="cost"><span class="glyphicon glyphicon-usd"></span>AED '.$vehicle->price.' </h3>
+                        <br>
+                        <h3 style="color: #f15b5b;" class="cost">'.$vehicle->price.' AED</h3>
                         <div class="space-ten"></div>
                         <div class="btn-ground">
                             

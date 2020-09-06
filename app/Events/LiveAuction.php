@@ -14,6 +14,7 @@ class LiveAuction implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
     public $message;
+
     /**
      * Create a new event instance.
      *
@@ -22,6 +23,7 @@ class LiveAuction implements ShouldBroadcast
     public function __construct($message)
     {
         $this->message = $message;
+       
     }
 
     /**
@@ -31,7 +33,8 @@ class LiveAuction implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('my-channel');
+        //return [$this->channel_name];
+        return new Channel($this->message['channel_name']);
     }
 //      public function broadcastOn()
 //   {

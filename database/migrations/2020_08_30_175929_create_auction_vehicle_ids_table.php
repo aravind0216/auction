@@ -18,7 +18,10 @@ class CreateAuctionVehicleIdsTable extends Migration
             $table->string('auction_id')->nullable();
             $table->string('vehicle_id')->nullable();
             $table->string('order_id')->nullable();
+            $table->string('starting_price')->nullable();
+            $table->string('bid_id')->nullable();
             $table->string('status')->default('0');
+            $table->string('un_bid')->default('0');
             $table->timestamps();
         });
     }

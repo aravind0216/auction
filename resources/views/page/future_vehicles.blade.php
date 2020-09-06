@@ -67,7 +67,7 @@
                             <img style="width: 350px;height: 200px;" src="{{asset('vehicle_image/').'/'.$vehicle1->image}}" alt="" class="img-fluid impl_frst_car_img" />
                             <!-- <img src="{{asset('vehicle_image/').'/'.$vehicle1->image}}" alt=""
                                 class="img-fluid impl_hover_car_img" /> -->
-                            <span class="impl_img_tag" title="compare"><i class="fa fa-exchange" aria-hidden="true"></i></span>
+                            <!-- <span class="impl_img_tag" title="compare"><i class="fa fa-exchange" aria-hidden="true"></i></span> -->
                         </div>
                         <div class="impl_fea_car_data">
                             <h2><a href="#" onclick="viewDetails({{$vehicle1->id}})">

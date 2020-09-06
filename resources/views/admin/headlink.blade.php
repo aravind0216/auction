@@ -31,7 +31,7 @@
     <!-- END: Page CSS-->
 
     <!-- BEGIN: Custom CSS-->
-    <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+    <!-- <link rel="stylesheet" type="text/css" href="/assets/css/style.css"> -->
     <!-- END: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{ asset('toastr/toastr.css')}}">
     @yield('css')

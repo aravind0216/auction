@@ -33,11 +33,6 @@
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
-        <!-- new task button -->
-        <button id="add_new" style="width: 300px;" type="button" class="btn btn-primary add-task-btn btn-block my-1">
-          <i class="bx bx-plus"></i>
-          <span>New Auction</span>
-        </button>
         </div>
         <div class="card-content">
             <div class="card-body card-dashboard">
@@ -49,44 +44,44 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Title</th>
-                                <th>Starting Date</th>
-                                <th>Starting Time</th>
-                                <th>Vehicles</th>
-                                <th>Minimum Percentage</th>
+                                <th>Lot Number</th>
+                                <th>Member</th>
+                                <th>Bid Amount</th>
+                                <th>Payment Status</th>
+                                <th>Appointment</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                        @foreach($auction as $key => $row)
+                        @foreach($order as $key => $row)
                             <tr>
                                 <td>{{$key + 1}}</td>
-                                <td>{{$row->auction_title}}</td>
-                                <td>{{$row->starting_date}}</td>
-                                <td>{{$row->starting_time}}</td>
+                                <td>{{$row->vehicle_id}}</td>
                                 <td>
-                                    <?php 
-                                    $x=0;
-                                    foreach($auction_id as $value){
-                                        if($value->auction_id == $row->id){
-                                        $x++;
-                                        }
-                                    } 
-                                    ?>
-                                    {{$x}} Vehicles
+                                    @foreach($user as $member)
+                                    @if($row->member_id == $member->id)
+                                        {{$member->name}}
+                                    @endif
+                                    @endforeach
                                 </td>
-                                <td>{{$row->minimum_percentage}} %</td>
+                                <td>{{$row->amount}}</td>
+                                <td>
+                                @if($row->payment_status == 0)
+                                Un Paid
+                                @else 
+                                Paid
+                                @endif
+                                </td>
+                                <td>{{$row->appointment_date}} {{$row->appointment_time}}</td>
 					            <td>
 						            <div class="dropdown">
 						                <span class="bx bx-dots-horizontal-rounded font-medium-3 dropdown-toggle nav-hide-arrow cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" role="menu">
 						                </span>
 						                <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-125px, 19px, 0px); top: 0px; left: 0px; will-change: transform;">
-						                  <a class="dropdown-item" href="/admin/edit-auction/{{$row->id}}"><i class="bx bx-edit-alt mr-1"></i> edit</a>
-						                  <a onclick="Delete({{$row->id}})" class="dropdown-item" href="#"><i class="bx bx-trash mr-1"></i> delete</a>
-                                          @if($row->status == 0)
-						                  <a class="dropdown-item" href="/admin/auction-monitoring/{{$row->id}}"><i class="bx bx-chat mr-1"></i> Monitoring</a>
-                                          @else
-                                          <a target="_blank" class="dropdown-item" href="/404"><i class="bx bx-chat mr-1"></i> Monitoring</a>
+                                          @if($row->payment_status == 0)
+                                            <a  class="dropdown-item" href="#" onclick="ChangeStatus({{$row->id}},1)">Un Paid</a>                                 
+                                          @else 
+                                            <a  class="dropdown-item" href="#" onclick="ChangeStatus({{$row->id}},0)">Paid</a> 
                                           @endif
 						                </div>
 						            </div>
@@ -96,12 +91,12 @@
                			</tbody>
 		                <tfoot>
 		                    <tr>
-                        		<th>#</th>
-                                <th>Title</th>
-                                <th>Starting Date</th>
-                                <th>Starting Time</th>
-                                <th>Vehicles</th>
-                                <th>Minimum Percentage</th>
+                                <th>#</th>
+                                <th>Lot Number</th>
+                                <th>Member</th>
+                                <th>Bid Amount</th>
+                                <th>Payment Status</th>
+                                <th>Appointment</th>
                                 <th>Action</th>
 		                    </tr>
 		                </tfoot>
@@ -153,16 +148,7 @@
                         <input autocomplete="off" type="text" id="starting_time" name="starting_time" class="form-control">
                     </div>
 
-                    <div class="form-group">
-                        <label>Choose Vehicles</label>
-                        <select id="vehicle_ids" name="vehicle_ids" class="select2 form-control" multiple="multiple">
-                        	<option value="">SELECT</option>
-                        	@foreach ($vehicle as $vehicle1)
-                            <option value="{{$vehicle1->id}}">{{$vehicle1->email}}</option>
-                          	@endforeach
-                        </select>
-                    </div>
-                    
+                   
                     <div class="form-group">
                         <button onclick="Save()" id="saveButton" class="btn btn-primary btn-block mr-10" type="button">Save</button>
                     </div>
@@ -198,7 +184,7 @@
     <script src="/app-assets/js/scripts/forms/select/form-select2.js"></script>
 
 <script type="text/javascript">
-$('.auction').addClass('active');
+$('.auction-winners').addClass('active');
 
 $(".select2").select2({
     dropdownAutoWidth: true,
@@ -211,17 +197,7 @@ $('.singledate').daterangepicker({
 });
 
 var action_type;
-// $('#add_new').click(function(){
-//     $('#popup_modal').modal('show');
-//     $("#form")[0].reset();
-//     action_type = 1;
-//     $('#saveButton').text('Save');
-//     $('#modal-title').text('Add Auction');
-// });
 
-$('#add_new').click(function(){
-  window.location.href="/admin/add-auction";
-})
   
 
 function Edit(id){
@@ -243,16 +219,16 @@ function Edit(id){
   });
 }
 
-function Delete(id){
+function ChangeStatus(id,id1){
     var r = confirm("Are you sure");
     if (r == true) {
       $.ajax({
-        url : '/admin/auction-delete/'+id,
+        url : '/admin/update-payment-status/'+id+'/'+id1,
         type: "GET",
         dataType: "JSON",
         success: function(data)
         {
-          toastr.success(data, 'Successfully Delete');
+          toastr.success(data, 'Successfully Update');
           $('.zero-configuration').load(location.href+' .zero-configuration');
         }
       });

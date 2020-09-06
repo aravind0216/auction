@@ -23,16 +23,14 @@
                 </a>
             </li>
 
-            <li class="find-vehicles dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="menu-livicon" data-icon="comments"></i><span>Find Vehicles</span></a>
+            <!-- <li class="find-vehicles dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="menu-livicon" data-icon="comments"></i><span>Find Vehicles</span></a>
                 <ul class="dropdown-menu">
                     <li class="find-vehicle" data-menu=""><a class="find-vehicle dropdown-item align-items-center" href="/member/find-vehicles" data-toggle="dropdown"><i class="bx bx-right-arrow-alt"></i>Vehicles Finder</a>
                     </li>
                     <li class="find-vehicle" data-menu=""><a class="find-vehicle dropdown-item align-items-center" href="/member/find-vehicles" data-toggle="dropdown"><i class="bx bx-right-arrow-alt"></i>All Vehicles</a>
                     </li>
-                    <!-- <li data-menu=""><a class="calendar dropdown-item align-items-center" href="#" data-toggle="dropdown"><i class="bx bx-right-arrow-alt"></i>Calendar</a>
-                    </li> -->
                 </ul>
-            </li>
+            </li> -->
 
             <!-- <li class="auctions dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="menu-livicon" data-icon="comments"></i><span>Auctions</span></a>
                 <ul class="dropdown-menu">
@@ -45,21 +43,23 @@
 
             <li class="bid-status dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="menu-livicon" data-icon="comments"></i><span>Bid Status</span></a>
                 <ul class="dropdown-menu">
-                    <!-- <li data-menu=""><a class="dropdown-item align-items-center" href="app-chat.html" data-toggle="dropdown"><i class="bx bx-right-arrow-alt"></i>Chat</a>
-                    </li> -->
-                    <!-- <li data-menu=""><a class="calendar dropdown-item align-items-center" href="#" data-toggle="dropdown"><i class="bx bx-right-arrow-alt"></i>Calendar</a> -->
+                    <li data-menu=""><a class="dropdown-item align-items-center" href="/member/pre-bidding" data-toggle="dropdown"><i class="bx bx-right-arrow-alt"></i>Pre Bidding</a>
+                    </li>
+                    <li data-menu=""><a class="dropdown-item align-items-center" href="/member/live-bidding" data-toggle="dropdown"><i class="bx bx-right-arrow-alt"></i>Live Bidding</a>
+                    </li>
+                    <li data-menu=""><a class="dropdown-item align-items-center" href="/member/winning-cars" data-toggle="dropdown"><i class="bx bx-right-arrow-alt"></i>Winning Cars</a>
                     </li>
                 </ul>
             </li>
 
-            <li class="payments dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="menu-livicon" data-icon="comments"></i><span>Payments</span></a>
+            <!-- <li class="payments dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="menu-livicon" data-icon="comments"></i><span>Payments</span></a>
                 <ul class="dropdown-menu">
-                    <!-- <li data-menu=""><a class="dropdown-item align-items-center" href="app-chat.html" data-toggle="dropdown"><i class="bx bx-right-arrow-alt"></i>Chat</a>
-                    </li> -->
-                    <!-- <li data-menu=""><a class="calendar dropdown-item align-items-center" href="#" data-toggle="dropdown"><i class="bx bx-right-arrow-alt"></i>Calendar</a> -->
+                    <li data-menu=""><a class="dropdown-item align-items-center" href="app-chat.html" data-toggle="dropdown"><i class="bx bx-right-arrow-alt"></i>Chat</a>
+                    </li>
+                    <li data-menu=""><a class="calendar dropdown-item align-items-center" href="#" data-toggle="dropdown"><i class="bx bx-right-arrow-alt"></i>Calendar</a>
                     </li>
                 </ul>
-            </li>
+            </li> -->
 
             <li class="my-account dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="menu-livicon" data-icon="comments"></i><span>My Account</span></a>
                 <ul class="dropdown-menu">

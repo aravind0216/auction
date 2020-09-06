@@ -21,6 +21,7 @@ class CreateBidValuesTable extends Migration
             $table->string('member_id')->nullable();
             $table->string('vehicle_id')->nullable();
             $table->string('bid_amount')->nullable();
+            $table->string('ip_address')->nullable();
             $table->string('status')->default('0');
             $table->timestamps();
         });

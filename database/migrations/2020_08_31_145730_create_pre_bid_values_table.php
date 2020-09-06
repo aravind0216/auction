@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAuctionVehiclesTable extends Migration
+class CreatePreBidValuesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class CreateAuctionVehiclesTable extends Migration
      */
     public function up()
     {
-        Schema::create('auction_vehicles', function (Blueprint $table) {
+        Schema::create('pre_bid_values', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('auction_title')->nullable();
-            $table->string('stating_date')->nullable();
-            $table->string('stating_time')->nullable();
-            $table->string('channel_name')->nullable();
-            $table->string('minimum_percentage')->nullable();
+            $table->string('date')->nullable();
+            $table->string('time')->nullable();
+            $table->string('member_id')->nullable();
+            $table->string('vehicle_id')->nullable();
+            $table->string('bid_amount')->nullable();
+            $table->string('ip_address')->nullable();
             $table->string('status')->default('0');
             $table->timestamps();
         });
@@ -32,6 +33,6 @@ class CreateAuctionVehiclesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('auction_vehicles');
+        Schema::dropIfExists('pre_bid_values');
     }
 }

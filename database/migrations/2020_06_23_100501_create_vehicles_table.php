@@ -46,6 +46,7 @@ class CreateVehiclesTable extends Migration
             $table->string('drive')->nullable();
             $table->string('location')->nullable();
             $table->string('image')->nullable();
+            $table->string('bid_id')->nullable();
             $table->string('status')->default('0');
             $table->timestamps();
         });

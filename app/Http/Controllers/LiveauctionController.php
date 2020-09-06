@@ -19,9 +19,11 @@ use App\vehicle_type;
 use App\auction_vehicle;
 use App\auction_vehicle_id;
 use App\bid_value;
+use App\order;
 use Hash;
 use DB;
 use Mail;
+use Carbon\Carbon;
 use App\Events\LiveAuction;
 
 
@@ -34,11 +36,12 @@ class LiveauctionController extends Controller
         //     'name'=>'required',
         //     'email'=>'required',
         // ]);
-        $bidAmount = $request->bid_amount;
-        event(new LiveAuction($bidAmount));
+        
 		date_default_timezone_set("Asia/Dubai");
         date_default_timezone_get();
 
+        $bidAmount = (int)$request->bid_amount;
+        $public_ip = $_SERVER['REMOTE_ADDR'];
 
         $bid_value = new bid_value;
         $bid_value->date = date('Y-m-d');
@@ -47,19 +50,95 @@ class LiveauctionController extends Controller
         $bid_value->auction_id = $request->auction_id;
         $bid_value->vehicle_id = $request->vehicle_id;
         $bid_value->bid_amount = $request->bid_amount;
+        $bid_value->ip_address = $public_ip;
         $bid_value->save();
 
-        return response()->json('successfully save'); 
+       $message =  array(
+           'user'=>'customer',
+           'bid_amount'=> $bidAmount,
+           'public_ip'=> $public_ip,
+           'bid_id'=> $bid_value->id,
+           'vehicle_id'=> $bid_value->vehicle_id,
+           'channel_name'=> $request->channel_name,
+           'bid_type'=> $request->bidding_type,
+       );
+
+        event(new LiveAuction($message));
+
+        return response()->json(Auth::user()->name); 
+    }                
+
+    public function bonusTime(Request $request){
+          $message =  array(
+            'user'=>$request->user,
+           'bid_type'=> $request->bidding_type,
+           'channel_name'=> $request->channel_name,
+           'bid_amount'=> $request->vehicle_price,
+       );
+           event(new LiveAuction($message));
+
+        return response()->json($message); 
+    }
+
+    public function updateMonitoringVehicleStatus(Request $request){
+
+        $auction_vehicle_id = auction_vehicle_id::where('auction_id',$request->auction_id)->where('vehicle_id',$request->vehicle_id)->first();
+        $auction_vehicle_id->un_bid = 1;
+        $auction_vehicle_id->status = 1;
+        $auction_vehicle_id->save();
+
+        $auction = auction_vehicle::find($request->auction_id);
+        $message =  array(
+            'user'=>'admin',
+           'bid_type'=> 'no-bid',
+           'channel_name'=> $auction->channel_name,
+         );
+           event(new LiveAuction($message));
+        return response()->json('Update Successfully'); 
+    }
+
+    public function updateVehicleStatus(Request $request){
+
+        $bid_value = bid_value::find($request->bid_id);
+        $bid_value->status = 1;
+        $bid_value->save();
+
+        $vehicle = vehicle::find($request->vehicle_id);
+        $vehicle->bid_id = $request->bid_id;
+        $vehicle->save();
+
+        $auction_vehicle_id = auction_vehicle_id::where('auction_id',$request->auction_id)->where('vehicle_id',$request->vehicle_id)->first();
+        $auction_vehicle_id->status = 1;
+        $auction_vehicle_id->bid_id = $request->bid_id;
+        $auction_vehicle_id->save();
+
+        $order = new order;
+        $order->member_id = Auth::user()->id;
+        $order->auction_id = $request->auction_id;
+        $order->vehicle_id = $request->vehicle_id;
+        $order->auction_vehicle_id = $auction_vehicle_id->id;
+        $order->bid_id = $request->bid_id;
+        $order->amount = $request->bid_amount;
+        $order->save();
+
+        $vehicle_count = auction_vehicle_id::where('auction_id',$request->auction_id)->where('status',0)->count();
+        if($vehicle_count == 0){
+            $auction_vehicle = auction_vehicle::find($request->auction_id);
+            $auction_vehicle->status = 1;
+            $auction_vehicle->save();
+        }
+        return response()->json('Update Successfully'); 
     }
 
     public function getLiveAuctions($id)
     {
+        date_default_timezone_set("Asia/Dubai");
+        date_default_timezone_get();
         $auction = auction_vehicle::find($id);
-        $auction_id = auction_vehicle_id::where('auction_id',$auction->id)->where('status',0)->orderBy('id', 'ASC')->get();
+        $auction_id = auction_vehicle_id::where('auction_id',$auction->id)->where('status',0)->where('un_bid',0)->orderBy('id', 'ASC')->get();
 
         $auction_count = auction_vehicle_id::where('auction_id',$auction->id)->count();
 
-        $member = User::find(Auth::user()->id);
         $data = array();
         foreach ($auction_id as $key => $value) {
             if($key == 0){
@@ -111,6 +190,7 @@ class LiveauctionController extends Controller
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 col-md-12">
+                <input type="hidden" name="channel_name" value="'.$auction->channel_name.'" id="channel_name">
                     <h1>'.$auction->auction_title.'</h1>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#">Total Vechle - '.$auction_count.'</a></li>
@@ -159,14 +239,26 @@ class LiveauctionController extends Controller
                         </div>
                         <br>
                         <h3>'.$vehicle->sales_type.'</h3>
-                        <br>
+                        <br>';
+                        date_default_timezone_set("Asia/Dubai");
+                        date_default_timezone_get();
+                        $time = date("h:i A"); 
+                        $date = date('Y-m-d'); 
+                            $output.='<div id="app"></div>';
+                            $output.='<div id="time_runner"></div>';
 
-                        <div id="app"></div>
-                     
-                    <div style="margin-left: 79px;
+                            
+                            $output.='<input type="hidden" name="current_time" id="current_time" value="'.$time.'" >
+       <input type="hidden" name="current_date" id="current_date" value="'.$date.'" >
+
+       <input type="hidden" name="starting_time" id="starting_time" value="'.$auction->starting_time.'" >
+       <input type="hidden" name="starting_date" id="starting_date" value="'.$auction->starting_date.'" >
+       
+                                <div id="check_timer">
+                        <div style="margin-left: 79px;
     letter-spacing: 1px;
     padding-top: 10px;
-    padding-bottom: 10px;">
+    padding-bottom: 10px;display:hidden">
                         <h5 style="color:#ed3833">All Bids in AED</h5>
                         <br>';
                         if(!\Auth::check()){
@@ -177,34 +269,41 @@ class LiveauctionController extends Controller
                         }
                     $output.='</div>';
                     if(\Auth::check()){
+
+        $bid_amount = $vehicle->minimum_bid_value + $vehicle->price;
+        $bid25 = $bid_amount * ($auction->minimum_percentage/100);
+        if(Auth::user()->wallet > $bid25){
                         $output.='<div class="row">
                             <div class="col-md-6">
-                               <div class="input-group">
-                               <input type="hidden" id="min_bid_value" value="'.$vehicle->minimum_bid_value.'">
-          <input type="hidden" name="_token" id="token" value="'.csrf_token().'">
-       <input type="hidden" name="wallet" id="wallet" value="'.$member->wallet.'" >    
-       <input type="hidden" name="auction_id" id="auction_id" value="'.$auction->id.'" >    
-       <input type="hidden" name="vehicle_id" id="vehicle_id" value="'.$vehicle->id.'" >';
+                               
+        <input type="hidden" id="min_bid_value" value="'.$vehicle->minimum_bid_value.'">
+        <input type="hidden" name="_token" id="token" value="'.csrf_token().'">
+        <input type="hidden" name="wallet" id="wallet" value="'.Auth::user()->wallet.'">
+        <input type="hidden" name="auction_id" id="auction_id" value="'.$auction->id.'" >    
+        <input type="hidden" name="vehicle_id" id="vehicle_id" value="'.$vehicle->id.'" >
 
-       $bid_amount = $vehicle->minimum_bid_value + $vehicle->price;
-      $output.='<input style="width:300x !important;" name="bid_amount" id="bid_amount" type="text" value="'.$bid_amount.'" class="form-control" readonly aria-describedby="basic-addon2">
-      <div class="input-group-append">
-        <button class="btn btn-outline-secondary" type="button" onclick=btnMinus()><i class="fa fa-minus" aria-hidden="true"></i></button>
-        <button class="btn btn-outline-secondary" type="button" onclick=btnPlus()><i class="fa fa-plus" aria-hidden="true"></i></button>
-      </div>
-    </div>
-                            </div>
+                <div class="input-group">
+                    <input style="width:300x !important;" name="bid_amount" id="bid_amount" type="text" value="'.$bid_amount.'" class="form-control" readonly aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" onclick=btnMinus()><i class="fa fa-minus" aria-hidden="true"></i></button>
+                        <button class="btn btn-outline-secondary" type="button" onclick=btnPlus()><i class="fa fa-plus" aria-hidden="true"></i></button>
+                    </div>
+                </div></div>
                       
                         </div>
                         <br>
                         <button style="margin-left: 70px;" onclick="SaveBid()" id="saveBid" type="button" class="btn btn-primary impl_btn">Bid Now</button>';
+        }
+        else{
+            $output.='<h5>You are Not Eligible to Bid</h5>';
+        }
                     }else{
 
                         $output.='<div class="impl_old_buy_btn">
                             <a href="/login" class="impl_btn">Sign In</a>
                             <a href="/member-registration" class="impl_btn">Register</a>
                             
-                        </div>';
+                        </div></div>';
                         }
                     $output.='</div>
                 </div>
@@ -293,10 +392,10 @@ class LiveauctionController extends Controller
                 $output.='</div>
             </div>
         </div>
-    </div>
+    </div>';
 
-
-    <div class="impl_compare_wrapper">
+    if(!empty($datas)){
+    $output.='<div class="impl_compare_wrapper">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 col-md-12">
@@ -338,12 +437,24 @@ class LiveauctionController extends Controller
            
             $output.='</div>
         </div>
-    </div>
-    <script type="text/javascript" src="/dist/js/custom.js"></script>
-        ';
-
-
-    	$vehicle_price = $vehicle->price;
-        return response()->json(['html'=>$output,'vehicle_price'=>$vehicle_price],200); 
+    </div>';
     }
+    $output.='<script type="text/javascript" src="/dist/js/custom.js"></script>
+        ';
+         $vehicle_price = $vehicle->price;
+         date_default_timezone_set("Asia/Dubai");
+         date_default_timezone_get();
+         $time = date("h:i A"); 
+         $date = date('Y-m-d'); 
+         $time_status;
+         if(strtotime($time) >= strtotime($auction->starting_time)){
+            $time_status=1;
+         }else{
+            $time_status=0;
+         }
+
+
+         return response()->json(['html'=>$output,'vehicle_price'=>$vehicle_price,'time_status'=>$time_status],200); 
+    }
+    
 }

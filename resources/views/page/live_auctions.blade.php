@@ -120,40 +120,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
-font-size: 35px;
-    font-family: sans-serif;
-    text-align: center;
+  font-size: 35px;
+  font-family: sans-serif;
+  text-align: center;
 }
+ #check_timer{
+          padding-bottom: 40px;
+        }
+        .timeFalse{
+          display: none
+        }
     </style>
-     <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
-  <script>
-    var circleBid='';
+    
 
-    // Enable pusher logging - don't include this in production
-    Pusher.logToConsole = true;
 
-    var pusher = new Pusher('21f77edf77b168e9187d', {
-      cluster: 'ap2'
-    });
-
-    var channel = pusher.subscribe('my-channel');
-    channel.bind('my-event', function(data) {
-      // alert(JSON.stringify(data));
-      clearInterval(timerInterval);
-      bidding_timer();
-      var bid_amount = parseInt($('#bid_amount').val());
-       $('#base-timer-label').html(bid_amount+ '<br> Bid!');
-    });
-  </script>
-
-<?php
-date_default_timezone_set("Asia/Dubai");
-date_default_timezone_get();
-$time = date("h:i A"); 
-$date = date('Y-m-d'); 
-
-$current_time = strtotime($auction->starting_time) - strtotime($time);
-?>
 <!-- <script>
 // Set the date we're counting down to
 var countDownDate = <?php //echo $current_time; ?>
@@ -188,17 +168,18 @@ var x = setInterval(function() {
 
 @endsection
 @section('content')
-    
+
 <div id="view-auction">
-    
+      <center><img src="https://thumbs.gfycat.com/ZealousFineHochstettersfrog-size_restricted.gif"></center>
 </div>
 
 
 
 <style type="text/css">
-            .product_view .modal-dialog{max-width: 800px; width: 100%;}
+          .product_view .modal-dialog{max-width: 800px; width: 100%;}
         .pre-cost{text-decoration: line-through; color: #a5a5a5;}
         .space-ten{padding: 10px 0;}
+       
 
 </style>
 <div class="modal fade product_view" id="popup_modal">
@@ -210,7 +191,119 @@ var x = setInterval(function() {
 </div>
 @endsection
 @section('extra-js')
-<script type="text/javascript">
+  <script type="text/javascript" src="/dist/js/jquery.js"></script>
+    <script type="text/javascript" src="/dist/js/popper.js"></script>
+    <script type="text/javascript" src="/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/dist/js/ion.rangeSlider.min.js"></script>
+    <script type="text/javascript" src="/dist/js/plugin/magnific/jquery.magnific-popup.min.js"></script>
+    <script type="text/javascript" src="/dist/js/plugin/slick/slick.min.js"></script>
+    <script type="text/javascript" src="/dist/js/custom.js"></script>
+ 
+ <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+  <script>
+
+    var public_ipv = '"{{$_SERVER['REMOTE_ADDR']}}"';
+    var circleBid='';
+    var timerOut=null;
+    var bid_amount;
+    var public_ip;
+    var bid_id;
+    var vehicle_id;
+    var min_bid;
+    var total_bid;
+    var bidding_place=0;
+    var bidding_type;
+    var body_data;
+    var after_bid=0;
+    // function pusher_call(){
+      Pusher.logToConsole = true;
+    // var channel_name = $('#channel_name').val();
+        var pusher = new Pusher('21f77edf77b168e9187d', {
+      cluster: 'ap2'
+    });
+
+
+
+    var channel = pusher.subscribe('<?php echo $auction->channel_name; ?>');
+    channel.bind('my-event', function(data) {
+      var auction_id = $("#auction_id").val();
+      if(after_bid ==1){
+        $('#view-auction').html(body_data);
+        after_bid=0;
+      }
+      if(data.message.user =='admin'){
+          if(data.message.bid_type =='bonus'){
+            bidding_type='bonus';
+               clearInterval(timerInterval);
+               bidding_timer(10);
+            //TIME_LIMIT = 10;
+            console.log(data.message.bid_amount)
+            $('#base-timer-label').html('Bonus Time'+'<br>'+data.message.bid_amount);
+          }else if(data.message.bid_type =='no-bid'){
+            clearInterval(timerInterval);
+            viewAuction(auction_id);
+          }
+      }else{
+           clearInterval(timerInterval);
+               bidding_timer(10);
+        // console.log(data.message.bid_amount)
+        //  alert(JSON.stringify(data));
+        // clearInterval(timerInterval);
+        // bidding_timer();
+        bidding_type='bid';
+         bid_amount = JSON.stringify(data.message.bid_amount);
+         public_ip = JSON.stringify(data.message.public_ip);
+         bid_id = JSON.stringify(data.message.bid_id);
+         vehicle_id = JSON.stringify(data.message.vehicle_id);
+        
+         min_bid = parseInt($('#min_bid_value').val());
+    
+         total_bid = parseInt(bid_amount) + parseInt(min_bid);
+        clearTimeout(timerOut);
+        if(public_ipv == public_ip){
+          timerOut = setTimeout(() => {
+         
+       updateVehicleStatus(bid_id,vehicle_id);
+    }, 10000);
+        }
+    
+        $('#bid_amount').val(total_bid);
+         $('#base-timer-label').html(bid_amount+ '<br> Bid!');
+      }
+    });
+    
+    //  }
+
+    function bonusTime(){
+      $.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+   var formData = { _token: token, auction_id: auction_id, vehicle_id: vehicle_id, bid_amount: bid_amount,channel_name:channel_name,bidding_type:bidding_type };
+
+    $.ajax({
+        url : '/bonus-time',
+        type: "POST",
+        data: formData,
+        //contentType: false,
+        //processData: false,
+        dataType: "JSON",
+        success: function(data)
+        {       
+                      
+            // toastr.success('United Arab Emirates',data);
+        },error: function (data) {
+            var errorData = data.responseJSON.errors;
+            $.each(errorData, function(i, obj) {
+            toastr.error(obj[0]);
+            });
+        }
+    });
+
+    }
+
+
 function viewDetails(id)
 {
     $.ajax({
@@ -218,17 +311,17 @@ function viewDetails(id)
     type: "GET",
     success: function(data)
     {
+      bidding_type = 'live_bid';
         $('#view-details').html(data);
         $('#popup_modal').modal('show');
+      
     }
   });
 }
-</script>
-<script>
-function bidding_timer() {
-  const TIME_LIMIT = 10;
+
+function bidding_timer(TIME_LIMITS) {
+  var TIME_LIMIT = TIME_LIMITS;
   let timeLeft = TIME_LIMIT;
- 
 
 const FULL_DASH_ARRAY = 283;
 const WARNING_THRESHOLD = 10;
@@ -278,11 +371,13 @@ document.getElementById("app").innerHTML = `
   </span>
 </div>
 `;
-
+console.log('TIME_LIMIT'+TIME_LIMIT)
 startTimer();
 
 function onTimesUp() {
   clearInterval(timerInterval);
+  timerInterval = null;
+  console.log('cal timesup');
 }
 // var onTimesUp2=null;
 // window.onTimesUp2 = correctData() => {
@@ -298,10 +393,10 @@ function startTimer() {
     // );
     setCircleDasharray();
     setRemainingPathColor(timeLeft);
-    console.log(timeLeft);
+    
     if (timeLeft <= 0) {
-      console.log('cal timesup')
-       clearInterval(timerInterval);
+      
+      // clearInterval(timerInterval);
       onTimesUp();
     }
   }, 1000);
@@ -354,17 +449,11 @@ function setCircleDasharray() {
 }
 </script>
 
-    <script type="text/javascript" src="/dist/js/jquery.js"></script>
-    <script type="text/javascript" src="/dist/js/popper.js"></script>
-    <script type="text/javascript" src="/dist/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/dist/js/ion.rangeSlider.min.js"></script>
-    <script type="text/javascript" src="/dist/js/plugin/magnific/jquery.magnific-popup.min.js"></script>
-    <script type="text/javascript" src="/dist/js/plugin/slick/slick.min.js"></script>
-    <script type="text/javascript" src="/dist/js/custom.js"></script>
+  
 
 <script type="text/javascript">
 
-var auction_id = '+<?php echo $id; ?>';
+var auction_id = '<?php echo $id; ?>';
 
 viewAuction(auction_id);
 function viewAuction(auction_id)
@@ -375,12 +464,18 @@ function viewAuction(auction_id)
     type: "GET",
     success: function(data)
     {
-        
+      if(data.time_status ==1){
+         body_data=data.html;
+        after_bid=1;
+      }else{
         $('#view-auction').html(data.html);
-        bidding_timer();
-        circleBid = parseInt(data.vehicle_price);
-        $('#base-timer-label').html(circleBid + '<br> Bid!');
+        call_time(); 
+      }
+        console.log("time_status"+data.time_status);
+        //bidding_timer();
         
+        circleBid = parseInt(data.vehicle_price);
+        $('#base-timer-label').html(circleBid + '<br> Bid!');   
     }
   });
 }
@@ -395,21 +490,19 @@ $.ajaxSetup({
     var vehicle_id = $("#vehicle_id").val();
     var bid_amount = $("#bid_amount").val();
     var token = $("#token").val();
-    var data = { _token: token, auction_id: auction_id, vehicle_id: vehicle_id, bid_amount: bid_amount };
+    var channel_name = '<?php echo $auction->channel_name; ?>';
+    var formData = { _token: token, auction_id: auction_id, vehicle_id: vehicle_id, bid_amount: bid_amount,channel_name:channel_name,bidding_type:bidding_type };
 
     $.ajax({
         url : '/save-bid-value',
         type: "POST",
-        data: data,
-        contentType: false,
-        processData: false,
+        data: formData,
+        //contentType: false,
+        //processData: false,
         dataType: "JSON",
         success: function(data)
         {                
-            // $("#form")[0].reset();
-            $('#popup_modal').modal('hide');
-            //$('.zero-configuration').load(location.href+' .zero-configuration');
-            toastr.success(data, 'Successfully Save');
+            toastr.success('United Arab Emirates',data);
         },error: function (data) {
             var errorData = data.responseJSON.errors;
             $.each(errorData, function(i, obj) {
@@ -418,6 +511,39 @@ $.ajaxSetup({
         }
     });
 }
+
+function updateVehicleStatus(bid_id,vehicle_id){
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+    var auction_id = $("#auction_id").val();
+    var vehicle_id = $("#vehicle_id").val();
+    var bid_id = bid_id;
+    var token = $("#token").val();
+    var formData = { _token: token, auction_id: auction_id, vehicle_id: vehicle_id, bid_id: bid_id };
+
+    $.ajax({
+        url : '/update-vehicle-status',
+        type: "POST",
+        data: formData,
+        //contentType: false,
+        //processData: false,
+        dataType: "JSON",
+        success: function(data)
+        {                
+            toastr.success('Sold');
+            viewAuction(auction_id);
+        },error: function (data) {
+            var errorData = data.responseJSON.errors;
+            $.each(errorData, function(i, obj) {
+            toastr.error(obj[0]);
+            });
+        }
+    });
+}
+
 function btnPlus(){
   var min_bid = parseInt($('#min_bid_value').val());
   var bid_amount = parseInt($('#bid_amount').val());
@@ -429,10 +555,91 @@ function btnMinus(){
    var min_bid = parseInt($('#min_bid_value').val());
   var bid_amount = parseInt($('#bid_amount').val());
   var totalValue = parseInt(min_bid + circleBid);
-if(totalValue < bid_amount){
-  bid_amount = parseInt(bid_amount - min_bid);
-  $('#bid_amount').val(bid_amount);
+  if(totalValue < bid_amount){
+    bid_amount = parseInt(bid_amount - min_bid);
+    $('#bid_amount').val(bid_amount);
+  }
 }
+
+function call_time(){
+// if( status == 0 ){
+  var start_date = $('#current_date').val();
+  var start_time = $('#current_time').val();
+  var end_date = $('#starting_date').val();
+  var end_time = $('#starting_time').val();
+
+  console.log(start_date);
+  console.log(start_time);
+  console.log(end_date);
+  console.log(end_time);
+
+// Set the date we're counting down to
+var countDownDate = new Date(end_date+' '+end_time).getTime();
+var countDownStartDate = new Date(start_date+' '+start_time).getTime();
+// console.log(end_date+' '+end_time)
+// Update the count down every 1 second
+
+
+var x = setInterval(function() {
+  // Get today's date and time
+  //var now = new Date().getTime('GMT+04');
+  // var now = new Date().getTime("en-UK",{timeZone:'Europe/London'});
+
+  var uaeTime = new Date().toLocaleString("en-US", {timeZone: "Asia/Dubai"});
+  var now = (new Date(uaeTime)).getTime();
+  console.log('UAE time: '+ (new Date(uaeTime)).getTime());
+
+// var indiaTime = new Date().toLocaleString("en-US", {timeZone: "Asia/Kolkata"});
+// console.log('India time: '+ (new Date(indiaTime)).getTime())
+  
+var dist = countDownStartDate - now;
+// console.log(dist)
+  // Find the distance between now and the count down date
+  var distance = countDownDate - now;
+  // Time calculations for days, hours, minutes and seconds
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+  // Output the result in an element with id="demo"
+ 
+    
+  // If the count down is over, write some text 
+    
+  if (distance < 0) {
+    clearInterval(x);
+    $('#registerForm').addClass('displayhide');
+    $('#register-expire').removeClass('displayhide');
+    $('#check_timer').removeClass('timeFalse');
+   
+    bidding_timer(10);
+    $('#base-timer-label').html(circleBid + '<br> Bid!'); 
+    //document.getElementById("time_runner").innerHTML = "EXPIRED";
+  }else{
+     document.getElementById("base-timer-label").innerHTML = "Bidding <br>"+"Starts in"+"<br>"+hours + " h "
+  + minutes + "m " + seconds + "s ";
+  $('#check_timer').addClass('timeFalse');
+    if(dist > 0){
+      TIME_LIMIT = distance;
+    $('#registerForm').addClass('displayhide');
+    $('#register-pre').removeClass('displayhide');
+    var days1 = Math.floor(dist / (1000 * 60 * 60 * 24));
+    var hours1 = Math.floor((dist % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes1 = Math.floor((dist % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds1 = Math.floor((dist % (1000 * 60)) / 1000);
+    // Output the result in an element with id="demo"
+    document.getElementById("time_runner1").innerHTML = days1 + " Day " + hours1 + "h "
+    + minutes1 + "m " + seconds1 + "s ";
+    }else{
+      $('#registerForm').removeClass('displayhide');
+      $('#register-pre').addClass('displayhide');
+    }
+  }
+  // if()
+}, 1000);
+//}
+bidding_timer(0);
 }
 
  

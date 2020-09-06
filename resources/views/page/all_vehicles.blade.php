@@ -122,7 +122,7 @@
                                             <li>
                                                 <label class="brnds_check_label">
 												{{$brand1->name}}
-												<input onclick="changeBrand()" value="{{$brand1->id}}" type="checkbox" name="brand_id"> 
+												<input onclick="changeBrand()" value="{{$brand1->id}}" type="checkbox" name="brand_id[]"> 
 												<span class="label-text"></span>
 											    </label>
                                             </li>
@@ -261,7 +261,7 @@
   width: 320px;
   height: 180px;" src="{{asset('vehicle_image/').'/'.$vehicle1->image}}" alt="" class="img-fluid impl_frst_car_img" />
                             <!-- <img src="dist/images/product/fea_car1_hover.jpg" alt="" class="img-fluid impl_hover_car_img" /> -->
-                            <span class="impl_img_tag" title="compare"><a href="/compare"><i class="fa fa-exchange" aria-hidden="true"></i></a></span>
+                            <!-- <span class="impl_img_tag" title="compare"><a href="/compare"><i class="fa fa-exchange" aria-hidden="true"></i></a></span> -->
                         </div>
                         <div class="impl_fea_car_data">
                             <h2><a href="#" onclick="viewDetails({{$vehicle1->id}})">

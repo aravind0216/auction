@@ -4,7 +4,10 @@
             <ul class="nav navbar-nav flex-row">
                 <li class="nav-item mr-auto"><a class="navbar-brand" href="/admin/dashboard">
                         <!-- <div class="brand-logo"><img class="logo" src="/images/logo/logo.png" /></div> -->
-                        <h2 class="brand-text mb-0">NYC Auction</h2>
+                        <img style="width: 151px;
+    margin-top: -25px;
+    margin-left: 26px;" src="/dist/images/logo.png" alt="Logo" class="img-fluid">
+                        {{-- <h2 class="brand-text mb-0">NYC Auction</h2> --}}
                     </a></li>
                 <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i class="bx bx-x d-block d-xl-none font-medium-4 primary"></i><i class="toggle-icon bx bx-disc font-medium-4 d-none d-xl-block primary" data-ticon="bx-disc"></i></a></li>
             </ul>
@@ -56,6 +59,13 @@
                     <a href="/admin/view-auction">
                         <i class="menu-livicon" data-icon="car"></i>
                         <span class="menu-title" data-i18n="Auction">Auction</span>
+                    </a>
+                </li>
+
+                <li class="auction-winners nav-item">
+                    <a href="/admin/auction-winners">
+                        <i class="menu-livicon" data-icon="car"></i>
+                        <span class="menu-title" data-i18n="Auction">Auction Winners</span>
                     </a>
                 </li>
 

@@ -61,12 +61,26 @@
 
                         <div class="col-md-4">
                           <label class="label-control">Starting Date</label>
-                          <input value="{{$auction->starting_date}}" type="text" class="form-control" placeholder="Starting Date" name="starting_date" id="starting_date">
+                          <input value="{{$auction->starting_date}}" type="date" class="form-control" placeholder="Starting Date" name="starting_date" id="starting_date">
                         </div>
 
                         <div class="col-md-4">
                           <label class="label-control">Starting Time</label>
                           <input value="{{$auction->starting_time}}" type="text" class="form-control" placeholder="Starting Time" name="starting_time" id="starting_time">
+                        </div>
+
+                      </div>
+
+                      <div class="form-group row">
+
+                        <div class="col-md-4">
+                          <label class="label-control">Channel Name</label>
+                          <input value="{{$auction->channel_name}}" type="text" class="form-control" placeholder="Channel Name" name="channel_name" id="channel_name">
+                        </div>
+
+                        <div class="col-md-4">
+                          <label class="label-control">Minimum Percentage</label>
+                          <input value="{{$auction->minimum_percentage}}" type="text" class="form-control" placeholder="Minimum Percentage" name="minimum_percentage" id="minimum_percentage">
                         </div>
 
                       </div>

@@ -37,10 +37,14 @@
  });
  
 
-Route::get('test', function () {
-    event(new App\Events\StatusLiked('Someone'));
-    return "Event has been sent!";
-});
+// Route::get('test', function () {
+//     event(new App\Events\StatusLiked('Someone'));
+//     return "Event has been sent!";
+// });
+
+Route::get('/404', function(){
+	return abort(404);
+ });
 
 Route::get('/', 'PageController@index');
 Route::get('/auction', 'PageController@auction');
@@ -57,6 +61,11 @@ Route::get('/live-auctions/{id}', 'PageController@liveAuctions');
 
 Route::get('/get-live-auctions/{id}', 'LiveauctionController@getLiveAuctions');
 Route::POST('/save-bid-value', 'LiveauctionController@saveBidValue');
+
+Route::POST('/update-vehicle-status', 'LiveauctionController@updateVehicleStatus');
+
+Route::get('/get-pre-auctions/{id}', 'PreauctionController@getPreAuctions');
+Route::POST('/save-pre-bid-value', 'PreauctionController@savePreBidValue');
 
 Route::get('/live-vehicle-quick-view/{id}', 'PageController@liveVehicleQuickView');
 Route::get('/how-it-works', 'PageController@howItWorks');
@@ -76,6 +85,8 @@ Route::get('/member-create-password/{id}', 'PageController@memberCreatePassword'
 Route::POST('/member-update-password', 'PageController@memberUpdatePassword');
 
 
+//bonus
+Route::POST('/bonus-time', 'LiveauctionController@bonusTime');
 
 Route::group(['prefix' => 'admin'],function(){
 
@@ -190,12 +201,22 @@ Route::group(['prefix' => 'admin'],function(){
 
 	//auction
 	Route::POST('/save-auction', 'AuctionController@saveAuction');
+	
 	Route::POST('/update-auction', 'AuctionController@updateAuction');
 	Route::get('/edit-auction/{id}', 'AuctionController@editAuction');
 	Route::get('/view-auction', 'AuctionController@viewAuction');
 	Route::get('/add-auction', 'AuctionController@addAuction');
 	Route::get('/auction-delete/{id}', 'AuctionController@deleteAuction');
 	Route::get('/get-auction-vehicle/{id}', 'AuctionController@getAuctionVehicle');
+	Route::get('/auction-monitoring/{id}', 'AuctionController@auctionMonitoring');
+	Route::get('/auction-winners', 'AuctionController@auctionCompleted');
+
+	Route::get('/update-payment-status/{id}/{id1}', 'AuctionController@updatePaymentStatus');
+
+	Route::get('/get-live-monitoring/{id}', 'AuctionController@getLiveMonitoring');
+
+	Route::POST('/update-vehicle-status', 'LiveauctionController@updateMonitoringVehicleStatus');
+
 
 	//damage
 	Route::POST('/save-damage', 'DamageController@saveDamage');
@@ -218,6 +239,13 @@ Route::group(['prefix' => 'member'],function(){
 	
 	Route::get('/find-vehicles', 'Member\VehicleController@findVehicles');
 	Route::get('/single-vehicle/{id}', 'Member\VehicleController@singleVehicles');
+
+	Route::get('/pre-bidding', 'Member\BiddingController@preBidding');
+	Route::get('/live-bidding', 'Member\BiddingController@liveBidding');
+	Route::get('/winning-cars', 'Member\BiddingController@winningCars');
+
+	Route::get('/get-appointment/{id}', 'Member\BiddingController@getAppointment');
+	Route::POST('/update-appointment', 'Member\BiddingController@updateAppointment');
 
 	Route::post('update-settings', 'Member\SettingsController@updateSettings');
 	Route::get('settings', 'Member\SettingsController@settings');

@@ -53,11 +53,13 @@
                                 <td>
                                     <?php 
                                     $x=0;
-                                    foreach(explode(',', $row->vehicle_ids) as $value){
+                                    foreach($auction_id as $value){
+                                        if($value->auction_id == $row->id){
                                         $x++;
+                                        }
                                     } 
                                     ?>
-                                    {{$x}} Vechiles
+                                    {{$x}} Vehicles
                                 </td>
                                 <td>
                                     <a href="/live-auctions/{{$row->id}}"><button type="button" class="impl_btn">View List</button></a>
@@ -93,11 +95,13 @@
                                 <td>
                                     <?php 
                                     $x=0;
-                                    foreach(explode(',', $row->vehicle_ids) as $value){
+                                    foreach($auction_id as $value){
+                                        if($value->auction_id == $row->id){
                                         $x++;
+                                        }
                                     } 
                                     ?>
-                                    {{$x}} Vechiles
+                                    {{$x}} Vehicles
                                 </td>
                                 <td>
                                     <a href="/live-auctions/{{$row->id}}"><button type="button" class="impl_btn">View List</button></a>

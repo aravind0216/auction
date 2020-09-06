@@ -61,7 +61,7 @@
                             <ul class="impl_header_icons">
                                 <!-- <li class="impl_search"><span><i class="fa fa-search" aria-hidden="true"></i></span>
                                 </li> -->
-                                <li><a href="/compare"><i class="fa fa-exchange" aria-hidden="true"></i></a></li>
+                                <!-- <li><a href="/compare"><i class="fa fa-exchange" aria-hidden="true"></i></a></li> -->
                                 <li><a href="/"><img style="width: 100px;" src="/dist/images/app-store.png"></a></li>
                                 <li><a href="/"><img style="width: 100px;" src="/dist/images/play-store.png"></a></li>
 
