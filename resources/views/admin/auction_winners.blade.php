@@ -79,9 +79,9 @@
 						                </span>
 						                <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(-125px, 19px, 0px); top: 0px; left: 0px; will-change: transform;">
                                           @if($row->payment_status == 0)
-                                            <a  class="dropdown-item" href="#" onclick="ChangeStatus({{$row->id}},1)">Un Paid</a>                                 
+                                            <a  class="dropdown-item" href="#" onclick="ChangeStatus({{$row->id}},1)">Paid</a>                                 
                                           @else 
-                                            <a  class="dropdown-item" href="#" onclick="ChangeStatus({{$row->id}},0)">Paid</a> 
+                                            <a  class="dropdown-item" href="#" onclick="ChangeStatus({{$row->id}},0)">Un Paid</a> 
                                           @endif
 						                </div>
 						            </div>

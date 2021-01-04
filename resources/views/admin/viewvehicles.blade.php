@@ -78,7 +78,7 @@
                 <table class="table zero-configuration">
                     <thead>
                   <tr>
-                    <th>S.No</th>
+                    <th>Lot.No</th>
                     <th>Image</th>
                     <th>Brand</th>
                     <th>Model</th>
@@ -93,8 +93,8 @@
                 @foreach($vehicle as $row)
                 @php $x++ @endphp
                   <tr>
-                    <td>{{$x}}</td>
-                    <td><img style="max-height:100px;height:100px;" src="{{asset('vehicle_image/').'/'.$row->image}}"></td>
+                    <td>#{{$row->id}}</td>
+                    <td><img style="max-height:50px;height:50px;" src="{{asset('vehicle_image/').'/'.$row->image}}"></td>
                     <td>
                     @foreach($brand as $brand1)
                     @if($brand1->id == $row->brand_id)
@@ -133,7 +133,7 @@
                 </tbody>
                 <tfoot>
                   <tr>
-                    <th>S.No</th>
+                    <th>Lot.No</th>
                     <th>Image</th>
                     <th>Brand</th>
                     <th>Model</th>

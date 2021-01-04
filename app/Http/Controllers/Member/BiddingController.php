@@ -17,7 +17,10 @@ use Auth;
 
 class BiddingController extends Controller
 {
-
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function preBidding()
     {
         $order = order::all();

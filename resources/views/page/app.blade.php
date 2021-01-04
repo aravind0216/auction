@@ -18,6 +18,74 @@
     margin-right: 10px;
     margin-top: 2px;
         }
+/* Responsive css starts here */
+
+@media screen and (max-width: 460px){
+    ul.impl_header_icons li{
+    margin-right: 0;
+    width: 50%;
+    float: left;
+    height: 58px;
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 12px;
+    border: 1px solid #565656;
+    vertical-align: middle;
+    padding: 14px;
+    position: relative;
+    }
+    ul.impl_header_icons li a {
+    display: block;
+}
+ul.impl_header_icons li span{
+    float: none;
+}
+.impl_top_header{
+    border-bottom: 1px solid #565656;
+}
+.impl_menu_wrapper {
+    width: 100%;
+    background-color: #151515;
+}
+.impl_menu_btn {
+    top: 12px;
+}
+.impl_menu_btn:hover{
+    color: #ffffff;
+}
+
+.impl_search_box .select2{
+    width: 100%;
+    margin-left: 0;
+}
+.impl_fea_car_data ul li{
+    float: left;
+    text-align: left;
+}
+.impl_featured_wrappar {
+    padding: 25px 15px 50px;
+    background-color: #0a0a0a;
+}
+.impl_provide_wrapper{
+    padding: 25px 15px 50px;
+}
+
+.impl_logo_responsive img{
+    max-width: 80%;
+    height: auto;
+    text-align: left;
+    float: left;
+}
+.impl_menu_btn {
+    top: 50%;
+    margin-top: -10px;
+    font-size: 25px;
+}
+
+
+}
+
+/* Responsive end here */
     </style>
     
     <!-- Favicon Link -->
@@ -299,7 +367,7 @@
   
 <!------ Footer Section Start ------>
     <div class="impl_footer_wrapper">
-        <div class="impl_social_wrapper">
+        <!-- <div class="impl_social_wrapper">
             <ul>
                 <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
                 <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
@@ -310,27 +378,27 @@
                 <li><a href="#"><i class="fa fa-pinterest-p" aria-hidden="true"></i></a></li>
                 <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
             </ul>
-        </div>
+        </div> -->
         <div class="impl_foo_wrapper">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-3 col-md-6">
                         <div class="impl_foo_box footer_abt_text">
                             <a href="#"><img src="/upload_image/{{$site_infos->logo}}" alt=""></a>
-                            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable by injected humour.</p>
+                            <p>New York car auction running successfully and properly serve our customers. We are selling many thousand of vehicles every year. Now run five auctions a week, handling everything, imported vehicles and occasional classic car auctions too.</p>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-6">
                         <div class="impl_foo_box">
                             <h1 class="impl_foo_title">Basic Information</h1>
                             <ul>
-                                <li><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i> Changing Oil</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i> Saving Fuel</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i> Antilock Brakes</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i> Battery</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i> Tips On Long Car Trips</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i> Air Pressure</a></li>
-                                <li><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i> Tire Replacement</a></li>
+                                <li><a href="/"><i class="fa fa-angle-right" aria-hidden="true"></i> Home</a></li>
+                                <li><a href="/about-us"><i class="fa fa-angle-right" aria-hidden="true"></i> About Us</a></li>
+                                <li><a href="/all-vehicles"><i class="fa fa-angle-right" aria-hidden="true"></i> Find Vehicles</a></li>
+                                <li><a href="/how-it-works"><i class="fa fa-angle-right" aria-hidden="true"></i> Hoiw it Works</a></li>
+                                <li><a href="/services"><i class="fa fa-angle-right" aria-hidden="true"></i> Services</a></li>
+                                <li><a href="/member-fees"><i class="fa fa-angle-right" aria-hidden="true"></i> Member Fees</a></li>
+                                <li><a href="/terms-and-conditions"><i class="fa fa-angle-right" aria-hidden="true"></i> Terms and Conditions</a></li>
                             </ul>
                         </div>
                     </div>
@@ -364,7 +432,7 @@
                     <div class="col-lg-3 col-md-6">
                         <div class="impl_foo_box">
                             <h1 class="impl_foo_title">Subscribe </h1>
-                            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form.</p>
+                            <p>If you need for auction, click subscribe our New York City Car Auction. You will get updated information from us and will get future privileges through our website or our mobile app</p>
                             <div class="impl_footer_subs">
                                 <input type="text" class="form-control" placeholder="Enter Your Email">
                                 <button class="foo_subs_btn"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></button>
@@ -380,7 +448,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 col-md-12">
-                    <p class="impl_copyright">Copyright &copy; 2020 New York Car Auction. All Rights Reserved</p>
+                    <p class="impl_copyright">Copyright &copy; 2020 New York Car Auction. All Rights Reserved Developed By <a target="_blank" href="/member/dashboard">LRBINFOTECH</a></p>
                 </div>
             </div>
         </div>

@@ -20,9 +20,20 @@ use DB;
 
 class AuctionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
     public function saveAuction(Request $request){
-        $request->validate([
+        $this->validate($request, [
             'auction_title'=>'required',
+            'starting_date'=>'required',
+            'starting_time'=>'required',
+            'channel_name'=>'required',
+            'minimum_percentage'=>'required',
+            'vehicle_id.*' => 'required' 
+          ],[
+            'vehicle_id.*.required' => 'Required atleast 1 Vehicle is Mandatory',
         ]);
 
         $auction = new auction_vehicle;
@@ -47,8 +58,15 @@ class AuctionController extends Controller
     }
 
     public function updateAuction(Request $request){
-        $request->validate([
-            'auction_title'=> 'required',
+        $this->validate($request, [
+            'auction_title'=>'required',
+            'starting_date'=>'required',
+            'starting_time'=>'required',
+            'channel_name'=>'required',
+            'minimum_percentage'=>'required',
+            'vehicle_id.*' => 'required', 
+          ],[
+            'vehicle_id.*.required' => 'Required atleast 1 Vehicle is Mandatory',
         ]);
         
         $auction = auction_vehicle::find($request->id);
@@ -223,9 +241,7 @@ class AuctionController extends Controller
          ->orderBy('bid_values.id','desc')
          ->get();
 
-
         $member = User::all();
-
         $data = array();
         $vehicle = array();
         foreach ($auction_id as $key => $value) {
@@ -276,9 +292,9 @@ class AuctionController extends Controller
         date_default_timezone_get();
         $time = date("h:i A"); 
         $date = date('Y-m-d'); 
-            
-$output='
-    <input type="hidden" name="current_time" id="current_time" value="'.$time.'" >
+$output='';
+if($auction->status == 0){
+$output.='<input type="hidden" name="current_time" id="current_time" value="'.$time.'" >
     <input type="hidden" name="current_date" id="current_date" value="'.$date.'" >
     <input type="hidden" name="starting_time" id="starting_time" value="'.$auction->starting_time.'" >
     <input type="hidden" name="starting_date" id="starting_date" value="'.$auction->starting_date.'" >
@@ -364,10 +380,68 @@ $output='
     </div>
 </div>
 </section>';
+}
+else{
+ $output.='    
+<section id="content-types">
+<div id="print_area" class="row">
+    <button onclick="printTable()" id="printTable" class="btn btn-primary">Print</button>
+    <table style="width:100%;" id="table-marketing-campaigns" class="table mb-0">
+        <thead>
+            <tr>
+                <th>Lot Number</th>
+                <th>Member Details</th>
+                <th>Bid Amount</th>
+                <th>status</th>
+            </tr>
+        </thead>
+        <tbody>';
+        $c_auction = auction_vehicle_id::where('auction_id',$auction->id)->get();
+        foreach($c_auction as $row){
+            if($row->status == 1 && $row->un_bid == 0){
+            $bid = bid_value::find($row->bid_id);
+            $user = User::find($bid->member_id);
+            $output.='<tr>
+                <td class="text-bold-600">
+                <span>#'.$row->vehicle_id.'</span>
+                </td>
+                <td>
+                <span>'.$user->name.'</span><br>
+                <span>'.$user->email.'</span>
+                </td>
+                <td class="text-bold-600">
+                <span>'.$bid->bid_amount.' AED</span>
+                </td>
+                <td class="text-success">
+                    Sold
+                </td>
+            </tr>';
+            }
+            elseif($row->un_bid == 1){
+                $output.='<tr>
+                <td class="text-bold-600">
+                <span>#'.$row->vehicle_id.'</span>
+                </td>
+                <td>
+                <span></span>
+                </td>
+                <td class="text-bold-600">
+                <span>0 AED</span>
+                </td>
+                <td class="text-danger">
+                    Un Bid
+                </td>
+            </tr>';
+            }
+        }
+        $output.='</tbody>
+    </table>
+</div>
+</section>
 
-    $output.='
-    
-    ';
+';
+}
+
         
     if(!empty($vehicle)){
         $vehicle_price = $vehicle->price;

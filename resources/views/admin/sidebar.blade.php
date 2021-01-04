@@ -118,13 +118,19 @@
                         <span class="menu-title" data-i18n="Users">Users</span>
                     </a>
                 </li>
-                <li class="roles nav-item">
+                <!-- <li class="roles nav-item">
                     <a href="/admin/role">
                         <i class="menu-livicon" data-icon="unlock"></i>
                         <span class="menu-title" data-i18n="Roles">Roles</span>
                     </a>
-                </li>
+                </li> -->
 
+                <li class="email-temp nav-item">
+                    <a href="/admin/email-temp">
+                        <i class="menu-livicon" data-icon="settings"></i>
+                        <span class="menu-title" data-i18n="Slider">Email Template</span>
+                    </a>
+                </li>
                 <li class="slider nav-item">
                     <a href="/admin/slider">
                         <i class="menu-livicon" data-icon="settings"></i>

@@ -16,12 +16,15 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class VehicleController extends Controller
 {
-
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
 
     public function saveBrand(Request $request){
         $request->validate([
             'name'=>'required|unique:brands',
-            'image' => 'mimes:jpeg,jpg,png|max:1000' // max 1000kb
+            'image' => 'required|mimes:jpeg,jpg,png|max:1000' // max 1000kb
         ]);
         //image upload
         $fileName = null;
@@ -39,7 +42,7 @@ class VehicleController extends Controller
     public function updateBrand(Request $request){
         $request->validate([
             'name'=> 'required|unique:brands,name,'.$request->id,
-            'image' => 'mimes:jpeg,jpg,png|max:1000' // max 1000kb
+            'image' => 'required|mimes:jpeg,jpg,png|max:1000' // max 1000kb
         ]);
         if($request->image!=""){
             $old_image = "upload_image/".$request->image1;
@@ -185,11 +188,18 @@ class VehicleController extends Controller
 
 
     public function saveVehicle(Request $request){
-        $request->validate([
+        $this->validate($request, [
             'brand_id'=>'required',
             'car_id'=>'required',
             'vehicle_status'=>'required',
-            'imgInp' => 'required|mimes:jpeg,jpg,png|max:1000' // max 1000kb
+            'imgInp' => 'required|mimes:jpeg,jpg,png|max:1000', // max 1000kb
+            'images.*' => 'mimes:jpeg,jpg,png|max:1000' // max 1000kb
+          ],[
+            'imgInp.required' => 'Vehicle Image is Required',
+            'imgInp.mimes' => 'Only jpeg, png and jpg images are allowed',
+            'imgInp.max' => 'Sorry! Maximum allowed size for an image is 1MB',
+            'images.*.mimes' => 'Only jpeg, png and jpg images are allowed',
+            'images.*.max' => 'Sorry! Maximum allowed size for an image is 1MB',
         ]);
 
         //image upload
@@ -256,11 +266,17 @@ class VehicleController extends Controller
 
 
     public function updateVehicle(Request $request){
-        $request->validate([
+        $this->validate($request, [
             'brand_id'=>'required',
             'car_id'=>'required',
             'vehicle_status'=>'required',
-            'image' => 'required|mimes:jpeg,jpg,png|size:1000' // max 1000kb
+            'imgInp' => 'mimes:jpeg,jpg,png|max:1000', // max 1000kb
+            'images.*' => 'mimes:jpeg,jpg,png|max:1000' // max 1000kb
+          ],[
+            'imgInp.mimes' => 'Only jpeg, png and jpg images are allowed',
+            'imgInp.max' => 'Sorry! Maximum allowed size for an image is 1MB',
+            'images.*.mimes' => 'Only jpeg, png and jpg images are allowed',
+            'images.*.max' => 'Sorry! Maximum allowed size for an image is 1MB',
         ]);
 
 

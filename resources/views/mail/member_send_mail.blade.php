@@ -299,7 +299,7 @@
 							<table cellpadding="0" cellspacing="0" width="100%" border="0">
 								<tr>
 									<td valign="middle" align="left" class="logo mobile-block">
-									<img src="{{ asset('images/logo/logo.png')}}">
+									<img src="{{asset('upload_image/').'/'.$email_temp->logo}}">
 									</td>
 								</tr>
 							</table>
@@ -327,33 +327,10 @@
 							<!-- Main content start -->
 
 							<table class="widget w580" cellpadding="0" cellspacing="0" border="0" align="center" style="width: 580px;">
-								<tr class="widget-header">
-									<td height="55" style="border-bottom: 5px #2d87ba solid;">
-										<h1 style="color: #2d87ba;font-family: Helvetica, Arial, sans-serif;font-size: 20px;font-weight: bold;text-transform: uppercase;line-height: 36px;padding-right: 20px;margin: 0;">Sample Text Formatting</h1>
-									</td>
-								</tr>
-								<tr>
-									<td class="spacer" height="20" style="font-size: 1px;line-height: 1px;">&nbsp;</td>
-								</tr>
 								<tr class="widget-content">
 									<td>
-										<p style="margin: 0;padding: 0;font-size: 14px;line-height: 25px;font-family: Helvetica, Arial, sans-serif;color: #333;">This template lets you select from a range of <a href="#" style="text-decoration: underline;color: #2d87ba;">different link text and image</a> formatting for your email content. These are just samples of the formatting you can choose from when you add your content in the next step.</p>
-
-										<h2 style="font-weight: bold;font-size: 16px;color: #2d87ba;">This is second level header</h2>
-
-										<p style="margin: 0;padding: 0;font-size: 14px;line-height: 25px;font-family: Helvetica, Arial, sans-serif;color: #333;">This template lets you select from a range of different text and image formatting for your email content. These are just samples of the formatting you can choose from when you add your content in the next step.</p>
-
-										<ul>
-											<li style="font-size: 14px;line-height: 25px;font-family: Helvetica, Arial, sans-serif;color: #333;">This template lets you select from </li>
-											<li style="font-size: 14px;line-height: 25px;font-family: Helvetica, Arial, sans-serif;color: #333;">Range of different text and image formatting for your email content
-												<ul>
-													<li style="font-size: 14px;line-height: 25px;font-family: Helvetica, Arial, sans-serif;color: #333;">These are just samples</li>
-													<li style="font-size: 14px;line-height: 25px;font-family: Helvetica, Arial, sans-serif;color: #333;">Formatting you can</li>
-													<li style="font-size: 14px;line-height: 25px;font-family: Helvetica, Arial, sans-serif;color: #333;">Choose from</li>
-												</ul>
-											</li>
-											<li style="font-size: 14px;line-height: 25px;font-family: Helvetica, Arial, sans-serif;color: #333;">When you add your content in the next step</li>
-										</ul>
+										<?php echo html_entity_decode($email_temp->content); ?>									
+										<br>
 										<br>
 									
 										<table cellpadding="0" cellspacing="0" border="0" align="center" class="button" bgcolor="#2d87ba">

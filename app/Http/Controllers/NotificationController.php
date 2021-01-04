@@ -8,6 +8,10 @@ use App\push_notification;
 
 class NotificationController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
 
     public function saveNotification(Request $request){
         $request->validate([

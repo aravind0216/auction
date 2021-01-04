@@ -46,6 +46,7 @@ Route::get('/404', function(){
 	return abort(404);
  });
 
+Route::get('/update_now', 'LiveauctionController@update_v');
 Route::get('/', 'PageController@index');
 Route::get('/auction', 'PageController@auction');
 Route::get('/contact', 'PageController@contact');
@@ -62,7 +63,8 @@ Route::get('/live-auctions/{id}', 'PageController@liveAuctions');
 Route::get('/get-live-auctions/{id}', 'LiveauctionController@getLiveAuctions');
 Route::POST('/save-bid-value', 'LiveauctionController@saveBidValue');
 
-Route::POST('/update-vehicle-status', 'LiveauctionController@updateVehicleStatus');
+Route::get('/update-vehicle-status', 'LiveauctionController@updateVehicleStatus');
+Route::get('/auction-complete', 'LiveauctionController@thanksPage');
 
 Route::get('/get-pre-auctions/{id}', 'PreauctionController@getPreAuctions');
 Route::POST('/save-pre-bid-value', 'PreauctionController@savePreBidValue');
@@ -71,6 +73,9 @@ Route::get('/live-vehicle-quick-view/{id}', 'PageController@liveVehicleQuickView
 Route::get('/how-it-works', 'PageController@howItWorks');
 Route::get('/services', 'PageController@services');
 Route::get('/member-registration', 'PageController@memberRegistration');
+Route::get('/thanks-page', function(){
+	return view('page.thanks_page');
+ });
 Route::POST('/save-member-registration', 'PageController@saveMemberRegistration');
 Route::POST('/home-search', 'PageController@homeSearch');
 Route::POST('/vehicle-search', 'PageController@vehicleSearch');
@@ -83,6 +88,8 @@ Route::get('/compare', 'PageController@compare');
 
 Route::get('/member-create-password/{id}', 'PageController@memberCreatePassword');
 Route::POST('/member-update-password', 'PageController@memberUpdatePassword');
+
+Route::POST('/contact-mail', 'PageController@contactMail');
 
 
 //bonus
@@ -111,6 +118,9 @@ Route::group(['prefix' => 'admin'],function(){
 
 	Route::POST('/update-site-info', 'servicesController@updateSiteInfo');
 	Route::get('/site-info', 'servicesController@siteInfo');
+
+	Route::POST('/update-email-temp', 'servicesController@updateEmailTemp');
+	Route::get('/email-temp', 'servicesController@EmailTemp');
 
 	Route::POST('/how-it-works', 'servicesController@updatehowItWorks');
 	Route::get('/how-it-works', 'servicesController@howItWorks');
@@ -259,6 +269,10 @@ Route::group(['prefix' => 'member'],function(){
 	Route::post('save-withdrawal', 'Member\SettingsController@saveWithdrawal');
 	Route::get('withdrawal', 'Member\SettingsController@Withdrawal');
 	Route::get('withdrawal-delete/{id}', 'Member\SettingsController@WithdrawalDelete');
+
+
+	Route::get('document', 'Member\SettingsController@viewDocument');
+	Route::POST('update-document', 'Member\SettingsController@updateDocument');
 
 });
 

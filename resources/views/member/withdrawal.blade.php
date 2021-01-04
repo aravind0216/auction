@@ -127,10 +127,24 @@
                 <input type="hidden" name="id" id="id">
                 <input type="hidden" value="{{Auth::user()->id}}" name="member_id" id="member_id">
 
-                <div class="form-group row">
-		            <label class="col-md-3 label-control">Wallet</label>
+              <div class="form-group row">
+		            <label class="col-md-3 label-control">Wallet Balance</label>
 		            <div class="col-md-9">
 		              <input readonly value="{{$member->wallet}}" type="text" id="wallet" class="form-control" name="wallet">
+		            </div>
+              </div>
+              
+              <div class="form-group row">
+		            <label class="col-md-3 label-control">Minimum Maintain Balance</label>
+		            <div class="col-md-9">
+		              <input readonly value="{{$site_info->withdrawal_limit}}" type="text" class="form-control" name="withdrawal_limit" id="withdrawal_limit">
+		            </div>
+              </div>
+              
+              <div class="form-group row">
+		            <label class="col-md-3 label-control">Balance Withdrawal Amount</label>
+		            <div class="col-md-9">
+		              <input readonly value="<?php echo $member->wallet - $site_info->withdrawal_limit; ?>" type="text" id="withdrawal_amount" class="form-control" name="withdrawal_amount">
 		            </div>
 	          	</div>
 
@@ -203,6 +217,17 @@ $('#add_new').click(function(){
     $('#saveButton').text('Save');
     $('#modal-title').text('Add Withdrawal');
 });
+
+function limitCheck(){
+    var wallet = Number($("#wallet").val()) - Number($("#withdrawal_limit").val());
+    var amount = Number($("#amount").val());
+
+    if(wallet > amount){
+        alert('Given Amount is high than Wallet Amount');
+        $("#amount").val('');
+        $("#amount").focus();
+    }
+}
 
 function Save(){
   var formData = new FormData($('#form')[0]);
@@ -287,16 +312,13 @@ function Delete(id){
     } 
 }
 
-$( "#amount" ).change(function() {
-	var wallet = Number($("#wallet").val());
-	var amount=Number($("#amount").val());
+$( "#amount" ).keyup(function() {
+	var wallet = Number($("#withdrawal_amount").val());
+	var amount = Number($("#amount").val());
 
-	if(wallet >= amount)
+	if(amount > wallet)
 	{
-	}
-	else
-	{
-		alert('Given Amount is higher than Wallet Amount');
+    alert('Given Amount is higher than Wallet Amount');
 		$("#amount").val('');
 		$("#amount").focus();
 	}

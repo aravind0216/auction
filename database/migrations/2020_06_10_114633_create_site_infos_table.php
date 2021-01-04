@@ -36,6 +36,7 @@ class CreateSiteInfosTable extends Migration
             $table->TEXT('member_fees',100000)->nullable();
             $table->TEXT('terms_and_conditions',100000)->nullable();
             $table->string('logo')->nullable();
+            $table->string('withdrawal_limit')->nullable();
             $table->timestamps();
         });
     }

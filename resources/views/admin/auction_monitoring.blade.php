@@ -14,12 +14,12 @@
         <div class="content-header-left col-12 mb-2 mt-1">
             <div class="row breadcrumbs-top">
                 <div class="col-12">
-                    <h5 class="content-header-title float-left pr-1 mb-0">Auction</h5>
+                    <h5 class="content-header-title float-left pr-1 mb-0" onclick="onTimesUp()">Auction</h5>
                     <div class="breadcrumb-wrapper col-12">
                         <ol class="breadcrumb p-0 mb-0">
                             <li class="breadcrumb-item"><a href="/admin/auction"><i class="bx bx-home-alt"></i></a>
                             </li>
-                            <li class="breadcrumb-item active" >Auction Monitoring
+                            <li class="breadcrumb-item active" onclick="pusher_calling('0')">Auction Monitoring
                             </li>
                         </ol>
                     </div>
@@ -57,6 +57,8 @@
 
  <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
 <script type="text/javascript">
+ window.timerOut=null;
+window.timerInterval = null;
 $('.auction').addClass('active');
    Pusher.logToConsole = true;
     // var channel_name = $('#channel_name').val();
@@ -66,8 +68,16 @@ $('.auction').addClass('active');
 
     var channel = pusher.subscribe('<?php echo $auction->channel_name; ?>');
     channel.bind('my-event', function(data) {
+      //   console.log('event'+data.message.bid_type)
       
-      
+      if(data.message.bid_type == 'start'){
+        pusher_calling('bonus')
+      }else if(data.message.bid_type =='bonus'){
+        pusher_calling('no-bid')
+      }else if(data.message.bid_type =='no-bid'){
+        pusher_calling('bonus')
+      }
+
     });
 
 var auction_id = '<?php echo $id; ?>';
@@ -137,7 +147,7 @@ var dist = countDownStartDate - now;
     clearInterval(x);
     // $('#registerForm').addClass('displayhide');
     // $('#register-expire').removeClass('displayhide');
-    document.getElementById("time_runner").innerHTML = "Running";
+    document.getElementById("time_runner").innerHTML = "Auction Running Don't Close";
     startBid();
   }else{
      document.getElementById("time_runner").innerHTML = "Starts in "+hours + " h "
@@ -194,19 +204,51 @@ var channel_name = $('#channel_name').val();
 }
 var TIME_LIMIT =10;
 
-function pusher_calling(bids_type){
-    // window.timerOut = null;
-  var timerOut = setTimeout(() => {
-       if(bids_type =='bonus'){
+
+// function pusher_calling(bids_type){
+//    timerOut =null;
+//    timerOut = setTimeout(() => {
+//        if(bids_type =='bonus'){
+//          bonusTime();
+//        }else if(bids_type == 'no-bid'){
+//         noBid();
+//        }
+//        else if(bids_type == 'next'){
+//           nextBid();
+//        }
+//   }, 10000);
+// }
+var timerInterval = null;
+function onTimesUp() {
+  clearInterval(timerInterval);
+  timerInterval = null;
+  console.log('cal timesup');
+}
+
+function pusher_calling(bids_type) {
+  let timePassed = 0;
+  onTimesUp();
+  timerInterval = setInterval(() => {
+    timePassed = timePassed += 1;
+    timeLeft = TIME_LIMIT - timePassed;
+    console.log(bids_type+'bids_type  '+timeLeft);
+    if (timeLeft <= 0) {
+        if(bids_type =='bonus'){
          bonusTime();
        }else if(bids_type == 'no-bid'){
         noBid();
        }
-      //  else if(bids_type == 'next'){
-      //     nextBid();
-      //  }
-  }, 10000);
+       else if(bids_type == 'next'){
+          nextBid();
+       }
+     console.log('timeLeft'+timeLeft);
+     // console.log(types+' -- '+timeLeft);
+      // clearInterval(timerInterval);
+      onTimesUp();
+    }
+  }, 1000);
 }
+
 
 function noBid(){
     $.ajaxSetup({
@@ -218,7 +260,9 @@ function noBid(){
     var vehicle_id = $("#vehicle_id").val();
     var token = $("#token").val();
     var formData = { _token: token, auction_id: auction_id, vehicle_id: vehicle_id};
-
+    alert(auction_id);
+    alert(vehicle_id);
+    alert(token);
     $.ajax({
         url : '/admin/update-vehicle-status',
         type: "POST",
@@ -303,6 +347,16 @@ function bonusTime(){
         }
     });
 
+    }
+
+
+
+    function printTable() {
+        var divToPrint=document.getElementById("table-marketing-campaigns");
+        newWin= window.open("");
+        newWin.document.write(divToPrint.outerHTML);
+        newWin.print();
+        newWin.close();
     }
 </script>
 

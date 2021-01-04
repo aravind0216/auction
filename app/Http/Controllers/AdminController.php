@@ -10,7 +10,10 @@ use Auth;
 
 class AdminController extends Controller
 {
-
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
     public function saveUser(Request $request){
         $request->validate([
             'name'=>'required',
@@ -28,6 +31,7 @@ class AdminController extends Controller
         $admin->save();
         return response()->json('successfully save'); 
     }
+
     public function updateUser(Request $request){
         $request->validate([
             'name'=> 'required',

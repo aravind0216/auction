@@ -67,7 +67,7 @@
                 <div class="row">
                     <div class="form-group col-md-6">
                         <label>Email</label>
-                        <input value="{{$member->email}}" autocomplete="off" type="email" id="email" name="email" class="form-control">
+                        <input readonly value="{{$member->email}}" autocomplete="off" type="email" id="email" name="email" class="form-control">
                     </div>
                     <div class="form-group col-md-6">
                         <label>Address</label>
@@ -102,11 +102,11 @@
                 <div class="row">
                     <div class="form-group col-md-6">
                         <label>Phone Number</label>
-                        <input value="{{$member->phone_number}}" type="text" id="phone_number" name="phone_number" class="form-control">
+                        <input readonly value="{{$member->phone_number}}" type="text" id="phone_number" name="phone_number" class="form-control">
                     </div>
                     <div class="form-group col-md-6">
                         <label>Phone Extension</label>
-                        <input value="{{$member->phone_extension}}" type="text" id="phone_extension" name="phone_extension" class="form-control">
+                        <input readonly value="{{$member->phone_extension}}" type="text" id="phone_extension" name="phone_extension" class="form-control">
                     </div>
                 </div>
 

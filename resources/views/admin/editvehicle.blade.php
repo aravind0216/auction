@@ -398,7 +398,9 @@ $('.input-images-1').imageUploader();
 
 function Save(){
 var formData = new FormData($('#form')[0]);
-$.ajax({
+    var description = tinyMCE.get('description').getContent();
+    formData.append('description', description);
+    $.ajax({
         url : '/admin/update-vehicle',
         type: "POST",
         data: formData,
@@ -414,8 +416,8 @@ $.ajax({
             var errorData = data.responseJSON.errors;
             $.each(errorData, function(i, obj) {
             toastr.error(obj[0]);
-      });
-    }
+          });
+        }
     });
 }
 

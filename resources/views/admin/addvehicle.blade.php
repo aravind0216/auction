@@ -372,10 +372,11 @@ function changeBrand(){
   });
 }
 
-
 function Save(){
-var formData = new FormData($('#form')[0]);
-$.ajax({
+    var formData = new FormData($('#form')[0]);
+    var description = tinyMCE.get('description').getContent();
+    formData.append('description', description);
+    $.ajax({
         url : '/admin/save-vehicle',
         type: "POST",
         data: formData,

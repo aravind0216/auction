@@ -19,6 +19,7 @@ use App\vehicle_type;
 use App\auction_vehicle;
 use App\auction_vehicle_id;
 use App\bid_value;
+use App\pre_bid_value;
 use App\order;
 use Hash;
 use DB;
@@ -93,7 +94,7 @@ class LiveauctionController extends Controller
     public function nextBid(Request $request){
           $message =  array(
            'user'=>'admin',
-           'bid_type'=> 'next',
+           'bid_type'=> 'no-bid',
            'auction_id'=> $request->auction_id,
            'channel_name'=> $request->channel_name,
        );
@@ -111,7 +112,7 @@ class LiveauctionController extends Controller
 
         $auction = auction_vehicle::find($request->auction_id);
         $message =  array(
-            'user'=>'admin',
+           'user'=>'admin',
            'bid_type'=> 'no-bid',
            'channel_name'=> $auction->channel_name,
          );
@@ -120,7 +121,6 @@ class LiveauctionController extends Controller
     }
 
     public function updateVehicleStatus(Request $request){
-
         $bid_value = bid_value::find($request->bid_id);
         $bid_value->status = 1;
         $bid_value->save();
@@ -144,11 +144,12 @@ class LiveauctionController extends Controller
         $order->save();
 
         $vehicle_count = auction_vehicle_id::where('auction_id',$request->auction_id)->where('status',0)->count();
-        if($vehicle_count == 0){
+        if($vehicle_count > 0){
             $auction_vehicle = auction_vehicle::find($request->auction_id);
             $auction_vehicle->status = 1;
             $auction_vehicle->save();
         }
+        
         return response()->json('Update Successfully'); 
     }
 
@@ -156,8 +157,8 @@ class LiveauctionController extends Controller
     {
         date_default_timezone_set("Asia/Dubai");
         date_default_timezone_get();
-        $auction = auction_vehicle::find($id);
-        $auction_id = auction_vehicle_id::where('auction_id',$auction->id)->where('status',0)->where('un_bid',0)->orderBy('id', 'ASC')->get();
+        $auction = auction_vehicle::where('status',0)->first();
+        $auction_id = auction_vehicle_id::where('auction_id',$auction->id)->where('status',0)->orderBy('id', 'ASC')->get();
 
         $auction_count = auction_vehicle_id::where('auction_id',$auction->id)->count();
 
@@ -205,8 +206,8 @@ class LiveauctionController extends Controller
                 $datas[] = $data;
             }
         }
-            
-
+        $output = '';
+if(!empty($auction_id)){
         $output = '
     <div class="impl_bread_wrapper">
         <div class="container">
@@ -229,24 +230,28 @@ class LiveauctionController extends Controller
                     <div class="impl_carparts_inner">
                         <div class="impl_buy_old_car">
                             <div class="slider slider-for">';
-                                if(!empty($vehicle->image)){
+                            if(!empty($vehicle->image)){
                                 $output.='<div><img style="width: 700px;height: 400px;" src="/vehicle_image/'.$vehicle->image.'" alt=""></div>';
-                                }
+                            }
+                            if(!empty($vehicle_image)){
                                 foreach($vehicle_image as $row){
                                 $output.='<div><img style="width: 700px;height: 400px;" src="/vehicle_image/'.$row->image.'" alt=""></div>';
                                 }
+                            }
                             $output.='</div>
                             <div class="slider slider-nav">';
-                                if(!empty($vehicle->image)){
-                                $output.='<div>
-                                    <div class="impl_thumb_ovrly"><img style="width: 100px;height: 100px;" src="/vehicle_image/'.$vehicle->image.'" alt=""></div>
-                                </div>';
-                                }
+                            if(!empty($vehicle->image)){
+                            $output.='<div>
+                                <div class="impl_thumb_ovrly"><img style="width: 100px;height: 100px;" src="/vehicle_image/'.$vehicle->image.'" alt=""></div>
+                            </div>';
+                            }
+                            if(!empty($vehicle_image)){
                                 foreach($vehicle_image as $row){
                                 $output.='<div>
                                     <div class="impl_thumb_ovrly"><img style="width: 100px;height: 100px;" src="/vehicle_image/'.$row->image.'" alt=""></div>
                                 </div>';
                                 }
+                            }
                             $output.='</div>
                         </div>
                     </div>
@@ -269,7 +274,7 @@ class LiveauctionController extends Controller
                             $output.='<div id="app"></div>';
                             $output.='<div id="time_runner"></div>';
 
-                            
+
                             $output.='<input type="hidden" name="current_time" id="current_time" value="'.$time.'" >
        <input type="hidden" name="current_date" id="current_date" value="'.$date.'" >
 
@@ -294,6 +299,7 @@ class LiveauctionController extends Controller
                     if(\Auth::check()){
 
         $pre_bid_value = pre_bid_value::where('vehicle_id',$id)->orderBy('bid_amount', 'desc')->first();
+        $bid_amount=0;
         if(!empty($pre_bid_value)){
             $bid_amount = $vehicle->minimum_bid_value + $pre_bid_value->bid_amount;
         }
@@ -417,7 +423,7 @@ class LiveauctionController extends Controller
                     <div class="impl_heading">
                         <h1>Additional Info</h1>
                     </div>';
-                $output.= html_entity_decode($vehicle->description);
+                    $output.= '<div style="padding-left:30px;">'.html_entity_decode($vehicle->description).'</div>';
                 $output.='</div>
             </div>
         </div>
@@ -432,12 +438,15 @@ class LiveauctionController extends Controller
                         <h1>Upcoming Lots</h1>
                     </div>
                 </div>';
-            foreach($datas as $data){
+            foreach($datas as $key => $data){
+                $min=$key+1;
              $output.='<div class="col-lg-3 col-md-4">
                 <div class="impl_fea_car_box" style="box-shadow: 1px 1px 10px 2px #ffffff;" onclick="viewDetails('.$data['vehicle_id'].')">
-                    <div class="impl_fea_car_img">
+                    <div class="impl_fea_car_img ">
                         <img style="width: 300px;height: 150px; padding:10px;cursor: pointer;" src="/vehicle_image/'.$data['image'].'" alt="" class="img-fluid impl_frst_car_img">
-                        <!-- <img src="/app-assets/images/featured/fea_car1_hover.jpg" alt="" class="img-fluid impl_hover_car_img"> -->
+                        <span class="impl_pst_date">
+                            '.$min.' Min
+                        </span>
                     </div>
                     <div class="impl_fea_car_data" style="background: #F44336;">
                         <h2> <a href="javascript:void(null)" onclick="viewDetails('.$data['vehicle_id'].')">'.$data['model'].'</a></h2>
@@ -489,9 +498,29 @@ class LiveauctionController extends Controller
          }else{
             $time_status=0;
          }
+}
+else{
+    return redirect('/auction-complete');
 
+}
 
          return response()->json(['html'=>$output,'vehicle_price'=>$vehicle_price,'time_status'=>$time_status],200); 
+    }
+
+    public function update_v(){
+        
+      $auctions = auction_vehicle_id::where('auction_id',1)->get();
+      foreach($auctions as $row){
+          $auction = auction_vehicle_id::find($row->id);
+          $auction->status =0;
+          $auction->un_bid =0;
+          $auction->save();
+      }
+      return response()->json('200');
+    }
+
+    public function thanksPage(){
+        return view('page.auction_complete');
     }
     
 }

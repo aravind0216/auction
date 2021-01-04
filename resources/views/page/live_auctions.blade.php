@@ -227,11 +227,14 @@ var x = setInterval(function() {
 
     var channel = pusher.subscribe('<?php echo $auction->channel_name; ?>');
     channel.bind('my-event', function(data) {
+      bidding_type = data.message.bid_type;
+      console.log('event'+data.message.bid_type)
       var auction_id = $("#auction_id").val();
       if(after_bid ==1){
         $('#view-auction').html(body_data);
         after_bid=0;
       }
+      //if check admin then goto
       if(data.message.user =='admin'){
         console.log('bidding_type'+data.message.bid_type)
           if(data.message.bid_type =='bonus'){
@@ -243,11 +246,13 @@ var x = setInterval(function() {
             //TIME_LIMIT = 10;
             // console.log(data.message.bid_amount)
           }else if(data.message.bid_type =='no-bid'){
+            bidding_type='no-bid';
             //clearInterval(timerInterval);
             viewAuction(auction_id,true);
             //$('#base-timer-label').html(circleBid + '<br> Bid!'); 
           }
           else if(data.message.bid_type =='start'){
+            bidding_type='start';
             clearInterval(timerInterval);
             bidding_timer(10,'start');
             $('#base-timer-label').html(circleBid + '<br> Bid!'); 
@@ -259,32 +264,37 @@ var x = setInterval(function() {
           //     viewAuction(auction_id);
           //   }
           // }
+
+          //user access
       }else{
            clearInterval(timerInterval);
-               bidding_timer(10,'bid');
+           bidding_timer(10,'bid');
         // console.log(data.message.bid_amount)
         //  alert(JSON.stringify(data));
         // clearInterval(timerInterval);
         // bidding_timer();
-        bidding_type='bid';
+
+        // bidding_type='bid';
          bid_amount = JSON.stringify(data.message.bid_amount);
          public_ip = JSON.stringify(data.message.public_ip);
          bid_id = JSON.stringify(data.message.bid_id);
          vehicle_id = JSON.stringify(data.message.vehicle_id);
-        
          min_bid = parseInt($('#min_bid_value').val());
-    
          total_bid = parseInt(bid_amount) + parseInt(min_bid);
         // clearTimeout(timerOut);
-    //     if(public_ipv == public_ip){
-    //       timerOut = setTimeout(() => {
+    //if(public_ipv == public_ip){
+    //timerOut = setTimeout(() => {
          
     //    updateVehicleStatus(bid_id,vehicle_id);
     // }, 10000);
     //     }
-    
         $('#bid_amount').val(total_bid);
+        if(data.message.bid_type =='bonus'){
+         $('#base-timer-label').html('Bonus Time'+'<br>'+bid_amount);
+        }else{
          $('#base-timer-label').html(bid_amount+ '<br> Bid!');
+
+        }
       }
     });
     

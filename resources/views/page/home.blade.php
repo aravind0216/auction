@@ -455,14 +455,18 @@
                         <div class="panel-group" id="accordion">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h4 class="panel-title"><a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Join New York Car Auction</a></h4>
+                                    <h4 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Join New York Car Auction</a></h4>
                                 </div>
                                 <div id="collapseOne" class="panel-collapse collapse in show">
-                                    <!-- <div class="panel-body">
-                                        Vivamus malesuada orci a sapien rutrum, ut iaculis turpis posuere. Proin mollis
-                                        sodales aliquet. Suspendisse iaculis, justo ac feugiat accumsan, turpis urna
-                                        consequat mauris.
-                                    </div> -->
+                                    <div class="panel-body">
+<ul>
+    <li>Register today with auction</li>
+    <li>Sign in through the link in the register</li>
+    <li>Choose the membership type that’s right for you</li>
+</ul>
+<p>To start bidding and buying with New York car Auction, you must first join New York car Auction:<p>
+<p>To register for our free basic membership. Simply full SIGNUP form. You may also register on the New York car Auction app. You will be sent a confirmation email containing your login information and password.</p>
+                                    </div>
                                 </div>
                             </div>
                             <div class="panel panel-default">
@@ -470,11 +474,18 @@
                                     <h4 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Add a Deposit</a></h4>
                                 </div>
                                 <div id="collapseTwo" class="panel-collapse collapse">
-                                    <!-- <div class="panel-body">
-                                        Vivamus malesuada orci a sapien rutrum, ut iaculis turpis posuere. Proin mollis
-                                        sodales aliquet. Suspendisse iaculis, justo ac feugiat accumsan, turpis urna
-                                        consequat mauris.
-                                    </div> -->
+                                    <div class="panel-body">
+<ul>
+    <li>Make fund transfers</li>
+    <li>Directly deposit to New York car Auctions bank account in your current location</li>
+    <li>Make cash or cheque payments at any of New York Car offices</li>
+</ul>
+<p>Find more details about our payments options below:</p>
+<ul>
+    <li>Payment by Direct deposit/Local Bank Transfers</li>
+    <li>Payment by cheque (Local currency Only)</li>
+</ul>
+                                    </div>
                                 </div>
                             </div>
                             <div class="panel panel-default">
@@ -482,11 +493,11 @@
                                     <h4 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">Search Vehicles</a></h4>
                                 </div>
                                 <div id="collapseThree" class="panel-collapse collapse">
-                                    <!-- <div class="panel-body">
-                                        Vivamus malesuada orci a sapien rutrum, ut iaculis turpis posuere. Proin mollis
-                                        sodales aliquet. Suspendisse iaculis, justo ac feugiat accumsan, turpis urna
-                                        consequat mauris.
-                                    </div> -->
+                                    <div class="panel-body">
+                                        <p>
+                                        Your vehicle search experience has been improved. High quality photo browsing directly from the search results. On the go searches for vehicles made easy with New York car auction app. You can also search by year, make, model, location, VIN and lot number. Once the search is complete, refine your results by utilizing the appropriate filters as well. Open the photo modals for an enhanced view of the vehicles featuring high quality photo browsing.
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
 
@@ -495,11 +506,11 @@
                                     <h4 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">Join Auctions</a></h4>
                                 </div>
                                 <div id="collapseFour" class="panel-collapse collapse">
-                                    <!-- <div class="panel-body">
-                                        Vivamus malesuada orci a sapien rutrum, ut iaculis turpis posuere. Proin mollis
-                                        sodales aliquet. Suspendisse iaculis, justo ac feugiat accumsan, turpis urna
-                                        consequat mauris.
-                                    </div> -->
+                                    <div class="panel-body">
+                                        <p>
+                                        After you’ve determined what vehicles you’d like to bid on. It’s time to submit preliminary bids or join some live auctions. You don’t need to be logged in to attend an auction, but you will need to sign in order to bid. Once you have done this, click on the Auctions tab to see a list of Today’s Auction. Where you can jump directly into live ongoing auction Upcoming auctions and the Auctions calendar. There are a handful of other entry points for auctions as well, including the New York homepage, member dashboard and individual locations. You’ll be directed to the Auction dashboard.
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
 
@@ -508,11 +519,11 @@
                                     <h4 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseFive">Place Bids</a></h4>
                                 </div>
                                 <div id="collapseFive" class="panel-collapse collapse">
-                                    <!-- <div class="panel-body">
-                                        Vivamus malesuada orci a sapien rutrum, ut iaculis turpis posuere. Proin mollis
-                                        sodales aliquet. Suspendisse iaculis, justo ac feugiat accumsan, turpis urna
-                                        consequat mauris.
-                                    </div> -->
+                                    <div class="panel-body">
+                                        <p>
+                                        New York car auction member can place preliminary bids, or pre-bids, on vehicles at any time up to one hour before the start of the live auction. When you pre-bid, you place an incremental value on the vehicle prior to the sale. With New York car patented online vehicle auction technology. Members experience the excitement of a live sale from the comfort of their home or office. On their computer or mobile devices. Bid from your computer to mobile devices by selecting from one of the automatic increment options or choosing your own bid, a monster Bid.
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
 
@@ -521,11 +532,11 @@
                                     <h4 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseSix">Pay and Pick Up</a></h4>
                                 </div>
                                 <div id="collapseSix" class="panel-collapse collapse">
-                                    <!-- <div class="panel-body">
-                                        Vivamus malesuada orci a sapien rutrum, ut iaculis turpis posuere. Proin mollis
-                                        sodales aliquet. Suspendisse iaculis, justo ac feugiat accumsan, turpis urna
-                                        consequat mauris.
-                                    </div> -->
+                                    <div class="panel-body">
+                                        <p>
+                                        For arrange payment purchase should be paid for within three business days, including the sale day. Payment of buyer fees, virtual bidding fees and other fees, as applicable will be required as well. Once all fees are paid in full, you can pick up your purchases. Virtual auction bidders have five business days, including day of sale, to pick up their purchase before storage fees begin accruing.
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -559,8 +570,7 @@
                                     <li>
                                         <div class="impl_tl_item">
                                             <h2>Auction</h2>
-                                            <p>Vivamus malesuada orci a sapien rutrum, ut iaculis turpis posuere. Proin
-                                                mollis sodales.</p>
+                                            <p>All New York car middle east auctions taking place on that particular day will be listed under today auction page where you can jump directly into live ongoing auctions upcoming auctions.</p>
                                             <span class="impl_tl_icon">
                                                 <i class="fa fa-shopping-basket" aria-hidden="true"></i>
                                             </span>
@@ -569,8 +579,7 @@
                                     <li>
                                         <div class="impl_tl_item impl_tl_item_rt">
                                             <h2>Find Vehicles</h2>
-                                            <p>Vivamus malesuada orci a sapien rutrum, ut iaculis turpis posuere. Proin
-                                                mollis sodales.</p>
+                                            <p>Under Today Auction page You will find auctions that will be happening later in the day and others that are current live auctions. Once the auction goes live, you can join the auction by simply clicking on the join Auction button..</p>
                                             <span class="impl_tl_icon">
                                                 <i class="fa fa-usd" aria-hidden="true"></i>
                                             </span>
@@ -579,8 +588,7 @@
                                     <li>
                                         <div class="impl_tl_item">
                                             <h2>Live Auctions</h2>
-                                            <p>Vivamus malesuada orci a sapien rutrum, ut iaculis turpis posuere. Proin
-                                                mollis sodales.</p>
+                                            <p>The great thing about the Find Vehicles, saved searches and watchlists is that all of these tools are also available on the New York Car Auction app. So pic up on your ipad or jump on your mobile to login, search vehicles, add your favourite items to your watchlist and saved.</p>
                                             <span class="impl_tl_icon">
                                                 <i class="fa fa-wrench" aria-hidden="true"></i>
                                             </span>

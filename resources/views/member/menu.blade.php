@@ -66,7 +66,7 @@
 
                     <li class="settings" data-menu=""><a class="dropdown-item align-items-center" href="/member/settings" data-toggle="dropdown"><i class="bx bx-right-arrow-alt"></i>Account Settings</a></li>
 
-                    <li data-menu=""><a class="calendar dropdown-item align-items-center" href="#" data-toggle="dropdown"><i class="bx bx-right-arrow-alt"></i>Document Upload</a></li>
+                    <li data-menu=""><a class="calendar dropdown-item align-items-center" href="/member/document" data-toggle="dropdown"><i class="bx bx-right-arrow-alt"></i>Document Upload</a></li>
 
                     <li class="deposit" data-menu=""><a class="deposit dropdown-item align-items-center" href="/member/deposit" data-toggle="dropdown"><i class="bx bx-right-arrow-alt"></i>Add Deposit</a></li>
 
@@ -75,12 +75,12 @@
                 </ul>
             </li>
 
-            <li class="locations nav-item" data-menu="dropdown">
+            <!-- <li class="locations nav-item" data-menu="dropdown">
                 <a class="dropdown-toggle nav-link" href="#">
                     <i class="menu-livicon" data-icon="notebook"></i>
                     <span data-i18n="Revenue Reports">Locations</span>
                 </a>
-            </li>
+            </li> -->
 
         </ul>
     </div>

@@ -173,12 +173,12 @@
                                         </select>
                                     </div>
                                     <!--Price Range-->
-                                    <div class="impl_product_price widget woocommerce">
+                                    <!-- <div class="impl_product_price widget woocommerce">
                                         <h2 class="widget-title">price range</h2>
                                         <div class="price_range">
                                             <input type="text" id="range_24" name="price_range" value="" />
                                         </div>
-                                    </div>
+                                    </div> -->
 
                                     <!--Car Type-->
                                     <!-- <div class="impl_product_type widget woocommerce">

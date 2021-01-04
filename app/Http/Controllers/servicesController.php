@@ -9,13 +9,14 @@ use App\site_info;
 use App\User;
 use App\blog;
 use App\admin;
+use App\email_temp;
 use Hash;
 
 class servicesController extends Controller
 {
     public function __construct()
     {
-        // $this->middleware('guest:admin');
+        $this->middleware('auth:admin');
     }
     
     public function dashboard()
@@ -155,6 +156,37 @@ class servicesController extends Controller
         $site_info->about_info = $request->about_info;
         $site_info->logo = $fileName1;
         $site_info->save();
+        return back();
+    }
+
+    public function EmailTemp(){
+        $data = email_temp::find('1');
+        return view('admin.email_temp',compact('data'));
+    }
+
+    public function updateEmailTemp(Request $request){
+        if($request->logo!=""){
+            $old_image = "upload_image/".$request->logo;
+            if (file_exists($old_image)) {
+                @unlink($old_image);
+            }
+            //image upload
+            $fileName1 = null;
+            if($request->file('logo')!=""){
+            $image = $request->file('logo');
+            $fileName1 = rand() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('upload_image/'), $fileName1);
+            }
+        }
+        else
+        {
+            $fileName1 = $request->logo1;
+        }
+
+        $email_temp = email_temp::find($request->id);
+        $email_temp->content = $request->content;
+        $email_temp->logo = $fileName1;
+        $email_temp->save();
         return back();
     }
 

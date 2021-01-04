@@ -8,14 +8,21 @@ use App\car;
 use App\member_password;
 use App\deposit;
 use App\withdrawal;
+use App\email_temp;
 use Mail;
 use DB;
 
 class MemberController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
     public function saveMember(Request $request){
         $request->validate([
+            'busisness_type'=>'required',
             'name'=>'required',
+            'email'=>'required|unique:users',
         ]);
 
         $member = new User;
@@ -43,16 +50,19 @@ class MemberController extends Controller
         $member_password->save();
 
         $all = $member_password::find($member_password->id);
-        Mail::send('mail.member_send_mail',compact('all'),function($message) use($all){
-            $message->to($all['email'])->subject('Create your Own Password');
-            $message->from('contact@lrbinfotech.com','New York Car Auction');
+        $email_temp = email_temp::first();
+        Mail::send('mail.member_send_mail',compact('all','email_temp'),function($message) use($all){
+            $message->to($all['email'])->subject('Verify Your Account');
+            $message->from('prasanthats@gmail.com','New York Car Auction');
         });
         return response()->json('successfully save'); 
     }
 
     public function updateMember(Request $request){
         $request->validate([
-            'name'=> 'required',
+            'busisness_type'=>'required',
+            'name'=>'required',
+            'email'=>'required|unique:users,email,'.$request->id,
         ]);
         
         $member = User::find($request->id);

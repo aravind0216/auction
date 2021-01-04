@@ -32,10 +32,10 @@
                         <div class="col-lg-12 col-md-12">
                             <h1>get in touch</h1>
                         </div>
-                        <form>
+                        <form id="contact_form" methos="POST" novalidate enctype="multipart/form-data">
                             <div class="col-lg-12 col-md-12">
                                 <div class="form-group">
-                                    <input type="text" name="first_name" class="form-control require" placeholder="YOUR NAME">
+                                    <input type="text" name="name" id="name" class="form-control require" placeholder="YOUR NAME">
                                 </div>
                             </div>
                             <div class="col-lg-12 col-md-12">
@@ -45,18 +45,23 @@
                             </div>
                             <div class="col-lg-12 col-md-12">
                                 <div class="form-group">
-                                    <input type="text" name="subject" class="form-control" placeholder="SUBJECT">
+                                    <input type="text" name="phone" id="phone" class="form-control" placeholder="Phone">
                                 </div>
                             </div>
                             <div class="col-lg-12 col-md-12">
                                 <div class="form-group">
-                                    <textarea name="message" class="form-control" placeholder="YOUR MESSAGE"></textarea>
+                                    <input type="text" name="subject" id="subject" class="form-control" placeholder="Subject">
                                 </div>
                             </div>
+                            <div class="col-lg-12 col-md-12">
+                                <div class="form-group">
+                                    <textarea name="message" id="message" class="form-control" placeholder="YOUR MESSAGE"></textarea>
+                                </div>
+                            </div>
+                           
                             <div class="response"></div>
                             <div class="col-lg-12 col-md-12">
-                                <input type="hidden" name="form_type" value="contact">
-                                <button type="button" class="impl_btn submitForm">post comment</button>
+                                <button type="button" onclick="mailsend()" class="impl_btn submitForm">post comment</button>
                             </div>
                         </form>
                     </div>
@@ -104,12 +109,39 @@
 @section('extra-js')
 
 <!--Main js file Style-->
+    <script src='https://www.google.com/recaptcha/api.js'></script>
     <script type="text/javascript" src="dist/js/jquery.js"></script>
     <script type="text/javascript" src="dist/js/popper.js"></script>
     <script type="text/javascript" src="dist/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="dist/js/contact_form.js"></script>
     <script type="text/javascript" src="dist/js/custom.js"></script>
     <!--Main js file End-->
+
+    <script>		
+    function mailsend(){
+        var termsData = new FormData(jQuery('#contact_form')[0]);
+        jQuery.ajax({
+        url : '/contact-mail',
+        type: "POST",
+        data: termsData,
+        contentType: false,
+        processData: false,
+        dataType: "JSON",
+        success: function(data)
+        {
+          console.log(data);                
+          jQuery("#contact_form")[0].reset();
+          toastr.success('Mail Send Successfully', 'Successfully Send');
+        },
+        error: function (data, errorThrown) {
+                var errorData = data.responseJSON.errors;
+              jQuery.each(errorData, function(i, obj) {
+                  toastr.error(obj[0]);
+              });
+            }
+      });
+    }
+    </script>
     
 	
 

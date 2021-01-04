@@ -14,6 +14,10 @@ use App\vehicle_type;
 
 class VehicleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     public function findVehicles()
     {

@@ -6,6 +6,10 @@ use App\damage;
 
 class DamageController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
     public function saveDamage(Request $request){
         $request->validate([
             'damage'=>'required',

@@ -8,10 +8,15 @@ use App\car;
 use App\User;
 use App\deposit;
 use App\withdrawal;
+use App\site_info;
 use Auth;
 
 class SettingsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function settings()
     {
         $member = User::find(Auth::user()->id);
@@ -45,9 +50,13 @@ class SettingsController extends Controller
     }
 
     public function saveDeposit(Request $request){
-        $request->validate([
+        $this->validate($request, [
             'deposit'=>'required|numeric',
-            'image'=>'required',
+            'image' => 'required|mimes:jpeg,jpg,png,pdf|max:1000', // max 1000kb
+          ],[
+            'image.mimes' => 'Only jpeg, png and jpg images are allowed',
+            'image.max' => 'Sorry! Maximum allowed size for an image is 1MB',
+            'image.required' => 'Slip Field is Required',
         ]);
         //image upload
         $fileName = null;
@@ -76,7 +85,8 @@ class SettingsController extends Controller
     {
         $withdrawal = withdrawal::where('member_id',Auth::user()->id)->get();
         $member = User::find(Auth::user()->id);
-        return view('member.withdrawal',compact('withdrawal','member'));
+        $site_info = site_info::first();
+        return view('member.withdrawal',compact('withdrawal','member','site_info'));
     }
 
     public function saveWithdrawal(Request $request){
@@ -104,6 +114,63 @@ class SettingsController extends Controller
         $withdrawal = withdrawal::find($id);
         $withdrawal->delete();
         return response()->json(['message'=>'Successfully Delete'],200); 
+    }
+
+    public function viewDocument(){
+        $user = User::where('id',Auth::user()->id)->first();
+        return view('member.document',compact('user'));
+    }
+
+    public function updateDocument(Request $request){
+        $this->validate($request, [
+            'upload_image' => 'mimes:jpeg,jpg,png|max:1000', // max 1000kb
+            'upload_emirate_id' => 'mimes:jpeg,jpg,png,pdf|max:1000', // max 1000kb
+            'upload_passport' => 'mimes:jpeg,jpg,png,pdf|max:1000', // max 1000kb
+          ],[
+            'upload_image.mimes' => 'Only jpeg, png and jpg images are allowed',
+            'upload_image.max' => 'Sorry! Maximum allowed size for an image is 1MB',
+            'upload_emirate_id.mimes' => 'Only jpeg, png, pdf and jpg images are allowed',
+            'upload_emirate_id.max' => 'Sorry! Maximum allowed size for an image is 1MB',
+            'upload_passport.mimes' => 'Only jpeg, png, pdf and jpg images are allowed',
+            'upload_passport.max' => 'Sorry! Maximum allowed size for an image is 1MB',
+        ]);
+
+        $user = User::find($request->id);
+        $upload_image = null;
+        if ($request->file('upload_image') != "") {
+            $old_image = "upload_image/".$request->upload_image1;
+            if (file_exists($old_image)) {
+                @unlink($old_image);
+            }
+            $image = $request->file('upload_image');
+            $upload_image = rand() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('uploads/'), $upload_image);
+            $user->upload_image = $upload_image;
+        }
+        $upload_passport = null;
+        if ($request->file('upload_passport') != "") {
+            $old_image = "upload_passport/".$request->upload_passport1;
+            if (file_exists($old_image)) {
+                @unlink($old_image);
+            }
+            $image = $request->file('upload_passport');
+            $upload_passport = rand() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('uploads/'), $upload_passport);
+            $user->upload_passport = $upload_passport;
+        }
+        $upload_emirate_id = null;
+        if ($request->file('upload_emirate_id') != "") {
+            $old_image = "upload_emirate_id/".$request->upload_emirate_id1;
+            if (file_exists($old_image)) {
+                @unlink($old_image);
+            }
+            $image = $request->file('upload_emirate_id');
+            $upload_emirate_id = rand() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('uploads/'), $upload_emirate_id);
+            $user->upload_emirate_id = $upload_emirate_id;
+        }
+        $user->save();
+        return back();
     }
 
 }

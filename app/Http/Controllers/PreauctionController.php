@@ -126,26 +126,40 @@ class PreauctionController extends Controller
                         }
                     $output.='</div>';
                     if(\Auth::check()){
+        $pre_bid_value = pre_bid_value::where('vehicle_id',$id)->orderBy('bid_amount', 'desc')->first();
+        $bid_amount=0;
+        if(!empty($pre_bid_value)){
+            $bid_amount = $vehicle->minimum_bid_value + $pre_bid_value->bid_amount;
+        }
+        else{
+            $bid_amount = $vehicle->minimum_bid_value + $vehicle->price;
+        }
+        $bid25 = $bid_amount * ($auction->minimum_percentage/100);
+        if(Auth::user()->wallet > $bid25){
                         $output.='<div class="row">
                             <div class="col-md-6">
-                               <div class="input-group">
-                               <input type="hidden" id="min_bid_value" value="'.$vehicle->minimum_bid_value.'">
-          <input type="hidden" name="_token" id="token" value="'.csrf_token().'">
-          <input type="hidden" name="wallet" id="wallet" value="'.Auth::user()->wallet.'">
-       <input type="hidden" name="vehicle_id" id="vehicle_id" value="'.$vehicle->id.'" >';
+                               
+        <input type="hidden" id="min_bid_value" value="'.$vehicle->minimum_bid_value.'">
+        <input type="hidden" name="_token" id="token" value="'.csrf_token().'">
+        <input type="hidden" name="wallet" id="wallet" value="'.Auth::user()->wallet.'">
+        <input type="hidden" name="auction_id" id="auction_id" value="'.$auction->id.'" >    
+        <input type="hidden" name="vehicle_id" id="vehicle_id" value="'.$vehicle->id.'" >
 
-       
-      $output.='<input style="width:300x !important;" name="bid_amount" id="bid_amount" type="text" value="'.$bid_amount.'" class="form-control" readonly aria-describedby="basic-addon2">
-      <div class="input-group-append">
-        <button class="btn btn-outline-secondary" type="button" onclick=btnMinus()><i class="fa fa-minus" aria-hidden="true"></i></button>
-        <button class="btn btn-outline-secondary" type="button" onclick=btnPlus()><i class="fa fa-plus" aria-hidden="true"></i></button>
-      </div>
-    </div>
-                            </div>
+                <div class="input-group">
+                    <input style="width:300x !important;" name="bid_amount" id="bid_amount" type="text" value="'.$bid_amount.'" class="form-control" readonly aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" onclick=btnMinus()><i class="fa fa-minus" aria-hidden="true"></i></button>
+                        <button class="btn btn-outline-secondary" type="button" onclick=btnPlus()><i class="fa fa-plus" aria-hidden="true"></i></button>
+                    </div>
+                </div></div>
                       
                         </div>
                         <br>
                         <button style="margin-left: 70px;" onclick="SaveBid()" id="saveBid" type="button" class="btn btn-primary impl_btn">Bid Now</button>';
+        }
+        else{
+            $output.='<h5>You are Not Eligible to Bid</h5>';
+        }
                     }else{
 
                         $output.='<div class="impl_old_buy_btn">
@@ -237,7 +251,7 @@ class PreauctionController extends Controller
                     <div class="impl_heading">
                         <h1>Additional Info</h1>
                     </div>';
-                $output.= html_entity_decode($vehicle->description);
+                $output.= '<div style="padding-left:30px;">'.html_entity_decode($vehicle->description).'</div>';
                 $output.='</div>
             </div>
         </div>

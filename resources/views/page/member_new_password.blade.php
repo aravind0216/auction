@@ -53,12 +53,17 @@
                                 </div>
                             </div>
                             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                	<label>Confirm Password</label>
+                                <label>Confirm Password</label>
                                 <div class="input-group">
 				                    <input class="form-control" type="password" name="password_confirmation" id="password_confirmation">
                                 </div>
                             </div>
-                            <button onclick="Save()" type="button" class="btn btn-primary glow position-relative w-100">Save<i id="icon-arrow" class="bx bx-right-arrow-alt"></i></button>
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <br>
+                                <div class="input-group">
+                                    <button onclick="Save()" type="button" class="btn btn-primary glow position-relative w-100">New Password</button>
+                                </div>
+                            </div>
                         </div>
                     </form>
                     </div>

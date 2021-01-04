@@ -18,6 +18,7 @@ use App\vehicle;
 use App\vehicle_type;
 use App\auction_vehicle;
 use App\auction_vehicle_id;
+use App\email_temp;
 use Hash;
 use DB;
 use Mail;
@@ -82,8 +83,8 @@ class PageController extends Controller
     public function auctions()
     {
         $today = date('Y-m-d');
-        $today_auction = auction_vehicle::where('starting_date',$today)->get();
-        $upcoming_auction = auction_vehicle::whereDate('starting_date','>',$today)->get();
+        $today_auction = auction_vehicle::where('starting_date',$today)->where('status',0)->get();
+        $upcoming_auction = auction_vehicle::whereDate('starting_date','>',$today)->where('status',0)->get();
         $vehicle = vehicle::all();
         $auction_id = auction_vehicle_id::all();
         $car = car::all();
@@ -218,7 +219,7 @@ class PageController extends Controller
         $request->validate([
             'busisness_type'=>'required',
             'name'=>'required',
-            'email'=>'required',
+            'email'=>'required|unique:users',
         ]);
 
         $member = new User;
@@ -246,9 +247,10 @@ class PageController extends Controller
         $member_password->save();
 
         $all = $member_password::find($member_password->id);
-        Mail::send('mail.member_send_mail',compact('all'),function($message) use($all){
-            $message->to($all['email'])->subject('Create your Own Password');
-            $message->from('contact@lrbinfotech.com','New York Car Auction');
+        $email_temp = email_temp::first();
+        Mail::send('mail.member_send_mail',compact('all','email_temp'),function($message) use($all){
+            $message->to($all['email'])->subject('Verify Your Account');
+            $message->from('prasanthats@gmail.com','New York Car Auction');
         });
         return response()->json('successfully save'); 
     }
@@ -333,6 +335,23 @@ elseif ( $request->price_range && !empty($request->price_range) )
 }
 
 
+public function contactMail(Request $request){
+    $request->validate([
+         'name'=>'required',
+         'phone'=>'required',
+         'email'=>'required',
+         'message'=>'required',
+         'g-recaptcha-response' => ['required', new ValidRecaptcha]
+    ]);
+    $all = $request->all();
+    Mail::send('mail.contact_mail',compact('all'),function($message) use($all){
+         $message->to('prasanthats@gmail.com')->subject($all['subject']);
+         $message->from('prasanthats@gmail.com',$all['name']);
+    });
+    return response()->json(['message'=>'Successfully Send'],200); 
+    //return back();
+}
+
 
 public function vehicleQuickView($id)
     {
@@ -400,7 +419,6 @@ public function vehicleQuickView($id)
                     </div>
                 </div>
             </div>
-
         ';
 
 

@@ -236,7 +236,7 @@ function Edit(id){
       $('input[name=name]').val(data.name);
       $('input[name=phone]').val(data.phone);
       $('input[name=email]').val(data.email);
-      $('select[name=role_id]').val(data.role_id);
+      //$('select[name=role_id]').val(data.role_id);
       $('input[name=id]').val(id);
       $('#popup_modal').modal('show');
       action_type = 2;

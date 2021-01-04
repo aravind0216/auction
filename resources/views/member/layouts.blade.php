@@ -128,14 +128,14 @@
                         <li class="dropdown dropdown-user nav-item"><a class="dropdown-toggle nav-link dropdown-user-link" href="#" data-toggle="dropdown">
                                 <div class="user-nav d-lg-flex d-none">
                                     <span class="user-name">{{Auth::user()->name}}</span>
-                                    <span class="user-status">Available</span>
+                                    <!-- <span class="user-status">Available</span> -->
                                 </div>
                                 <span>
                                     <img class="round" src="/app-assets/images/portrait/small/avatar-s-11.jpg" alt="avatar" height="40" width="40">
                                 </span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right pb-0">
-
+                            <a class="dropdown-item" href="/member/settings" ><i class="bx bx-edit-alt mr-50"></i>Edit Profile</a>
                                 <div class="dropdown-divider mb-0"></div>
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">     
                         <i class="bx bx-power-off mr-50"></i>Log out
