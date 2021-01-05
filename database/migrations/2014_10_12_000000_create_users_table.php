@@ -33,6 +33,8 @@ class CreateUsersTable extends Migration
             $table->string('wallet')->default('0');
             $table->string('role_id')->default('0');
             $table->string('status')->default('0');
+            $table->string('otp')->nullable();
+            $table->string('firebase_key')->nullable();
             $table->string('upload_image')->nullable();
             $table->string('uplaod_passport')->nullable();
             $table->string('upload_emirate_id')->nullable();
