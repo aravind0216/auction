@@ -56,9 +56,8 @@ class PreauctionController extends Controller
         $brand = brand::find($vehicle->brand_id);
         $vehicle_type = vehicle_type::find($vehicle->vehicle_type);
 
-        $output = '
-
-<div class="impl_buy_wrapper">
+    $output = '
+    <div class="impl_buy_wrapper">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 col-md-6">
@@ -134,15 +133,12 @@ class PreauctionController extends Controller
         else{
             $bid_amount = $vehicle->minimum_bid_value + $vehicle->price;
         }
-        $bid25 = $bid_amount * ($auction->minimum_percentage/100);
-        if(Auth::user()->wallet > $bid25){
-                        $output.='<div class="row">
-                            <div class="col-md-6">
-                               
+        if(Auth::user()->wallet > $vehicle->minimum_bid_value){
+$output.='<div class="row">
+    <div class="col-md-6">
         <input type="hidden" id="min_bid_value" value="'.$vehicle->minimum_bid_value.'">
         <input type="hidden" name="_token" id="token" value="'.csrf_token().'">
         <input type="hidden" name="wallet" id="wallet" value="'.Auth::user()->wallet.'">
-        <input type="hidden" name="auction_id" id="auction_id" value="'.$auction->id.'" >    
         <input type="hidden" name="vehicle_id" id="vehicle_id" value="'.$vehicle->id.'" >
 
                 <div class="input-group">

@@ -3,7 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\slider;
+use App\site_info;
+use App\blog;
+use App\member_password;
 use App\User;
+use App\brand;
+use App\car;
+use App\damage;
+use App\deposit;
+use App\vehicle_image;
+use App\vehicle;
+use App\vehicle_type;
+use App\auction_vehicle;
+use App\auction_vehicle_id;
+use App\email_temp;
 use Hash;
 use Auth;
 use DB;
@@ -42,6 +56,13 @@ class ApiController extends Controller
         $member->firebase_key = $request->firebase_key;
         $member->password = Hash::make($request->password);
         $member->save();
+
+        $msg= "Dear Customer, Please use the code ".$member->otp." to Change your password";
+
+        Mail::send('mail.otp_send_mail',compact('member'),function($message) use($member){
+            $message->to($member->email)->subject('NYC Auction Verification Code');
+            $message->from('info@lrbinfotech.com','NYC Auction');
+        });
 
         return response()->json(
             ['message' => 'Register Successfully',
@@ -149,12 +170,17 @@ class ApiController extends Controller
         try{
             $exist = User::where('email',$request->email)->get();
 	        if(count($exist)>0){
-		        $customer = User::find($exist[0]->id);
+		        $member = User::find($exist[0]->id);
 		        $randomid = mt_rand(100000,999999);
-		        $customer->otp = $randomid;
-		        $customer->save();       
+		        $member->otp = $randomid;
+		        $member->save();      
 
-		        return response()->json(['message' => 'Successfully Send','_id'=>$customer->id], 200);
+                Mail::send('mail.otp_send_mail',compact('member'),function($message) use($member){
+                    $message->to($member->email)->subject('NYC Auction Verification Code');
+                    $message->from('info@lrbinfotech.com','NYC Auction');
+                }); 
+
+		        return response()->json(['message' => 'Successfully Send','_id'=>$member->id], 200);
             }else{
                 return response()->json(['message' => 'This Email Address Not Registered','status'=>403], 403);
             }
@@ -165,11 +191,11 @@ class ApiController extends Controller
     }
 
     public function resetPassword(Request $request){
-        if($request->customer_id !=null){
-            $customer = User::find($request->customer_id);
-            if($customer->otp == $request->otp){
-                $customer->password = Hash::make($request->get('password'));
-                $customer->save();
+        if($request->member_id !=null){
+            $member = User::find($request->member_id);
+            if($member->otp == $request->otp){
+                $member->password = Hash::make($request->get('password'));
+                $member->save();
                 return response()->json(['message' => 'Successfully Reset'], 200);
             }else{
                 return response()->json(['message' => 'Verification Code Not Valid','status'=>400], 400);
@@ -196,6 +222,107 @@ class ApiController extends Controller
         else{
             return response()->json(['message' => 'old password doesnt matched','status'=>400], 400);
         }
+    }
+
+    public function getApiOtpResend(Request $request)
+    {
+        if($request->customer_id !=null){
+            $member = User::find($request->customer_id);
+            $randomid = mt_rand(1000,9999);
+            $member->otp = $randomid;
+            $member->save();
+
+            Mail::send('mail.otp_send_mail',compact('member'),function($message) use($member){
+                $message->to($member->email)->subject('NYC Auction Verification Code');
+                $message->from('info@lrbinfotech.com','NYC Auction');
+            }); 
+
+            return response()->json(['message' => 'Otp Send Successfully'], 200);
+        }else{
+            return response()->json(['message' => 'Customer id not found'], 400);
+        }
+    }
+
+    public function verifyCustomer(Request $request)
+    {
+        if($request->customer_id !=null){
+            $customer = User::find($request->customer_id);
+            if($customer->otp == $request->otp){
+                $customer->status = 1;
+                $customer->save();
+
+                return response()->json(['message' => 'Verified Your Account',
+                'name'=>$customer->name,
+                'email'=>$customer->email,
+                'customer_id'=>$customer->id,'status'=>200], 200);
+            }else{
+                return response()->json(['message' => 'Verification Code Not Valid','status'=>400], 400);
+            }
+        }else{
+            return response()->json(['message' => 'Customer id not found'], 400);
+        }
+    }
+
+
+    public function auctions()
+    {
+        $today = date('Y-m-d');
+        $today_auction = auction_vehicle::where('starting_date',$today)->where('status',0)->get();
+        $upcoming_auction = auction_vehicle::whereDate('starting_date','>',$today)->where('status',0)->get();
+        $vehicle = vehicle::all();
+        $auction_id = auction_vehicle_id::all();
+        $car = car::all();
+        $brand = brand::all();
+        return view('page.auctions',compact('today_auction','vehicle','car','brand','upcoming_auction','auction_id'));
+    }
+
+    public function liveAuctions($id)
+    {   
+        $auction = auction_vehicle::find($id);
+        return response()->json($auction);
+    }
+
+    public function viewAuctions($id)
+    {
+        $auction = auction_vehicle::find($id);
+        
+        $data = array();
+       foreach(explode(',', $auction->vehicle_ids) as $value) 
+        {
+            $vehicle = vehicle::find($value);
+            
+            $brand = brand::find($vehicle->brand_id);
+            $model = car::find($vehicle->car_id);
+            $vehicle_type = vehicle_type::find($vehicle->vehicle_type);
+
+            $data = array(
+                'auction_id' => $auction->id,
+                'vehicle_id' => $vehicle->id,
+                'price' => $vehicle->price,
+                'year' => $vehicle->year,
+                'location' => $vehicle->location,
+                'odometer' => $vehicle->odometer,
+                'document_type' => $vehicle->document_type,
+                'price' => $vehicle->price,
+                'image' => $vehicle->image,
+                'brand' => '',
+                'model' => '',
+                'vehicle_type' => '',
+            );
+
+            if(!empty($brand)){
+                $data['brand'] = $brand->name;
+            }
+            if(!empty($model)){
+                $data['model'] = $model->name;
+            }
+            if(!empty($vehicle_type)){
+                $data['vehicle_type'] = $vehicle_type->name;
+            }
+
+            $datas[] = $data;
+        }
+        return response()->json($datas);
     }
 
 

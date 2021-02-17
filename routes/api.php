@@ -25,3 +25,12 @@ Route::get('/edit-customer/{id}', 'ApiController@editCustomer');
 Route::post('/change-password', 'ApiController@changePassword');
 Route::post('/forget-password', 'ApiController@forgetPassword');
 Route::post('/reset-password', 'ApiController@resetPassword');
+Route::post('/verify-customer', 'ApiController@verifyCustomer');
+Route::post('/otp-resend', 'ApiController@getApiOtpResend');
+
+
+//auction
+Route::get('/auctions', 'ApiController@auctions');
+Route::get('/view-auctions/{id}', 'ApiController@viewAuctions');
+Route::get('/live-auctions/{id}', 'ApiController@liveAuctions');
+

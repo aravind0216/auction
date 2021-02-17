@@ -223,9 +223,11 @@ var x = setInterval(function() {
       cluster: 'ap2'
     });
 
-
-
     var channel = pusher.subscribe('<?php echo $auction->channel_name; ?>');
+
+    //var members_count = channel.members.count;
+    //alert(members_count);
+
     channel.bind('my-event', function(data) {
       bidding_type = data.message.bid_type;
       console.log('event'+data.message.bid_type)
@@ -340,7 +342,6 @@ function viewDetails(id)
       bidding_type = 'live_bid';
         $('#view-details').html(data);
         $('#popup_modal').modal('show');
-      
     }
   });
 }

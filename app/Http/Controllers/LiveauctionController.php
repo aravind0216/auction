@@ -157,7 +157,7 @@ class LiveauctionController extends Controller
     {
         date_default_timezone_set("Asia/Dubai");
         date_default_timezone_get();
-        $auction = auction_vehicle::where('status',0)->first();
+        $auction = auction_vehicle::where('id',$id)->where('status',0)->first();
         $auction_id = auction_vehicle_id::where('auction_id',$auction->id)->where('status',0)->orderBy('id', 'ASC')->get();
 
         $auction_count = auction_vehicle_id::where('auction_id',$auction->id)->count();
@@ -334,12 +334,12 @@ if(!empty($auction_id)){
         }
                     }else{
 
-                        $output.='<div class="impl_old_buy_btn">
-                            <a href="/login" class="impl_btn">Sign In</a>
-                            <a href="/member-registration" class="impl_btn">Register</a>
-                            
-                        </div></div>';
-                        }
+                    $output.='<div class="impl_old_buy_btn">
+                        <a href="/login" class="impl_btn">Sign In</a>
+                        <a href="/member-registration" class="impl_btn">Register</a>
+                        
+                    </div></div>';
+                    }
                     $output.='</div>
                 </div>
             </div>
